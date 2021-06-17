@@ -1,11 +1,14 @@
 import com.google.gson.Gson;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
 
-
+    public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static String textolog = "-----------------------LOG de ACCIONES-----------------------";
+    //textolog+="\n"+dtf+"";
     public static void opciones(){
         int opcion;
         int opcionS;
@@ -28,6 +31,7 @@ do
                     if (main.usuariosA.get(i).getUsername().equals(username) && main.usuariosA.get(i).getPassword().equals(password)){
                         System.out.println("Ingreso exitoso");
                         Menu();
+
                     }
                 }
                 System.out.println("Usuario y/o contraseña incorrectos. Intente de nuevo");

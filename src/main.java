@@ -1,8 +1,8 @@
 import com.google.gson.*;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
 
 public class main {
     public static ArrayList<Usuario> usuariosA = new ArrayList<>();
@@ -15,7 +15,8 @@ public class main {
     public static Cliente[] clientes;
     public static Factura[] facturas;
 
-
+    public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static String textologA = "-----------------------------LOG de ACCIONES-----------------------------";
 
     public static void main(String[] args) {
 
@@ -48,7 +49,7 @@ public class main {
                 usuariosA.add(usuario);
             }
         }
-
+        VerificarUsuarios();
 
         productos = gson.fromJson(archivo2, Producto[].class);
         for (Producto producto: productos) {
@@ -73,8 +74,8 @@ public class main {
         }
 
         System.out.println();
-
-        Menu.Menu();
+        Login();
+       // Menu.Menu();
     }
 
     public static void CargaBin(){
@@ -89,8 +90,43 @@ public class main {
 
         System.out.println();
 
-        Menu.Menu();
+        Login();
     }
 
+    public static void Login(){
+        System.out.println("--------------INICIAR SESIÓN--------------");
+        System.out.println("USERNAME: ");
+        Scanner sc1 = new Scanner(System.in);
+        String username = sc1.nextLine();
+        System.out.println("PASSWORD: ");
+        Scanner sc2 = new Scanner(System.in);
+        String password = sc1.nextLine();
+        for (int i=0; i<main.usuariosA.size() ; i++) {
+            if (main.usuariosA.get(i).getUsername().equals(username) && main.usuariosA.get(i).getPassword().equals(password)){
+                System.out.println("Ingreso exitoso");
+                Menu.Menu();
+                textologA+="\n"+dtf+"\t"+username+": Inicio de sesión exitoso.";
+            }
+        }
+        System.out.println("Usuario y/o contraseña incorrectos. Intente de nuevo");
+        textologA+="\n"+dtf+"\t"+username+": Inicio de sesión fallido.";
+        Login();
+    }
+
+    public static void VerificarUsuarios() {
+
+            for (int i = 0; i < usuariosA.size(); i++) {
+                for (int j = i+1; j < usuariosA.size(); j++) {
+                    if (usuariosA.get(i).getUsername().equals(usuariosA.get(j).getUsername())) {
+                        usuariosA.remove(j);
+                        i=0;
+                        break;
+                    }
+                }
+            }
+
+
+
+    }
 }
 

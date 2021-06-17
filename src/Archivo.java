@@ -86,7 +86,59 @@ public class Archivo {
         }
     }
 
+    //Log de Errores
+    public static void LogErrores(String texto){
+        System.out.println("Log generado.");
 
+
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try
+        {
+            fichero = new FileWriter("errors.log");
+            pw = new PrintWriter(fichero);
+
+            for (int i = 0; i <= 0; i++)
+                pw.println(texto);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != fichero)
+                    fichero.close();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+    }
+
+    //Log de Acciones
+    public static void LogAcciones(String texto){
+        System.out.println("Log generado.");
+
+
+        FileWriter fichero = null;
+        PrintWriter pw = null;
+        try
+        {
+            fichero = new FileWriter("log.log");
+            pw = new PrintWriter(fichero);
+
+            for (int i = 0; i <= 0; i++)
+                pw.println(texto);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (null != fichero)
+                    fichero.close();
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
+        }
+    }
 
 
 
