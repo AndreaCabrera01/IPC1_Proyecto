@@ -57,6 +57,7 @@ public class main {
                 productosA.add(producto);
             }
         }
+        VerificarProductos();
 
         clientes = gson.fromJson(archivo3, Cliente[].class);
         for (Cliente cliente: clientes) {
@@ -64,6 +65,7 @@ public class main {
                 clientesA.add(cliente);
             }
         }
+        VerificarClientes();
 
         facturas = gson.fromJson(archivo4, Factura[].class);
         for (Factura factura: facturas) {
@@ -72,23 +74,22 @@ public class main {
             }
 
         }
+        VerificarFacturas();
 
-        System.out.println();
         Login();
        // Menu.Menu();
     }
 
     public static void CargaBin(){
         usuariosA = (ArrayList<Usuario>) Archivo.deserialize("users.ipcrm");
+        VerificarUsuarios();
 
         clientesA = (ArrayList<Cliente>) Archivo.deserialize("clients.ipcrm");
-
+        VerificarClientes();
         productosA = (ArrayList<Producto>) Archivo.deserialize("products.ipcrm");
-
+        VerificarProductos();
         facturasA = (ArrayList<Factura>) Archivo.deserialize("invoices.ipcrm");
-
-
-        System.out.println();
+        VerificarFacturas();
 
         Login();
     }
@@ -119,14 +120,46 @@ public class main {
                 for (int j = i+1; j < usuariosA.size(); j++) {
                     if (usuariosA.get(i).getUsername().equals(usuariosA.get(j).getUsername())) {
                         usuariosA.remove(j);
-                        i=0;
-                        break;
+                        j--;
                     }
                 }
             }
+    }
 
+    public static void VerificarClientes() {
 
+        for (int i = 0; i < clientesA.size(); i++) {
+            for (int j = i+1; j < clientesA.size(); j++) {
+                if (clientesA.get(i).getId()==clientesA.get(j).getId()) {
+                    clientesA.remove(j);
+                    j--;
+                }
+            }
+        }
+    }
 
+    public static void VerificarFacturas() {
+
+        for (int i = 0; i < facturasA.size(); i++) {
+            for (int j = i+1; j < facturasA.size(); j++) {
+                if (facturasA.get(i).getId()==facturasA.get(j).getId()) {
+                    facturasA.remove(j);
+                    j--;
+                }
+            }
+        }
+    }
+
+    public static void VerificarProductos() {
+
+        for (int i = 0; i < productosA.size(); i++) {
+            for (int j = i+1; j < productosA.size(); j++) {
+                if (productosA.get(i).getId()==productosA.get(j).getId()) {
+                    productosA.remove(j);
+                    j--;
+                }
+            }
+        }
     }
 }
 
