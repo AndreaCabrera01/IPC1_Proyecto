@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -6,6 +8,7 @@ public class Menu {
 
     public static void opciones(){
         int opcion;
+        int opcionS;
 do
 
     {
@@ -34,7 +37,7 @@ do
 
             case 2: {
                 System.out.println("--------------INFORMACIÓN DEL RESTAURANTE--------------");
-                    main.configsA.get(0).ListarConfig();
+                    main.configs.ListarConfig();
                     Menu();
                 break;
             }
@@ -63,6 +66,27 @@ do
             }
             case 7: {
 //                "--------------GUARDAR CAMBIOS-------------"
+                System.out.println("Ingrese la opción que desea realizar: \n" +
+                        "1. JSON\n" +
+                        "2. Binario");
+                opcionS = sc.nextInt();
+
+                switch (opcionS){
+                    case 1:{
+                        SerializacionJ();
+                        System.out.println("Se han guardado los cambios en archivos JSON.");
+                        Menu();
+                        break;}
+                    case 2: {
+                        SerializacionB();
+                        System.out.println("Se han guardado los cambios en archivos Binarios.");
+                        Menu();
+                        break;}
+                    default:
+                        System.out.println("Ha ingresado una opción incorrecta");
+                }
+
+
                 break;
             }
 
@@ -355,7 +379,7 @@ public static void ListadoUsers(){
     }
 
 }
-public static void ListadoProducts(){
+    public static void ListadoProducts(){
         for (int i = 0; i <main.productosA.size(); i++) {
             main.productosA.get(i).ListarProducto(i+1);
         }
@@ -369,5 +393,27 @@ public static void ListadoProducts(){
         for (int i = 0; i <main.facturasA.size(); i++) {
             main.facturasA.get(i).ListarFacturas(i+1);
         }
+    }
+
+    public static void SerializacionJ(){
+        Gson gson = new Gson();
+        String JsonUsuarios = gson.toJson(main.usuariosA);
+        Archivo.writeOnFile("users.json",JsonUsuarios,false);
+
+        String JsonClientes = gson.toJson(main.clientesA);
+        Archivo.writeOnFile("clients.json",JsonClientes,false);
+
+        String JsonProductos = gson.toJson(main.productosA);
+        Archivo.writeOnFile("products.json",JsonProductos,false);
+
+        String JsonFacturas = gson.toJson(main.facturasA);
+        Archivo.writeOnFile("invoices.json",JsonFacturas,false);
+    }
+
+    public static void SerializacionB(){
+            Archivo.serialize("users.ipcrm", main.usuariosA);
+            Archivo.serialize("clients.ipcrm", main.clientesA);
+            Archivo.serialize("products.ipcrm", main.productosA);
+            Archivo.serialize("invoices.ipcrm", main.facturasA);
     }
 }

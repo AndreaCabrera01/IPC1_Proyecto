@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Producto {
+public class Producto implements Serializable {
     private int id;
     private String name;
     private String description;
@@ -24,7 +25,7 @@ public class Producto {
             System.out.println("> Cost: " + cost+"        ");
             System.out.println("> Price: " + price+"        ");
             System.out.println("\t---------Ingredients-------------");
-        ingredients.get(i-1).Listar();
+            ingredients.get(i-1).Listar();
     }
     public void     ListarProductoparaFactur(int i) {
 

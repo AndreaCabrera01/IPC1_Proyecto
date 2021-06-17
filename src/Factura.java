@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Factura {
+public class Factura implements Serializable {
     private int id;
     private int client;
     private String date;

@@ -1,4 +1,6 @@
-public class Config {
+import java.io.Serializable;
+
+public class Config implements Serializable {
     private String name;
     private String address;
     private int phone;
@@ -13,5 +15,35 @@ public class Config {
         System.out.println("> Load: " + load+"        ");
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
+    public String getLoad() {
+        return load;
+    }
+
+    public void setLoad(String load) {
+        this.load = load;
+    }
 }

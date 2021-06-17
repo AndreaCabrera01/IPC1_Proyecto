@@ -1,6 +1,6 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import com.google.gson.*;
+import java.io.*;
+import java.util.ArrayList;
 
 public class Archivo {
     public static String getContentOfFile(String pathname) {
@@ -37,4 +37,57 @@ public class Archivo {
         }
         return "";
     }
+
+    public static void serialize(String pathname, Object object){
+        // Serializar un objeto
+        try {
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(pathname));
+            objectOutputStream.writeObject(object);
+            objectOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Object deserialize(String pathname) {
+        // Leer un objeto serializado
+        try {
+            ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(pathname));
+            Object data = objectInputStream.readObject();
+            objectInputStream.close();
+            return data;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void writeOnFile(String pathname, String content, boolean append) {
+        File file;
+        FileWriter fw = null;
+        BufferedWriter bw = null;
+
+        try {
+            file = new File(pathname);
+            fw = new FileWriter(file, append);
+            bw = new BufferedWriter(fw);
+            bw.write(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bw != null)
+                    bw.close();
+                if (fw != null)
+                    fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
+
 }

@@ -1,62 +1,96 @@
 import com.google.gson.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class main {
-    public static ArrayList<Usuario> usuariosA;
-    public static ArrayList<Producto> productosA;
-    public static ArrayList<Cliente> clientesA;
-    public static ArrayList<Factura> facturasA;
-    public static ArrayList<Config> configsA;
+    public static ArrayList<Usuario> usuariosA = new ArrayList<>();
+    public static ArrayList<Producto> productosA = new ArrayList<>();
+    public static ArrayList<Cliente> clientesA = new ArrayList<>();
+    public static ArrayList<Factura> facturasA = new ArrayList<>();
+    public static Config configs;
+    public static Usuario[] usuarios;
+    public static Producto[] productos;
+    public static Cliente[] clientes;
+    public static Factura[] facturas;
+
 
 
     public static void main(String[] args) {
 
-        String archivo1 = Archivo.getContentOfFile("C:\\Users\\usuario\\Desktop\\Archivos Prueba Darwin\\users.json");
-        String archivo2 = Archivo.getContentOfFile("C:\\Users\\usuario\\Desktop\\Archivos Prueba Darwin\\products.json");
-        String archivo3 = Archivo.getContentOfFile("C:\\Users\\usuario\\Desktop\\Archivos Prueba Darwin\\clients.json");
-        String archivo4 = Archivo.getContentOfFile("C:\\Users\\usuario\\Desktop\\Archivos Prueba Darwin\\invoices.json");
-        String archivo5 = Archivo.getContentOfFile("C:\\Users\\usuario\\Desktop\\Archivos Prueba Darwin\\config.json");
-
-
-
+        String archivo5 = Archivo.getContentOfFile("config.json");
         Gson gson = new Gson();
-        Usuario[] usuarios = gson.fromJson(archivo1, Usuario[].class);
-        usuariosA = new ArrayList<>();
+        configs = gson.fromJson(archivo5, Config.class);
+        if(configs.getLoad().equals("json")){
+            CargaJson();
+        }else if(configs.getLoad().equals("bin")){
+            CargaBin();
+        }else{
+            System.out.println("Los archivos no son compatibles.");
+        }
+
+
+
+
+}
+
+    public static void CargaJson(){
+        Gson gson = new Gson();
+        String archivo1 = Archivo.getContentOfFile("users.json");
+        String archivo2 = Archivo.getContentOfFile("products.json");
+        String archivo3 = Archivo.getContentOfFile("clients.json");
+        String archivo4 = Archivo.getContentOfFile("invoices.json");
+
+        usuarios = gson.fromJson(archivo1, Usuario[].class);
         for (Usuario usuario: usuarios) {
-            usuariosA.add(usuario);
+            if(usuarios!=null){
+                usuariosA.add(usuario);
+            }
         }
 
 
-        Producto[] productos = gson.fromJson(archivo2, Producto[].class);
-        productosA = new ArrayList<>();
+        productos = gson.fromJson(archivo2, Producto[].class);
         for (Producto producto: productos) {
-            productosA.add(producto);
+            if(producto!=null) {
+                productosA.add(producto);
+            }
         }
 
-        Cliente[] clientes = gson.fromJson(archivo3, Cliente[].class);
-        clientesA = new ArrayList<>();
+        clientes = gson.fromJson(archivo3, Cliente[].class);
         for (Cliente cliente: clientes) {
-            clientesA.add(cliente);
+            if(cliente!=null) {
+                clientesA.add(cliente);
+            }
         }
 
-        Factura[] facturas = gson.fromJson(archivo4, Factura[].class);
-        facturasA = new ArrayList<>();
+        facturas = gson.fromJson(archivo4, Factura[].class);
         for (Factura factura: facturas) {
-            facturasA.add(factura);
+            if(factura!=null) {
+                facturasA.add(factura);
+            }
+
         }
 
-        Config[] configs = gson.fromJson(archivo5, Config[].class);
-        configsA = new ArrayList<>();
-        for (Config config: configs) {
-            configsA.add(config);
-        }
+        System.out.println();
+
+        Menu.Menu();
+    }
+
+    public static void CargaBin(){
+        usuariosA = (ArrayList<Usuario>) Archivo.deserialize("users.ipcrm");
+
+        clientesA = (ArrayList<Cliente>) Archivo.deserialize("clients.ipcrm");
+
+        productosA = (ArrayList<Producto>) Archivo.deserialize("products.ipcrm");
+
+        facturasA = (ArrayList<Factura>) Archivo.deserialize("invoices.ipcrm");
 
 
         System.out.println();
 
         Menu.Menu();
+    }
 
-}    }
+}
 
