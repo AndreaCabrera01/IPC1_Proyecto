@@ -7,68 +7,68 @@ import java.util.Scanner;
 public class Menu {
 
     public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    public static String textolog = "-----------------------LOG de ACCIONES-----------------------";
-    //textolog+="\n"+dtf+"";
+    public static String textolog="";
+
+
     public static void opciones(){
         int opcion;
         int opcionS;
-do
 
-    {
+        do{
         Scanner sc = new Scanner(System.in);
         opcion = sc.nextInt();
 
         switch (opcion) {
+//            case 1: {
+//                System.out.println("--------------INICIAR SESIÓN--------------");
+//                System.out.println("USERNAME: ");
+//                Scanner sc1 = new Scanner(System.in);
+//                String username = sc1.nextLine();
+//                System.out.println("PASSWORD: ");
+//                Scanner sc2 = new Scanner(System.in);
+//                String password = sc1.nextLine();
+//                for (int i=0; i<main.usuariosA.size() ; i++) {
+//                    if (main.usuariosA.get(i).getUsername().equals(username) && main.usuariosA.get(i).getPassword().equals(password)){
+//                        System.out.println("Ingreso exitoso");
+//                        Menu();
+//
+//                    }
+//                }
+//                System.out.println("Usuario y/o contraseña incorrectos. Intente de nuevo");
+//                Menu();
+//                break;
+ //           }
+
             case 1: {
-                System.out.println("--------------INICIAR SESIÓN--------------");
-                System.out.println("USERNAME: ");
-                Scanner sc1 = new Scanner(System.in);
-                String username = sc1.nextLine();
-                System.out.println("PASSWORD: ");
-                Scanner sc2 = new Scanner(System.in);
-                String password = sc1.nextLine();
-                for (int i=0; i<main.usuariosA.size() ; i++) {
-                    if (main.usuariosA.get(i).getUsername().equals(username) && main.usuariosA.get(i).getPassword().equals(password)){
-                        System.out.println("Ingreso exitoso");
-                        Menu();
-
-                    }
-                }
-                System.out.println("Usuario y/o contraseña incorrectos. Intente de nuevo");
-                Menu();
-                break;
-            }
-
-            case 2: {
                 System.out.println("--------------INFORMACIÓN DEL RESTAURANTE--------------");
                     main.configs.ListarConfig();
                     Menu();
                 break;
             }
 
-            case 3: {
+            case 2: {
 //                System.out.println("--------------USUARIOS-------------");
                 SubmMenuUsers();
                 break;
             }
 
-            case 4: {
+            case 3: {
 //                System.out.println("--------------PRODUCTOS-------------");
                 SubmMenuProducts();
                 break;
             }
 
-            case 5: {
+            case 4: {
 //                System.out.println("--------------CLIENTES-------------");
                 SubmMenuCliente();
                 break;
             }
-            case 6: {
+            case 5: {
 //                System.out.println("--------------FACTURAS-------------");
                 SubmMenuFacturas();
                 break;
             }
-            case 7: {
+            case 6: {
 //                "--------------GUARDAR CAMBIOS-------------"
                 System.out.println("Ingrese la opción que desea realizar: \n" +
                         "1. JSON\n" +
@@ -94,11 +94,13 @@ do
                 break;
             }
 
-            case 8: {
-                main main = new main();
+            case 7: {
+                textolog="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha cerrado sesión.";
+                Archivo.LogAcciones(textolog);
+                main.Login();
                 break;
             }
-            case 9: {
+            case 8: {
                 System.out.println("Gracias por utilizar  RESTAURANT MANAGER");
                 System.out.println("Copyright 2021 - Grupo 19.");
                 System.exit(0);
@@ -123,20 +125,21 @@ do
         System.out.println("|                                            |");
         System.out.println("|    Ingrese la accion a realizar:           |");
         System.out.println("|                                            |");
-        System.out.println("|    1. Inicio de sesión                     |");
-        System.out.println("|    2. Información del restaurante          |");
-        System.out.println("|    3. Usuarios                             |");
-        System.out.println("|    4. Productos                            |");
-        System.out.println("|    5. Clientes                             |");
-        System.out.println("|    6. Facturas                             |");
-        System.out.println("|    7. Guardar Cambios                      |");
-        System.out.println("|    8. Cerrar Sesión                        |");
-        System.out.println("|    9. Cerrar Programa                      |");
+        System.out.println("|    1. Información del restaurante          |");
+        System.out.println("|    2. Usuarios                             |");
+        System.out.println("|    3. Productos                            |");
+        System.out.println("|    4. Clientes                             |");
+        System.out.println("|    5. Facturas                             |");
+        System.out.println("|    6. Guardar Cambios                      |");
+        System.out.println("|    7. Cerrar Sesión                        |");
+        System.out.println("|    8. Cerrar Programa                      |");
         System.out.println("|                                            |");
         System.out.println("==============================================\n");
         opciones();
 
     }
+
+
     public static void SubmMenuUsers(){
         //Menú
         System.out.println("\n=================  USERS  ==================");
@@ -169,6 +172,8 @@ do
                     String nombre = sc1.nextLine();
                     for (int i=0; i<main.usuariosA.size() ; i++) {
                         if (main.usuariosA.get(i).getUsername().equals(nombre)){
+                            textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó al usuario: "+ main.usuariosA.get(i).getUsername()+".";
+                            Archivo.LogAcciones(textolog);
                             main.usuariosA.remove(i);
                         }
                     }
@@ -195,6 +200,7 @@ do
 
         }while (opcion2!=4);
     }
+
 
     public static void SubmMenuProducts(){
         //Menú
@@ -228,6 +234,8 @@ do
                     int id = sc1.nextInt();
                     for (int i=0; i<main.productosA.size() ; i++) {
                         if (main.productosA.get(i).getId()==id){
+                            textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó el producto: "+ main.productosA.get(i).getName()+" con id "+main.productosA.get(i).getId()+".";
+                            Archivo.LogAcciones(textolog);
                             main.productosA.remove(i);
                         }
                     }
@@ -254,6 +262,7 @@ do
 
         }while (opcion!=4);
     }
+
 
     public static void SubmMenuCliente(){
         //Menú
@@ -286,6 +295,8 @@ do
                     Scanner sc1 = new Scanner(System.in);
                     int id = sc1.nextInt();
                     for (int i=0; i<main.clientesA.size() ; i++) {
+                        textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó al cliente: "+ main.clientesA.get(i).getName()+" con id "+main.clientesA.get(i).getId()+".";
+                        Archivo.LogAcciones(textolog);
                         if (main.clientesA.get(i).getId()==id){
                             main.clientesA.remove(i);
                         }
@@ -314,6 +325,7 @@ do
 
         }while (opcion!=4);
     }
+
 
     public static void SubmMenuFacturas(){
         //Menú
@@ -347,6 +359,8 @@ do
                     int id = sc1.nextInt();
                     for (int i=0; i<main.facturasA.size() ; i++) {
                         if (main.facturasA.get(i).getId()==id){
+                            textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó la factura con id "+main.facturasA.get(i).getId()+".";
+                            Archivo.LogAcciones(textolog);
                             main.facturasA.remove(i);
                         }
                     }
@@ -377,7 +391,8 @@ do
 
 
 
-public static void ListadoUsers(){
+
+    public static void ListadoUsers(){
     for (int i = 0; i <main.usuariosA.size(); i++) {
         main.usuariosA.get(i).Listar(i+1);
     }

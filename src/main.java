@@ -14,9 +14,10 @@ public class main {
     public static Producto[] productos;
     public static Cliente[] clientes;
     public static Factura[] facturas;
-
+    public static String username;
     public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    public static String textologA = "-----------------------------LOG de ACCIONES-----------------------------";
+    public static String textologA = "";
+    public static String textologE = " | LOG de ERRORES |";
 
     public static void main(String[] args) {
 
@@ -76,8 +77,9 @@ public class main {
         }
         VerificarFacturas();
 
+
+        Archivo.LogErrores(textologE);
         Login();
-       // Menu.Menu();
     }
 
     public static void CargaBin(){
@@ -98,19 +100,21 @@ public class main {
         System.out.println("--------------INICIAR SESIÓN--------------");
         System.out.println("USERNAME: ");
         Scanner sc1 = new Scanner(System.in);
-        String username = sc1.nextLine();
+        username = sc1.nextLine();
         System.out.println("PASSWORD: ");
         Scanner sc2 = new Scanner(System.in);
         String password = sc1.nextLine();
         for (int i=0; i<main.usuariosA.size() ; i++) {
             if (main.usuariosA.get(i).getUsername().equals(username) && main.usuariosA.get(i).getPassword().equals(password)){
                 System.out.println("Ingreso exitoso");
+                textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+username+": Inicio de sesión exitoso.";
+                Archivo.LogAcciones(textologA);
                 Menu.Menu();
-                textologA+="\n"+dtf+"\t"+username+": Inicio de sesión exitoso.";
             }
         }
         System.out.println("Usuario y/o contraseña incorrectos. Intente de nuevo");
-        textologA+="\n"+dtf+"\t"+username+": Inicio de sesión fallido.";
+        textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+username+": Inicio de sesión fallido.";
+        Archivo.LogAcciones(textologA);
         Login();
     }
 
@@ -119,6 +123,7 @@ public class main {
             for (int i = 0; i < usuariosA.size(); i++) {
                 for (int j = i+1; j < usuariosA.size(); j++) {
                     if (usuariosA.get(i).getUsername().equals(usuariosA.get(j).getUsername())) {
+                        textologE+="\n"+dtf.format(LocalDateTime.now())+"\tUSERS: El username "+usuariosA.get(j).getUsername()+" ya existe, se omitió el registro.";
                         usuariosA.remove(j);
                         j--;
                     }
@@ -131,6 +136,7 @@ public class main {
         for (int i = 0; i < clientesA.size(); i++) {
             for (int j = i+1; j < clientesA.size(); j++) {
                 if (clientesA.get(i).getId()==clientesA.get(j).getId()) {
+                    textologE+="\n"+dtf.format(LocalDateTime.now())+"\tCLIENTS: El id "+clientesA.get(j).getId()+" ya existe, se omitió el registro.";
                     clientesA.remove(j);
                     j--;
                 }
@@ -143,6 +149,7 @@ public class main {
         for (int i = 0; i < facturasA.size(); i++) {
             for (int j = i+1; j < facturasA.size(); j++) {
                 if (facturasA.get(i).getId()==facturasA.get(j).getId()) {
+                    textologE+="\n"+dtf.format(LocalDateTime.now())+"\tINVOICES: El id "+facturasA.get(j).getId()+" ya existe, se omitió el registro.";
                     facturasA.remove(j);
                     j--;
                 }
@@ -151,10 +158,10 @@ public class main {
     }
 
     public static void VerificarProductos() {
-
         for (int i = 0; i < productosA.size(); i++) {
             for (int j = i+1; j < productosA.size(); j++) {
                 if (productosA.get(i).getId()==productosA.get(j).getId()) {
+                    textologE+="\n"+dtf.format(LocalDateTime.now())+"\tPRODUCTS: El id "+productosA.get(j).getId()+" ya existe, se omitió el registro.";
                     productosA.remove(j);
                     j--;
                 }

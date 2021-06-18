@@ -88,7 +88,7 @@ public class Archivo {
 
     //Log de Errores
     public static void LogErrores(String texto){
-        System.out.println("Log generado.");
+       // System.out.println("Log generado.");
 
 
         FileWriter fichero = null;
@@ -114,9 +114,10 @@ public class Archivo {
     }
 
     //Log de Acciones
+    private static String textoA = " | LOG de ACCIONES |";
     public static void LogAcciones(String texto){
-        System.out.println("Log generado.");
-
+        //System.out.println("Log generado.");
+        textoA += texto;
 
         FileWriter fichero = null;
         PrintWriter pw = null;
@@ -126,7 +127,7 @@ public class Archivo {
             pw = new PrintWriter(fichero);
 
             for (int i = 0; i <= 0; i++)
-                pw.println(texto);
+                pw.println(textoA);
 
         } catch (Exception e) {
             e.printStackTrace();
