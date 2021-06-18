@@ -19,25 +19,7 @@ public class Menu {
         opcion = sc.nextInt();
 
         switch (opcion) {
-//            case 1: {
-//                System.out.println("--------------INICIAR SESIÓN--------------");
-//                System.out.println("USERNAME: ");
-//                Scanner sc1 = new Scanner(System.in);
-//                String username = sc1.nextLine();
-//                System.out.println("PASSWORD: ");
-//                Scanner sc2 = new Scanner(System.in);
-//                String password = sc1.nextLine();
-//                for (int i=0; i<main.usuariosA.size() ; i++) {
-//                    if (main.usuariosA.get(i).getUsername().equals(username) && main.usuariosA.get(i).getPassword().equals(password)){
-//                        System.out.println("Ingreso exitoso");
-//                        Menu();
-//
-//                    }
-//                }
-//                System.out.println("Usuario y/o contraseña incorrectos. Intente de nuevo");
-//                Menu();
-//                break;
- //           }
+
 
             case 1: {
                 System.out.println("--------------INFORMACIÓN DEL RESTAURANTE--------------");
@@ -78,11 +60,15 @@ public class Menu {
                 switch (opcionS){
                     case 1:{
                         SerializacionJ();
+                        textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó al cliente: Guardó los cambios por medio de Archivos JSON.";
+                        Archivo.LogAcciones(textolog);
                         System.out.println("Se han guardado los cambios en archivos JSON.");
                         Menu();
                         break;}
                     case 2: {
                         SerializacionB();
+                        textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó al cliente: Guardó los cambios por medio de Archivos Binarios.";
+                        Archivo.LogAcciones(textolog);
                         System.out.println("Se han guardado los cambios en archivos Binarios.");
                         Menu();
                         break;}
@@ -97,6 +83,7 @@ public class Menu {
             case 7: {
                 textolog="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha cerrado sesión.";
                 Archivo.LogAcciones(textolog);
+                System.out.println("Ha cerrado sesión.\n");
                 main.Login();
                 break;
             }
@@ -142,7 +129,7 @@ public class Menu {
 
     public static void SubmMenuUsers(){
         //Menú
-        System.out.println("\n=================  USERS  ==================");
+      System.out.println("\n==================  USERS  ===================");
         System.out.println("|                                            |");
         System.out.println("|                                            |");
         System.out.println("|    Ingrese la accion a realizar:           |");
@@ -174,9 +161,14 @@ public class Menu {
                         if (main.usuariosA.get(i).getUsername().equals(nombre)){
                             textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó al usuario: "+ main.usuariosA.get(i).getUsername()+".";
                             Archivo.LogAcciones(textolog);
+                            System.out.println("Se ha eliminado el usuario correctamente.");
                             main.usuariosA.remove(i);
+                            SubmMenuUsers();
                         }
                     }
+                    System.out.println("No se ha encontrado el usuario a eliminar.");
+                    textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": No se encontró al usuario: "+ nombre + " para eliminar.";
+                    Archivo.LogAcciones(textolog);
                     SubmMenuUsers();
                     break;
                 }
@@ -204,7 +196,7 @@ public class Menu {
 
     public static void SubmMenuProducts(){
         //Menú
-        System.out.println("\n================  PRODUCTS  ================");
+      System.out.println("\n=================  PRODUCTS  =================");
         System.out.println("|                                            |");
         System.out.println("|                                            |");
         System.out.println("|    Ingrese la accion a realizar:           |");
@@ -237,8 +229,13 @@ public class Menu {
                             textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó el producto: "+ main.productosA.get(i).getName()+" con id "+main.productosA.get(i).getId()+".";
                             Archivo.LogAcciones(textolog);
                             main.productosA.remove(i);
+                            System.out.println("Se ha eliminado el producto correctamente.");
+                            SubmMenuProducts();
                         }
                     }
+                    System.out.println("No se ha encontrado el producto a eliminar.");
+                    textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": No se encontró al producto con id: "+ id + " para eliminar.";
+                    Archivo.LogAcciones(textolog);
                     SubmMenuProducts();
                     break;
                 }
@@ -266,7 +263,7 @@ public class Menu {
 
     public static void SubmMenuCliente(){
         //Menú
-        System.out.println("\n================  CLIENTS  =================");
+      System.out.println("\n=================  CLIENTS  ==================");
         System.out.println("|                                            |");
         System.out.println("|                                            |");
         System.out.println("|    Ingrese la accion a realizar:           |");
@@ -295,12 +292,17 @@ public class Menu {
                     Scanner sc1 = new Scanner(System.in);
                     int id = sc1.nextInt();
                     for (int i=0; i<main.clientesA.size() ; i++) {
-                        textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó al cliente: "+ main.clientesA.get(i).getName()+" con id "+main.clientesA.get(i).getId()+".";
-                        Archivo.LogAcciones(textolog);
                         if (main.clientesA.get(i).getId()==id){
+                            textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó al cliente: "+ main.clientesA.get(i).getName()+" con id "+main.clientesA.get(i).getId()+".";
+                            Archivo.LogAcciones(textolog);
                             main.clientesA.remove(i);
+                            System.out.println("Se ha eliminado el cliente correctamente.");
+                            SubmMenuCliente();
                         }
                     }
+                    System.out.println("No se ha encontrado el cliente a eliminar.");
+                    textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": No se encontró al cliente con id: "+ id + " para eliminar.";
+                    Archivo.LogAcciones(textolog);
                     SubmMenuCliente();
                     break;
                 }
@@ -329,7 +331,7 @@ public class Menu {
 
     public static void SubmMenuFacturas(){
         //Menú
-        System.out.println("\n================  INVOICES  ================");
+      System.out.println("\n=================  INVOICES  =================");
         System.out.println("|                                            |");
         System.out.println("|                                            |");
         System.out.println("|    Ingrese la accion a realizar:           |");
@@ -362,8 +364,13 @@ public class Menu {
                             textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó la factura con id "+main.facturasA.get(i).getId()+".";
                             Archivo.LogAcciones(textolog);
                             main.facturasA.remove(i);
+                            System.out.println("Se ha eliminado la factura correctamente.");
+                            SubmMenuFacturas();
                         }
                     }
+                    System.out.println("No se ha encontrado la factura a eliminar.");
+                    textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": No se encontró la factura con id: "+ id + " para eliminar.";
+                    Archivo.LogAcciones(textolog);
                     SubmMenuFacturas();
                     break;
                 }

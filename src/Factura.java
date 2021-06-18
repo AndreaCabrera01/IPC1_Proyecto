@@ -15,7 +15,12 @@ public class Factura implements Serializable {
         System.out.println("> Id: " + id+"           ");
         System.out.println("> Client: " + client+"         ");
         System.out.println("> Date: " + date+"  ");
-        products.get(i-1).ListarProductoparaFactur(i);
+        System.out.println("\t---------Productos-------------");
+        for (int j = 0; j < products.size(); j++) {
+            products.get(j).ListarProductoparaFactur();
+            System.out.println("");
+        }
+
     }
 
     public int getId() {

@@ -1,0 +1,106 @@
+[
+    {
+        "id": 1, 
+        "client": 1,
+        "date": "2020-06-13",
+        "products": [
+            {
+                "name": "Pizza",
+                "price": 50
+            }
+        ]
+    },
+	{
+        "id": 2, 
+        "client": 2,
+        "date": "2020-08-13",
+        "products": [
+            {
+                "name": "Hamburguesa",
+                "price": 34
+            },
+			{
+                "name": "Tacos",
+                "price": 20
+            },
+			{
+                "name": "Licuado",
+                "price": 15
+            }
+        ]
+    },
+	{
+        "id": 1, 
+        "client": 4,
+        "date": "2020-06-13",
+        "products": [
+            {
+                "name": "Pizza",
+                "price": 50
+            }
+        ]
+    },
+	{
+        "id": 3, 
+        "client": 3,
+        "date": "2020-06-15",
+        "products": [
+            {
+                "name": "Tacos",
+                "price": 20
+            }
+        ]
+    },
+	{
+        "id": 4, 
+        "client": 3,
+        "date": "2020-06-03",
+        "products": [
+            {
+                "name": "Spaguetti",
+                "price": 35
+            },
+			{
+                "name": "Pan",
+                "price": 20
+            }
+        ]
+    },
+	{
+        "id": 3, 
+        "client": 1,
+        "date": "2020-06-13",
+        "products": [
+            {
+                "name": "Pizza",
+                "price": 50
+            }
+        ]
+    },
+	{
+        "id": 7, 
+        "client": 5,
+        "date": "2021-06-13",
+        "products": [
+            {
+                "name": "Pan",
+                "price": 20
+            },
+			{
+                "name": "Pizza",
+                "price": 50
+            }
+        ]
+    },
+	{
+        "id": 2, 
+        "client": 3,
+        "date": "2020-06-15",
+        "products": [
+            {
+                "name": "Tacos",
+                "price": 20
+            }
+        ]
+    }
+]

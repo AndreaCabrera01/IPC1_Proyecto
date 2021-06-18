@@ -93,6 +93,7 @@ public class main {
         facturasA = (ArrayList<Factura>) Archivo.deserialize("invoices.ipcrm");
         VerificarFacturas();
 
+        Archivo.LogErrores(textologE);
         Login();
     }
 

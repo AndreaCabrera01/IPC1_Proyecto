@@ -15,9 +15,10 @@ public class Producto implements Serializable {
     this.description=description;
     this.cost=cost;
     this.price=price;
-    }
-    public void ListarProducto(int i){
 
+    }
+
+    public void ListarProducto(int i){
             System.out.println("\n\t----------Product "+i+"------------");
             System.out.println("> Id: " + id+"           ");
             System.out.println("> Name: " + name+"         ");
@@ -25,11 +26,13 @@ public class Producto implements Serializable {
             System.out.println("> Cost: " + cost+"        ");
             System.out.println("> Price: " + price+"        ");
             System.out.println("\t---------Ingredients-------------");
-            ingredients.get(i-1).Listar();
+            for (int j = 0; j < ingredients.size(); j++) {
+                    ingredients.get(j).Listar();
+                    System.out.println("");
+            }
     }
-    public void     ListarProductoparaFactur(int i) {
+    public void     ListarProductoparaFactur() {
 
-        System.out.println("\n\t----------Product " + i + "------------");
         System.out.println("> Name: " + name + "         ");
         System.out.println("> Price: " + price + "        ");
     }
