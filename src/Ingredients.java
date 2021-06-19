@@ -1,16 +1,19 @@
 import java.io.Serializable;
 
 public class Ingredients implements Serializable {
+    //Atributos
     private String name;
     private int quantity;
     private String units;
 
+    //Lista los ingredientes del producto
     public void Listar(){
             System.out.println("> Name: " + name+"         ");
             System.out.println("> Quantity: " +quantity+"     ");
             System.out.println("> Units: " + units+"        ");
     }
 
+    //GETTERS AND SETTERS
     public String getName() {
         return name;
     }

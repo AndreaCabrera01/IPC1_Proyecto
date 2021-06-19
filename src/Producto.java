@@ -2,6 +2,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Producto implements Serializable {
+    //Atributos de los productos
     private int id;
     private String name;
     private String description;
@@ -18,6 +19,7 @@ public class Producto implements Serializable {
 
     }
 
+    //Lista los datos de los productos
     public void ListarProducto(int i){
             System.out.println("\n\t----------Product "+i+"------------");
             System.out.println("> Id: " + id+"           ");
@@ -31,12 +33,15 @@ public class Producto implements Serializable {
                     System.out.println("");
             }
     }
+
+    //Según la factura, lista los productos que se enlazan a esta (la factura)
     public void     ListarProductoparaFactur() {
 
         System.out.println("> Name: " + name + "         ");
         System.out.println("> Price: " + price + "        ");
     }
 
+    //GETTERS AND SETTERS
     public int getId() {
         return id;
     }

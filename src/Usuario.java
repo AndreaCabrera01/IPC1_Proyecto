@@ -1,7 +1,7 @@
 import java.io.Serializable;
 
 public class Usuario implements Serializable {
-
+//ATRIBUTOS
     private String username;
     private String password;
 
@@ -10,6 +10,7 @@ public class Usuario implements Serializable {
         this.password=password;
     }
 
+    //Lista los datos del usuario
     public void Listar(int i) {
 
             System.out.println("\n\t----------User "+i+"-------------------");
@@ -18,6 +19,7 @@ public class Usuario implements Serializable {
 
     }
 
+    //GETTERS AND SETTERS
     public String getUsername() {
         return username;
     }

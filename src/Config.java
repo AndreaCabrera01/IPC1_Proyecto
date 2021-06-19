@@ -1,11 +1,13 @@
 import java.io.Serializable;
 
 public class Config implements Serializable {
+   //Atributos
     private String name;
     private String address;
     private int phone;
     private String load;
 
+    //Lista la descripción del restaurante descita por el archivo JSON
     public void ListarConfig(){
 
         System.out.println("\n\t----------Config------------");
@@ -15,6 +17,7 @@ public class Config implements Serializable {
         System.out.println("> Load: " + load+"        ");
     }
 
+    //GETTERS AND SETTERS
     public String getName() {
         return name;
     }

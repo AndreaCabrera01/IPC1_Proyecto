@@ -2,13 +2,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Factura implements Serializable {
+    //Atributos
     private int id;
     private int client;
     private String date;
     private ArrayList<Producto> products;
 
 
-
+//Lista los datos de las facturas
     public void ListarFacturas(int i){
 
         System.out.println("\n\t----------Factura "+i+"------------");
@@ -23,6 +24,7 @@ public class Factura implements Serializable {
 
     }
 
+    //GETTERS AND SETTERS
     public int getId() {
         return id;
     }

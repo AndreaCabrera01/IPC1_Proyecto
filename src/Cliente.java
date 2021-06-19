@@ -1,6 +1,7 @@
 import java.io.Serializable;
 
 public class Cliente implements Serializable {
+   //Atributos
     private int id;
     private String name;
     private String address;
@@ -8,14 +9,7 @@ public class Cliente implements Serializable {
     private String nit;
 
 
-//    public void Usuario(int id, String name, String description, int cost, double price){
-//        this.id=id;
-//        this.name=name;
-//        this.description=description;
-//        this.cost=cost;
-//        this.price=price;
-//    }
-
+    //Listado de clientes
     public void ListarClientes(int i){
 
         System.out.println("\n\t----------Client "+i+"------------");
@@ -26,6 +20,7 @@ public class Cliente implements Serializable {
         System.out.println("> Nit: " + nit+"        ");
     }
 
+    //GETTERS AND SETTERS
     public int getId() {
         return id;
     }
