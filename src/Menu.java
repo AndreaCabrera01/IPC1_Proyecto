@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
@@ -189,8 +190,10 @@ public class Menu {
                     for (int i=0; i<main.usuariosA.size() ; i++) {
                         if (main.usuariosA.get(i).getUsername().equals(nombre)){
                             main.usuariosA.get(i).Listar(i+1);
+                            SubmMenuUsers();
                         }
                     }
+                    System.out.println("No se ha encontrado el usuario a visualizar.");
                     //Despliegue de submenú
                     SubmMenuUsers();
                     break;
@@ -237,34 +240,46 @@ public class Menu {
                 case 2:{
                     //Se elimina un producto por medio de su id
                     System.out.println("Ingrese el id del producto a eliminar:");
-                    Scanner sc1 = new Scanner(System.in);
-                    int id = sc1.nextInt();
-                    for (int i=0; i<main.productosA.size() ; i++) {
-                        if (main.productosA.get(i).getId()==id){
-                            textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó el producto: "+ main.productosA.get(i).getName()+" con id "+main.productosA.get(i).getId()+".";
-                            Archivo.LogAcciones(textolog);
-                            main.productosA.remove(i);
-                            System.out.println("Se ha eliminado el producto correctamente.");
-                            SubmMenuProducts();
+                    try{
+                        Scanner sc1 = new Scanner(System.in);
+                        int id = sc1.nextInt();
+                        for (int i=0; i<main.productosA.size() ; i++) {
+                            if (main.productosA.get(i).getId()==id){
+                                textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó el producto: "+ main.productosA.get(i).getName()+" con id "+main.productosA.get(i).getId()+".";
+                                Archivo.LogAcciones(textolog);
+                                main.productosA.remove(i);
+                                System.out.println("Se ha eliminado el producto correctamente.");
+                                SubmMenuProducts();
+                            }
                         }
+                        System.out.println("No se ha encontrado el producto a eliminar.");
+                        textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": No se encontró al producto con id: "+ id + " para eliminar.";
+                        Archivo.LogAcciones(textolog);
+                        SubmMenuProducts();
+                    }catch(InputMismatchException e){
+                        System.out.println("Por favor, ingrese un id correcto.");
+                        SubmMenuProducts();
                     }
-                    System.out.println("No se ha encontrado el producto a eliminar.");
-                    textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": No se encontró al producto con id: "+ id + " para eliminar.";
-                    Archivo.LogAcciones(textolog);
-                    SubmMenuProducts();
                     break;
                 }
                 case 3:{
-                    //Por medio del ID se visualiza un producto en específico
-                    System.out.println("Ingrese el id del producto a visualizar:");
-                    Scanner sc1 = new Scanner(System.in);
-                    int id = sc1.nextInt();
-                    for (int i=0; i<main.productosA.size() ; i++) {
-                        if (main.productosA.get(i).getId()==id){
-                            main.productosA.get(i).ListarProducto(i+1);
+                    try{
+                        //Por medio del ID se visualiza un producto en específico
+                        System.out.println("Ingrese el id del producto a visualizar:");
+                        Scanner sc1 = new Scanner(System.in);
+                        int id = sc1.nextInt();
+                        for (int i=0; i<main.productosA.size() ; i++) {
+                            if (main.productosA.get(i).getId()==id){
+                                main.productosA.get(i).ListarProducto(i+1);
+                                SubmMenuProducts();
+                            }
                         }
+                        System.out.println("No se ha encontrado el producto a visualizar.");
+                        SubmMenuProducts();
+                    }catch(InputMismatchException e){
+                        System.out.println("Por favor, ingrese un id correcto.");
+                        SubmMenuProducts();
                     }
-                    SubmMenuProducts();
                     break;
                 }
                 case 4:{
@@ -307,37 +322,49 @@ public class Menu {
                     break;
                 }
                 case 2:{
-                    //Se elimina un cliente por medio de su id
-                    System.out.println("Ingrese el id del cliente a eliminar:");
-                    Scanner sc1 = new Scanner(System.in);
-                    int id = sc1.nextInt();
-                    for (int i=0; i<main.clientesA.size() ; i++) {
-                        if (main.clientesA.get(i).getId()==id){
-                            textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó al cliente: "+ main.clientesA.get(i).getName()+" con id "+main.clientesA.get(i).getId()+".";
-                            Archivo.LogAcciones(textolog);
-                            main.clientesA.remove(i);
-                            System.out.println("Se ha eliminado el cliente correctamente.");
-                            SubmMenuCliente();
+                    try{
+                        //Se elimina un cliente por medio de su id
+                        System.out.println("Ingrese el id del cliente a eliminar:");
+                        Scanner sc1 = new Scanner(System.in);
+                        int id = sc1.nextInt();
+                        for (int i=0; i<main.clientesA.size() ; i++) {
+                            if (main.clientesA.get(i).getId()==id){
+                                textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó al cliente: "+ main.clientesA.get(i).getName()+" con id "+main.clientesA.get(i).getId()+".";
+                                Archivo.LogAcciones(textolog);
+                                main.clientesA.remove(i);
+                                System.out.println("Se ha eliminado el cliente correctamente.");
+                                SubmMenuCliente();
+                            }
                         }
+                        System.out.println("No se ha encontrado el cliente a eliminar.");
+                        textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": No se encontró al cliente con id: "+ id + " para eliminar.";
+                        Archivo.LogAcciones(textolog);
+                        SubmMenuCliente();
+                    }catch(InputMismatchException e){
+                        System.out.println("Por favor, ingrese un id correcto.");
+                        SubmMenuCliente();
                     }
-                    System.out.println("No se ha encontrado el cliente a eliminar.");
-                    textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": No se encontró al cliente con id: "+ id + " para eliminar.";
-                    Archivo.LogAcciones(textolog);
-                    SubmMenuCliente();
                     break;
                 }
                 case 3:{
-                    //Se visualiza un cliente en específico
-                    System.out.println("Ingrese el id del cliente que desea visualizar:");
-                    Scanner sc1 = new Scanner(System.in);
-                    int id = sc1.nextInt();
-                    for (int i=0; i<main.clientesA.size() ; i++) {
-                        if (main.clientesA.get(i).getId()==id){
-                            main.clientesA.get(i).ListarClientes(i+1);
+                    try{
+                        //Se visualiza un cliente en específico
+                        System.out.println("Ingrese el id del cliente que desea visualizar:");
+                        Scanner sc1 = new Scanner(System.in);
+                        int id = sc1.nextInt();
+                        for (int i=0; i<main.clientesA.size() ; i++) {
+                            if (main.clientesA.get(i).getId()==id){
+                                main.clientesA.get(i).ListarClientes(i+1);
+                                SubmMenuCliente();
+                            }
                         }
+                        System.out.println("No se ha encontrado el cliente a visualizar.");
+                        SubmMenuCliente();
+                        System.out.println();
+                    }catch(InputMismatchException e){
+                        System.out.println("Por favor, ingrese un id correcto.");
+                        SubmMenuCliente();
                     }
-                    SubmMenuCliente();
-                    System.out.println();
                     break;
                 }
                 case 4:{
@@ -380,37 +407,50 @@ public class Menu {
                     break;
                 }
                 case 2:{
-                    //Se elimina una factura por medio de su id
-                    System.out.println("Ingrese el id de la factura a eliminar:");
-                    Scanner sc1 = new Scanner(System.in);
-                    int id = sc1.nextInt();
-                    for (int i=0; i<main.facturasA.size() ; i++) {
-                        if (main.facturasA.get(i).getId()==id){
-                            textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó la factura con id "+main.facturasA.get(i).getId()+".";
-                            Archivo.LogAcciones(textolog);
-                            main.facturasA.remove(i);
-                            System.out.println("Se ha eliminado la factura correctamente.");
-                            SubmMenuFacturas();
+                    try{
+
+                        //Se elimina una factura por medio de su id
+                        System.out.println("Ingrese el id de la factura a eliminar:");
+                        Scanner sc1 = new Scanner(System.in);
+                        int id = sc1.nextInt();
+                        for (int i=0; i<main.facturasA.size() ; i++) {
+                            if (main.facturasA.get(i).getId()==id){
+                                textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó la factura con id "+main.facturasA.get(i).getId()+".";
+                                Archivo.LogAcciones(textolog);
+                                main.facturasA.remove(i);
+                                System.out.println("Se ha eliminado la factura correctamente.");
+                                SubmMenuFacturas();
+                            }
                         }
+                        System.out.println("No se ha encontrado la factura a eliminar.");
+                        textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": No se encontró la factura con id: "+ id + " para eliminar.";
+                        Archivo.LogAcciones(textolog);
+                        SubmMenuFacturas();
+                    }catch(InputMismatchException e){
+                        System.out.println("Por favor, ingrese un id correcto.");
+                        SubmMenuFacturas();
                     }
-                    System.out.println("No se ha encontrado la factura a eliminar.");
-                    textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": No se encontró la factura con id: "+ id + " para eliminar.";
-                    Archivo.LogAcciones(textolog);
-                    SubmMenuFacturas();
+
                     break;
                 }
                 case 3:{
-                    //Despliega una factura en específico
-                    System.out.println("Ingrese el id de la factura que desea visualizar:");
-                    Scanner sc1 = new Scanner(System.in);
-                    int id = sc1.nextInt();
-                    for (int i=0; i<main.facturasA.size() ; i++) {
-                        if (main.facturasA.get(i).getId()==id){
-                            main.facturasA.get(i).ListarFacturas(i+1);
+                    try{
+                        //Despliega una factura en específico
+                        System.out.println("Ingrese el id de la factura que desea visualizar:");
+                        Scanner sc1 = new Scanner(System.in);
+                        int id = sc1.nextInt();
+                        for (int i=0; i<main.facturasA.size() ; i++) {
+                            if (main.facturasA.get(i).getId()==id){
+                                main.facturasA.get(i).ListarFacturas(i+1);
+                                SubmMenuFacturas();
+                            }
                         }
+                        System.out.println("No se ha encontrado la factura a visualizar.");
+                        SubmMenuFacturas();
+                    }catch(InputMismatchException e){
+                        System.out.println("Por favor, ingrese un id correcto.");
+                        SubmMenuFacturas();
                     }
-
-                    SubmMenuFacturas();
                     break;
                 }
                 case 4:{
