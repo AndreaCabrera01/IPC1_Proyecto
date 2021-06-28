@@ -1,10 +1,18 @@
 import com.google.gson.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
+
 public class main {
+
+
     //Variables y arreglos globales para guardar los archivos automaticamente
     public static ArrayList<Usuario> usuariosA = new ArrayList<>();
     public static ArrayList<Producto> productosA = new ArrayList<>();
@@ -19,6 +27,7 @@ public class main {
     public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     public static String textologA = "";
     public static String textologE = "\n\n | LOG de ERRORES " + dtf.format(LocalDateTime.now())+ " |";
+
 
     public static void main(String[] args) {
         //Dependiendo del 'load' en el archivo de config se leera el tipo de archivo
@@ -110,29 +119,139 @@ public class main {
     }
 
 
+
     //Método del inicio de sesión, usuario y contraseña según los archivos de users
-    public static void Login(){
-        System.out.println("--------------INICIAR SESIÓN--------------");
-        System.out.println("USERNAME: ");
-        Scanner sc1 = new Scanner(System.in);
-        username = sc1.nextLine();
-        System.out.println("PASSWORD: ");
-        Scanner sc2 = new Scanner(System.in);
-        String password = sc1.nextLine();
-        //Verificación
-        for (int i=0; i<main.usuariosA.size() ; i++) {
-            if (main.usuariosA.get(i).getUsername().equals(username) && main.usuariosA.get(i).getPassword().equals(password)){
-                System.out.println("Ingreso exitoso");
-                textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+username+": Inicio de sesión exitoso.";
+    public static void Login (){
+
+        //Interfaz gráfica del Login
+
+
+        JFrame login = new JFrame();
+        login.setBounds(250, 250, 1200, 900);
+        login.setLayout(null);
+       // login.getContentPane().setBackground(new Color(147, 161, 104));
+        login.setResizable(false);
+        login.setLocationRelativeTo(null);
+
+        JLabel titulo = new JLabel();
+        titulo.setText("Restaurant Manager");
+        titulo.setBounds(450, 10, 400, 50);
+        titulo.setFont(new Font("Century Gothic",2,30));
+        titulo.setForeground(new Color(255, 255, 255));
+
+        JLabel Loginlbl = new JLabel();
+        Loginlbl.setText("Login");
+        Loginlbl.setBounds(550, 210, 400, 100);
+        Loginlbl.setFont(new Font("Bahnschrift",0,60));
+        Loginlbl.setForeground(new Color(0, 0, 0));
+
+        JPanel paneldeco = new JPanel();
+        paneldeco.setBounds(380, 5, 440, 60);
+        paneldeco.setBackground(new Color(0, 0, 0, 185));
+
+        JPanel panellog = new JPanel();
+        panellog.setBounds(150, 150, 900, 600);
+        panellog.setBackground(new Color(255, 255, 255));
+
+        JPanel panel = new JPanel();
+        panel.setBounds(165, 165, 900, 600);
+        panel.setBackground(new Color(47, 43, 43, 159));
+
+        JLabel label = new JLabel();
+        label.setIcon(new ImageIcon("FondoMadera.png"));
+        label.setBounds(0, 0, 2000, 1200);
+
+        JLabel labelIcon = new JLabel();
+        labelIcon.setIcon(new ImageIcon("LoginIcon.png"));
+        labelIcon.setBounds(400, 190, 128, 128);
+
+        JLabel usernamelbl = new JLabel();
+        usernamelbl.setText("USERNAME: ");
+        usernamelbl.setBounds(300, 330, 200, 100);
+        usernamelbl.setFont(new Font("Century Gothic",2,27));
+
+        JLabel passwordlbl = new JLabel();
+        passwordlbl.setText("PASSWORD: ");
+        passwordlbl.setBounds(300, 455, 200, 100);
+        passwordlbl.setFont(new Font("Century Gothic",2,27));
+
+        JTextField txt1 = new JTextField();
+        txt1.setBounds(500, 360, 375, 35);
+        txt1.setBorder(null);
+        txt1.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, Color.BLACK));
+        txt1.setFont(new Font("Bahnschrift",0,27));
+        txt1.setBackground(new Color(142, 137, 137));
+        txt1.setForeground(new Color(0, 0, 0));
+
+        JPasswordField txt2 = new JPasswordField();
+        txt2.setBounds(500, 485, 375, 35);
+        txt2.setBorder(null);
+        txt2.setBorder(BorderFactory.createMatteBorder(0, 0, 3, 0, Color.BLACK));
+        txt2.setFont(new Font("Bahnschrift",0,27));
+        txt2.setBackground(new Color(142, 137, 137));
+        txt2.setForeground(new Color(0, 0, 0));
+
+        JButton log = new JButton("Login");
+        log.setBounds(520, 600, 200, 75);
+        log.setFont(new Font("Century Gothic", 0, 27));
+        log.setBackground(new Color(84, 158, 177));
+        log.setForeground(Color.WHITE);
+
+
+        login.setVisible(true);
+        login.add(txt1);
+        login.add(txt2);
+        login.add(log);
+        login.add(usernamelbl);
+        login.add(passwordlbl);
+        login.add(labelIcon);
+        login.add(Loginlbl);
+        login.add(panellog);
+        login.add(panel);
+        login.add(titulo);
+        login.add(paneldeco);
+        login.add(label);
+        //---------------------------------------------------------------------
+        //Funcionamiento del login
+
+        log.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+               /* System.out.println("--------------INICIAR SESIÓN--------------");
+                System.out.println("USERNAME: ");
+                Scanner sc1 = new Scanner(System.in);
+                username = sc1.nextLine();
+                System.out.println("PASSWORD: ");
+                Scanner sc2 = new Scanner(System.in);
+                String password = sc1.nextLine();
+                //Verificación
+
+                //Manejo de error
+                //Login();*/
+
+              username = txt1.getText();
+               String password =String.valueOf(txt2.getPassword());
+                System.out.println(username);
+                System.out.println(password);
+                for (int i=0; i<main.usuariosA.size() ; i++) {
+                    if (main.usuariosA.get(i).getUsername().equals(username) && main.usuariosA.get(i).getPassword().equals(password)){
+                        System.out.println("Ingreso exitoso");
+                        textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+username+": Inicio de sesión exitoso.";
+                        Archivo.LogAcciones(textologA);
+                        login.dispose();
+                        Menu.Menu();
+                    }
+                }
+                System.out.println("Usuario y/o contraseña incorrectos. Intente de nuevo");
+                textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+username+": Inicio de sesión fallido.";
                 Archivo.LogAcciones(textologA);
-                Menu.Menu();
+                login.dispose();
+                Login();
             }
-        }
-        //Manejo de error
-        System.out.println("Usuario y/o contraseña incorrectos. Intente de nuevo");
-        textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+username+": Inicio de sesión fallido.";
-        Archivo.LogAcciones(textologA);
-        Login();
+        });
+
+
     }
 
     //Verificación de archivo de usuarios

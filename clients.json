@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "name": "Darwin Arevalo",
+        "address": "Ciudad de Guatemala",
+        "phone": 42562365,
+        "nit": "5283282-3"
+    },
+	{
+        "id": 2,
+        "name": "Gusanito de Mar",
+        "address": "Escuintla",
+        "phone": 33445566,
+        "nit": "5765451-2"
+    },
+	{
+        "id": 3,
+        "name": "Dino Programador",
+        "address": "Petén",
+        "phone": 32345123,
+        "nit": "1235451-3"
+    },
+	{
+        "id": 4,
+        "name": "Andrea Cabrera",
+        "address": "Guatemala",
+        "phone": 55783422,
+        "nit": "4565451-4"
+    },
+	{
+        "id": 5,
+        "name": "Paulo Argueta",
+        "address": "Guatemala",
+        "phone": 59080056,
+        "nit": "7895451-5"
+    },
+	{
+        "id": 6,
+        "name": "Ezequiel de Paz",
+        "address": "Guatemala",
+        "phone": 46789034,
+        "nit": "1023551-6"
+    }
+]

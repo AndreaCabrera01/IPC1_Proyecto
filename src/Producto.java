@@ -35,8 +35,7 @@ public class Producto implements Serializable {
     }
 
     //Según la factura, lista los productos que se enlazan a esta (la factura)
-    public void     ListarProductoparaFactur() {
-
+    public void ListarProductoparaFactur() {
         System.out.println("> Name: " + name + "         ");
         System.out.println("> Price: " + price + "        ");
     }

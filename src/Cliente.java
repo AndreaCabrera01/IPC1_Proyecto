@@ -20,6 +20,12 @@ public class Cliente implements Serializable {
         System.out.println("> Nit: " + nit+"        ");
     }
 
+    public void  ListarClienteparaFactur() {
+        System.out.println("> Id: " + id + "        ");
+        System.out.println("> Name: " + name + "         ");
+        System.out.println("> Nit: " + nit+"        ");
+    }
+
     //GETTERS AND SETTERS
     public int getId() {
         return id;
