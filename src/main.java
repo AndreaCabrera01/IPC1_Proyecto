@@ -18,6 +18,7 @@ public class main {
     public static ArrayList<Producto> productosA = new ArrayList<>();
     public static ArrayList<Cliente> clientesA = new ArrayList<>();
     public static ArrayList<Factura> facturasA = new ArrayList<>();
+
     public static Config configs;
     public static Usuario[] usuarios;
     public static Producto[] productos;
@@ -197,6 +198,11 @@ public class main {
         log.setBackground(new Color(84, 158, 177));
         log.setForeground(Color.WHITE);
 
+        JButton cerrar = new JButton("Cerrar Programa");
+        cerrar.setBounds(50, 770, 250, 50);
+        cerrar.setFont(new Font("Century Gothic", 0, 22));
+        cerrar.setBackground(new Color(147, 28, 28));
+        cerrar.setForeground(Color.WHITE);
 
         login.setVisible(true);
         login.add(txt1);
@@ -210,7 +216,10 @@ public class main {
         login.add(panel);
         login.add(titulo);
         login.add(paneldeco);
+        login.add(cerrar);
         login.add(label);
+        login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         //---------------------------------------------------------------------
         //Funcionamiento del login
 
@@ -230,7 +239,7 @@ public class main {
                 //Manejo de error
                 //Login();*/
 
-              username = txt1.getText();
+                username = txt1.getText();
                String password =String.valueOf(txt2.getPassword());
                 System.out.println(username);
                 System.out.println(password);
@@ -243,14 +252,19 @@ public class main {
                         Menu.Menu();
                     }
                 }
-                System.out.println("Usuario y/o contraseña incorrectos. Intente de nuevo");
+              /*  System.out.println("Usuario y/o contraseña incorrectos. Intente de nuevo");
                 textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+username+": Inicio de sesión fallido.";
                 Archivo.LogAcciones(textologA);
-                login.dispose();
-                Login();
+                login.dispose();*/
+              //  Login();
             }
         });
-
+        cerrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
 
     }
 

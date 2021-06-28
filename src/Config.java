@@ -9,7 +9,6 @@ public class Config implements Serializable {
 
     //Lista la descripción del restaurante descita por el archivo JSON
     public void ListarConfig(){
-
         System.out.println("\n\t----------Config------------");
         System.out.println("> Name: " + name+"         ");
         System.out.println("> Address: " + address+"  ");

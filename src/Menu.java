@@ -1,4 +1,9 @@
 import com.google.gson.Gson;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,6 +15,195 @@ public class Menu {
     //Variables globales
     public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     public static String textolog="";
+
+    public static void  Menu (){
+        //Interfaz general del menú
+        JFrame frame = new JFrame();
+        frame.setBounds(250, 250, 1400, 900);
+        frame.setLayout(null);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+
+        JLabel titulo = new JLabel();
+        titulo.setText("Restaurant Management: Welcome "+main.username);
+        titulo.setBounds(10,20,1000,40);
+        titulo.setFont(new Font("Century Gothic", 1, 30));
+        titulo.setForeground(Color.black);
+
+
+        JLabel labelIcon = new JLabel();
+        labelIcon.setIcon(new ImageIcon("FondoMenu.jpg"));
+        labelIcon.setBounds(0, 0, 1400, 900);
+
+        JButton cerrarS = new JButton("Cerrar Sesión");
+        cerrarS.setBounds(1070, 20, 250, 50);
+        cerrarS.setFont(new Font("Century Gothic", 0, 22));
+        cerrarS.setBackground(new Color(147, 28, 28));
+        cerrarS.setForeground(Color.WHITE);
+
+//-------------------------PESTAÑAS------------------------------------------
+
+        JTabbedPane pestañas=new JTabbedPane();
+        pestañas.setBounds(0,80,1400,850);
+        //--------------------INFO--------------------
+        JPanel info = new JPanel();
+        JLabel fotoFondo = new JLabel();
+        fotoFondo.setIcon(new ImageIcon("FondoMenu.jpg"));
+        fotoFondo.setBounds(0, 0, 1400, 850);
+
+        JPanel cuadroBlanco = new JPanel();
+        cuadroBlanco.setBounds(450, 200, 800,300);
+        cuadroBlanco.setBackground(Color.WHITE);
+
+        JPanel cuadro = new JPanel();
+        cuadro.setBounds(465, 215, 800,300);
+        cuadro.setBackground(new Color(0,0,0, 178));
+
+        //Nombre del restaurante
+        JLabel Config_Nombre = new JLabel("Nombre del Restaurante:");
+        info.setLayout(null);
+        Config_Nombre.setBounds(500, 220, 400, 50);
+        Config_Nombre.setFont(new Font("Bahnschrift", 2, 27));
+        info.add(Config_Nombre);
+
+        JLabel ConfigName = new JLabel("//////////////");
+        ConfigName.setBounds(850, 220, 400, 50);
+        ConfigName.setFont(new Font("Bahnschrift", 0, 27));
+        info.add(ConfigName);
+
+
+        //Dirección
+        JLabel Config_Dir = new JLabel("Dirección del Restaurante:");
+        Config_Dir.setBounds(500, 320, 400, 50);
+        Config_Dir.setFont(new Font("Bahnschrift", 2, 27));
+        info.add(Config_Dir);
+
+        JLabel ConfigAddress = new JLabel("//////////////");
+        ConfigAddress.setBounds(850, 320, 400, 50);
+        ConfigAddress.setFont(new Font("Bahnschrift", 0, 27));
+        info.add(ConfigAddress);
+
+        //Teléfono del restaurante
+        JLabel Config_Tel = new JLabel("Teléfono del Restaurante:");
+        Config_Tel.setBounds(500, 420, 400, 50);
+        Config_Tel.setFont(new Font("Bahnschrift", 2, 27));
+        info.add(Config_Tel);
+
+        JLabel ConfigPhone = new JLabel("//////////////");
+        ConfigPhone.setBounds(850, 420, 400, 50);
+        ConfigPhone.setFont(new Font("Bahnschrift", 0, 27));
+        info.add(ConfigPhone);
+
+        JLabel fotoDec = new JLabel();
+        fotoDec.setIcon(new ImageIcon("ComidaDec.jpg"));
+        fotoDec.setBounds(50, 50, 300, 625);
+        info.add(fotoDec);
+
+        JButton editarConfig = new JButton("Editar");
+        editarConfig.setBounds(750, 570, 200, 75);
+        editarConfig.setBackground(new Color(234, 195, 47));
+        editarConfig.setFont(new Font("Century Gothic", 1, 20));
+        editarConfig.setForeground(new Color(0, 0, 0));
+        info.add(editarConfig);
+        info.add(cuadroBlanco);
+        info.add(cuadro);
+        info.add(fotoFondo);
+
+        //--------------------USUARIOS--------------------
+        JPanel usuarios=new JPanel();
+
+        //--------------------CLIENTES--------------------
+        JPanel clientes=new JPanel();
+
+        //--------------------PRODUCTOS--------------------
+        JPanel productos=new JPanel();
+
+        //--------------------FACTURAS--------------------
+        JPanel facturas=new JPanel();
+
+        //--------------------GUARDAR--------------------
+        JPanel guardar=new JPanel();
+
+        //Cada una de las pestañas para seleccionar opción/submenú
+        pestañas.add("Information", info);
+        pestañas.add("Users", usuarios);
+        pestañas.add("Clients", clientes);
+        pestañas.add("Products", productos);
+        pestañas.add("Invoices", facturas);
+        pestañas.add("Save Changes", guardar);
+        pestañas.setBackground(Color.white);
+        pestañas.setFont(new Font("Century Gothic", 0, 20));
+
+        frame.add(pestañas);
+        frame.add(titulo);
+        frame.add(cerrarS);
+        frame.add(labelIcon);
+        frame.setVisible(true);
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+//Botón para cerrar sesión y volver al login
+        cerrarS.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                main.Login();
+                frame.dispose();
+            }
+        });
+
+
+        //EDICIÓN DE CONFIG.JSON
+        editarConfig.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame editConfig = new JFrame();
+                editConfig.setBounds(670, 100, 700, 600);
+                editConfig.setBackground(new Color(255, 193, 77));
+                editConfig.setLayout(null);
+                editConfig.setResizable(false);
+
+//Config del nombre
+                JLabel nombre = new JLabel("Nombre del Restaurante: ");
+                nombre.setBounds(10, 100, 300, 30);
+                nombre.setFont(new Font("Century Gothic", 0, 20));
+                JTextField name = new JTextField();
+                name.setBounds(300, 102, 330, 30);
+                name.setFont(new Font("Century Gothic", 0, 20));
+
+
+//Config de la dirección
+                JLabel direccion = new JLabel("Direccion del Restaurante: ");
+                direccion.setBounds(10, 200, 300, 30);
+                direccion.setFont(new Font("Century Gothic", 0, 20));
+                JTextField address = new JTextField();
+                address.setBounds(300, 202, 330, 30);
+                address.setFont(new Font("Century Gothic", 0, 20));
+
+
+//Config del numero
+                JLabel numero = new JLabel("Teléfono del Restaurante: ");
+                numero.setBounds(10, 300, 300, 30);
+                numero.setFont(new Font("Century Gothic", 0, 20));
+                JTextField number = new JTextField();
+                number.setBounds(300, 302, 330, 30);
+                number.setFont(new Font("Century Gothic", 0, 20));
+
+
+                editConfig.add(name);
+                editConfig.add(address);
+                editConfig.add(number);
+
+                editConfig.add(direccion);
+                editConfig.add(nombre);
+                editConfig.add(numero);
+
+
+                editConfig.setVisible(true);
+            }
+        });
+    }
+
+
 
 
     public static void opciones(){
@@ -27,7 +221,7 @@ public class Menu {
                 //Despliega la información del restaurante
                 System.out.println("--------------INFORMACIÓN DEL RESTAURANTE--------------");
                     main.configs.ListarConfig();
-                    Menu();
+                  //  Menu();
                 break;
             }
 
@@ -67,7 +261,7 @@ public class Menu {
                         textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó al cliente: Guardó los cambios por medio de Archivos JSON.";
                         Archivo.LogAcciones(textolog);
                         System.out.println("Se han guardado los cambios en archivos JSON.");
-                        Menu();
+                        //Menu();
                         break;}
                     case 2: {
                         //JSON - serializa los datos a Binario y los guarda
@@ -75,7 +269,7 @@ public class Menu {
                         textolog ="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Eliminó al cliente: Guardó los cambios por medio de Archivos Binarios.";
                         Archivo.LogAcciones(textolog);
                         System.out.println("Se han guardado los cambios en archivos Binarios.");
-                        Menu();
+                        //Menu();
                         break;}
                     default:
                         System.out.println("Ha ingresado una opción incorrecta");
@@ -105,13 +299,7 @@ public class Menu {
     }while(opcion!=8);
 }
 
-
-
-
-
-
-
-    public static void Menu(){
+   /* public static void Menu(){
         //Menú principal
       System.out.println("\n===========  RESTAURANT MANAGER  =============");
         System.out.println("|                                            |");
@@ -130,7 +318,7 @@ public class Menu {
         System.out.println("==============================================\n");
         opciones();
 
-    }
+    }*/
 
 
     public static void SubmMenuUsers(){
@@ -200,14 +388,13 @@ public class Menu {
                 }
                 case 4:{
                     //Regreso al menú principal
-                    Menu();
+                    //Menu();
                     break;
                 }
             }
 
         }while (opcion2!=4);
     }
-
 
     public static void SubmMenuProducts(){
         //Menú productos
@@ -284,14 +471,13 @@ public class Menu {
                 }
                 case 4:{
                     //Regreso al menú principal
-                    Menu();
+                    //Menu();
                     break;
                 }
             }
 
         }while (opcion!=4);
     }
-
 
     public static void SubmMenuCliente(){
         //Menú de clientes
@@ -369,14 +555,13 @@ public class Menu {
                 }
                 case 4:{
                     //Regreso al menú principal
-                    Menu();
+                    //Menu();
                     break;
                 }
             }
 
         }while (opcion!=4);
     }
-
 
     public static void SubmMenuFacturas(){
         //Menú de facturas
@@ -455,15 +640,13 @@ public class Menu {
                 }
                 case 4:{
                     //Regresa al menú principal
-                    Menu();
+                    //Menu();
                     break;
                 }
             }
 
         }while (opcion!=4);
     }
-
-
 
     //Método que lista los users
     public static void ListadoUsers(){
