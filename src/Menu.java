@@ -1,6 +1,7 @@
 import com.google.gson.Gson;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,12 +10,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Vector;
 
 public class Menu {
 
     //Variables globales
     public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     public static String textolog="";
+    public static JPanel usuarios;
 
     public static void  Menu (){
         //Interfaz general del menú
@@ -66,7 +69,7 @@ public class Menu {
         Config_Nombre.setFont(new Font("Bahnschrift", 2, 27));
         info.add(Config_Nombre);
 
-        JLabel ConfigName = new JLabel("//////////////");
+        JLabel ConfigName = new JLabel(String.valueOf(main.configs.getName()));
         ConfigName.setBounds(850, 220, 400, 50);
         ConfigName.setFont(new Font("Bahnschrift", 0, 27));
         info.add(ConfigName);
@@ -78,7 +81,7 @@ public class Menu {
         Config_Dir.setFont(new Font("Bahnschrift", 2, 27));
         info.add(Config_Dir);
 
-        JLabel ConfigAddress = new JLabel("//////////////");
+        JLabel ConfigAddress = new JLabel(String.valueOf(main.configs.getAddress()));
         ConfigAddress.setBounds(850, 320, 400, 50);
         ConfigAddress.setFont(new Font("Bahnschrift", 0, 27));
         info.add(ConfigAddress);
@@ -89,7 +92,8 @@ public class Menu {
         Config_Tel.setFont(new Font("Bahnschrift", 2, 27));
         info.add(Config_Tel);
 
-        JLabel ConfigPhone = new JLabel("//////////////");
+
+        JLabel ConfigPhone = new JLabel(String.valueOf(main.configs.getPhone()));
         ConfigPhone.setBounds(850, 420, 400, 50);
         ConfigPhone.setFont(new Font("Bahnschrift", 0, 27));
         info.add(ConfigPhone);
@@ -110,7 +114,8 @@ public class Menu {
         info.add(fotoFondo);
 
         //--------------------USUARIOS--------------------
-        JPanel usuarios=new JPanel();
+        usuarios=new JPanel();
+        CrearTablaUsuarios2();
 
         //--------------------CLIENTES--------------------
         JPanel clientes=new JPanel();
@@ -189,6 +194,14 @@ public class Menu {
                 number.setFont(new Font("Century Gothic", 0, 20));
 
 
+//Botón guardar Config
+                JButton guardarConfig = new JButton("Guardar");
+                guardarConfig.setBounds(100, 400, 200, 75);
+                guardarConfig.setBackground(new Color(234, 195, 47));
+                guardarConfig.setFont(new Font("Century Gothic", 1, 20));
+                guardarConfig.setForeground(new Color(0, 0, 0));
+
+
                 editConfig.add(name);
                 editConfig.add(address);
                 editConfig.add(number);
@@ -197,11 +210,113 @@ public class Menu {
                 editConfig.add(nombre);
                 editConfig.add(numero);
 
+                editConfig.add(guardarConfig);
+
+                guardarConfig.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        boolean guardar = false;
+                        if(name.getText().equals("") && address.getText().equals("") && number.getText().equals("")){
+                            JOptionPane.showMessageDialog(null,"No se han encontrado datos que actualizar.");
+                        }
+
+                        if(!name.getText().equals("")){
+                            String newName = name.getText();
+                            main.configs.setName(newName);
+                            guardar = true;
+                        }
+                        if(!address.getText().equals("")){
+                            String newAddress = address.getText();
+                            main.configs.setAddress(newAddress);
+                            guardar = true;
+                        }
+                        if(!number.getText().equals("")){
+                            String newNumber = number.getText();
+                            main.configs.setPhone(Integer.parseInt(newNumber));
+                            guardar = true;
+                        }
+
+                        if(guardar){
+                            JOptionPane.showMessageDialog(null,"Datos actualizados.");
+                            ConfigName.setText(main.configs.getName());
+                            ConfigPhone.setText(String.valueOf(main.configs.getPhone()));
+                            ConfigAddress.setText(main.configs.getAddress());
+                        }
+
+
+                        editConfig.dispose();
+                    }
+                });
+
 
                 editConfig.setVisible(true);
             }
         });
     }
+
+
+
+
+    public static void CrearTablaUsuarios(){
+        String[] columnas = {"#","Username","Password","Borrar Usuario","Editar usuario"};
+        DefaultTableModel tablaUsers;
+        Object[][] objUsuarios = new Object[main.usuariosA.size()][5];
+        JButton[] buttonBorrarUsers = new JButton[main.usuariosA.size()];
+        JButton[] buttonEditarUsers = new JButton[main.usuariosA.size()];
+        for (int i = 0; i <main.usuariosA.size(); i++) {
+            buttonBorrarUsers[i]=new JButton("Borrar");
+            buttonBorrarUsers[i].setVisible(true);
+           // usuarios.add(buttonBorrarUsers[i]);
+            buttonEditarUsers[i]=new JButton("Editar");
+            buttonEditarUsers[i].setVisible(true);
+            Object[] arregloUsers = {String.valueOf(i),main.usuariosA.get(i).getUsername(), main.usuariosA.get(i).getPassword(),usuarios.add(buttonBorrarUsers[i]),usuarios.add(buttonEditarUsers[i])};
+            objUsuarios[i]=arregloUsers;
+        }
+        JTable t = new JTable(objUsuarios, columnas);
+        JScrollPane sp = new JScrollPane(t);
+        sp.setEnabled(false);
+        sp.setBounds(10,10,300,300);
+        sp.setVisible(true);
+        usuarios.add(sp);
+        tablaUsers = new DefaultTableModel(objUsuarios,columnas){
+            @Override
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+                 return false;
+            }
+        };
+        //tblData.setModel(tablaUsers);
+    }
+
+
+    public static void CrearTablaUsuarios2(){
+        DefaultTableModel modelUsuario = new DefaultTableModel();
+        JTable table = new JTable(modelUsuario);
+        modelUsuario.addColumn("#");
+        modelUsuario.addColumn("Username");
+        modelUsuario.addColumn("Password");
+        modelUsuario.addColumn("Borrar Usuario");
+        modelUsuario.addColumn("Editar Usuario");
+
+        JButton[] buttonBorrarUsers = new JButton[main.usuariosA.size()];
+        JButton[] buttonEditarUsers = new JButton[main.usuariosA.size()];
+        for (int i = 0; i <main.usuariosA.size(); i++) {
+            buttonBorrarUsers[i]=new JButton("Borrar");
+            //buttonBorrarUsers[i].setVisible(true);
+            // usuarios.add(buttonBorrarUsers[i]);
+            buttonEditarUsers[i]=new JButton("Editar");
+           // buttonEditarUsers[i].setVisible(true);
+            modelUsuario.addRow(new Object[]{String.valueOf(i),main.usuariosA.get(i).getUsername(), main.usuariosA.get(i).getPassword()});
+        }
+
+        JScrollPane sp = new JScrollPane(table);
+        sp.setEnabled(false);
+        sp.setBounds(10,10,300,300);
+        sp.setVisible(true);
+        usuarios.add(sp);
+    }
+
+
+
 
 
 

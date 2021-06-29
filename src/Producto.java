@@ -6,11 +6,11 @@ public class Producto implements Serializable {
     private int id;
     private String name;
     private String description;
-    private int cost;
+    private double cost;
     private double price;
     private ArrayList<Ingredients> ingredients;
 
-    public void Producto(int id, String name, String description, int cost, double price){
+    public void Producto(int id, String name, String description, double cost, double price){
     this.id=id;
     this.name=name;
     this.description=description;
@@ -65,11 +65,11 @@ public class Producto implements Serializable {
         this.description = description;
     }
 
-    public int getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 
