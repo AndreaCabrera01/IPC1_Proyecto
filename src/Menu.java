@@ -18,6 +18,11 @@ public class Menu {
     public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     public static String textolog="";
     public static JPanel usuarios;
+    public static JPanel clientes;
+    public static JPanel productos;
+    public static JPanel facturas;
+    public static JPanel guardar;
+
 
     public static void  Menu (){
         //Interfaz general del menú
@@ -118,16 +123,20 @@ public class Menu {
         CrearTablaUsuarios2();
 
         //--------------------CLIENTES--------------------
-        JPanel clientes=new JPanel();
+        clientes=new JPanel();
+        CrearTablaClientes();
 
         //--------------------PRODUCTOS--------------------
-        JPanel productos=new JPanel();
+        productos=new JPanel();
+
 
         //--------------------FACTURAS--------------------
-        JPanel facturas=new JPanel();
+        facturas=new JPanel();
+        CrearTablaFacturas();
 
         //--------------------GUARDAR--------------------
-        JPanel guardar=new JPanel();
+        guardar=new JPanel();
+        CrearTablaProductos();
 
         //Cada una de las pestañas para seleccionar opción/submenú
         pestañas.add("Information", info);
@@ -257,35 +266,6 @@ public class Menu {
 
 
 
-    public static void CrearTablaUsuarios(){
-        String[] columnas = {"#","Username","Password","Borrar Usuario","Editar usuario"};
-        DefaultTableModel tablaUsers;
-        Object[][] objUsuarios = new Object[main.usuariosA.size()][5];
-        JButton[] buttonBorrarUsers = new JButton[main.usuariosA.size()];
-        JButton[] buttonEditarUsers = new JButton[main.usuariosA.size()];
-        for (int i = 0; i <main.usuariosA.size(); i++) {
-            buttonBorrarUsers[i]=new JButton("Borrar");
-            buttonBorrarUsers[i].setVisible(true);
-           // usuarios.add(buttonBorrarUsers[i]);
-            buttonEditarUsers[i]=new JButton("Editar");
-            buttonEditarUsers[i].setVisible(true);
-            Object[] arregloUsers = {String.valueOf(i),main.usuariosA.get(i).getUsername(), main.usuariosA.get(i).getPassword(),usuarios.add(buttonBorrarUsers[i]),usuarios.add(buttonEditarUsers[i])};
-            objUsuarios[i]=arregloUsers;
-        }
-        JTable t = new JTable(objUsuarios, columnas);
-        JScrollPane sp = new JScrollPane(t);
-        sp.setEnabled(false);
-        sp.setBounds(10,10,300,300);
-        sp.setVisible(true);
-        usuarios.add(sp);
-        tablaUsers = new DefaultTableModel(objUsuarios,columnas){
-            @Override
-            public boolean isCellEditable(int rowIndex, int colIndex) {
-                 return false;
-            }
-        };
-        //tblData.setModel(tablaUsers);
-    }
 
 
     public static void CrearTablaUsuarios2(){
@@ -297,22 +277,74 @@ public class Menu {
         modelUsuario.addColumn("Borrar Usuario");
         modelUsuario.addColumn("Editar Usuario");
 
-        JButton[] buttonBorrarUsers = new JButton[main.usuariosA.size()];
-        JButton[] buttonEditarUsers = new JButton[main.usuariosA.size()];
         for (int i = 0; i <main.usuariosA.size(); i++) {
-            buttonBorrarUsers[i]=new JButton("Borrar");
-            //buttonBorrarUsers[i].setVisible(true);
-            // usuarios.add(buttonBorrarUsers[i]);
-            buttonEditarUsers[i]=new JButton("Editar");
-           // buttonEditarUsers[i].setVisible(true);
             modelUsuario.addRow(new Object[]{String.valueOf(i),main.usuariosA.get(i).getUsername(), main.usuariosA.get(i).getPassword()});
-        }
+    }
 
         JScrollPane sp = new JScrollPane(table);
         sp.setEnabled(false);
         sp.setBounds(10,10,300,300);
         sp.setVisible(true);
         usuarios.add(sp);
+    }
+
+    public static void CrearTablaClientes(){
+        DefaultTableModel modelCliente = new DefaultTableModel();
+        JTable table = new JTable(modelCliente);
+        modelCliente.addColumn("ID");
+        modelCliente.addColumn("Name");
+        modelCliente.addColumn("Address");
+        modelCliente.addColumn("Phone");
+        modelCliente.addColumn("NIT");
+
+        for (int i = 0; i <main.clientesA.size(); i++) {
+            modelCliente.addRow(new Object[]{main.clientesA.get(i).getId(),main.clientesA.get(i).getName(), main.clientesA.get(i).getAddress(),main.clientesA.get(i).getPhone(),main.clientesA.get(i).getNit()});
+        }
+
+        JScrollPane sp = new JScrollPane(table);
+        sp.setEnabled(false);
+        sp.setBounds(10,10,300,300);
+        sp.setVisible(true);
+        clientes.add(sp);
+    }
+
+    public static void CrearTablaProductos(){
+        DefaultTableModel modelProductos = new DefaultTableModel();
+        JTable table = new JTable(modelProductos);
+        modelProductos.addColumn("ID");
+        modelProductos.addColumn("Name");
+        modelProductos.addColumn("Description");
+        modelProductos.addColumn("Cost");
+        modelProductos.addColumn("Price");
+
+        for (int i = 0; i <main.productosA.size(); i++) {
+            modelProductos.addRow(new Object[]{main.productosA.get(i).getId(),main.productosA.get(i).getName(), main.productosA.get(i).getDescription(),main.productosA.get(i).getCost(),main.productosA.get(i).getPrice()});
+        }
+
+        JScrollPane sp = new JScrollPane(table);
+        sp.setEnabled(false);
+        sp.setBounds(10,10,300,200);
+        sp.setVisible(true);
+        productos.add(sp);
+    }
+
+    public static void CrearTablaFacturas(){
+        DefaultTableModel modelFacturas = new DefaultTableModel();
+        JTable table = new JTable(modelFacturas);
+        modelFacturas.addColumn("ID");
+        modelFacturas.addColumn("Cliente");
+        modelFacturas.addColumn("Date");
+
+        for (int i = 0; i <main.facturasA.size(); i++) {
+            String nombreCliente = Factura.BuscarClienteFactura(main.facturasA.get(i).getClient());
+            modelFacturas.addRow(new Object[]{main.facturasA.get(i).getId(),nombreCliente, main.facturasA.get(i).getDate()});
+        }
+
+        JScrollPane sp = new JScrollPane(table);
+        sp.setEnabled(false);
+        sp.setBounds(10,10,300,200);
+        sp.setVisible(true);
+        facturas.add(sp);
     }
 
 

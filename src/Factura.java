@@ -15,7 +15,7 @@ public class Factura implements Serializable {
         System.out.println("\n\t----------Factura "+i+"------------");
         System.out.println("> Id: " + id+"           ");
         System.out.println("> Cliente: " + client+"           ");
-        BuscarClienteFactura();
+       // BuscarClienteFactura();
         System.out.println("> Date: " + date+"  ");
         System.out.println("\t---------Productos-------------");
         for (int j = 0; j < products.size(); j++) {
@@ -25,13 +25,14 @@ public class Factura implements Serializable {
 
     }
 
-    public void BuscarClienteFactura(){
+    public static String BuscarClienteFactura(int idCliente){
         for (int j = 0; j < main.clientesA.size(); j++) {
-            if(main.clientesA.get(j).getId() == client){
-                main.clientesA.get(j).ListarClientes(j);
-                System.out.println("");
+            if(main.clientesA.get(j).getId() == idCliente){
+               String nombre = main.clientesA.get(j).getName();
+               return nombre;
             }
         }
+        return  "Cliente no registrado";
     }
 
     //GETTERS AND SETTERS
