@@ -2,15 +2,17 @@ import com.google.gson.Gson;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.Vector;
 
 public class Menu {
 
@@ -18,10 +20,34 @@ public class Menu {
     public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     public static String textolog="";
     public static JPanel usuarios;
+
     public static JPanel clientes;
     public static JPanel productos;
     public static JPanel facturas;
     public static JPanel guardar;
+    public static DefaultTableModel modelUsuario;
+    public static JTable table;
+    public static JTable tableProductos;
+    public static DefaultTableModel modelProductos2;
+    public static JTable tableFacturas;
+    public static DefaultTableModel modelFacturas2;
+    //Variables para obtener los datos
+    //**Usuarios**
+    public static String usu;
+    public static String con;
+
+    //**Facturas**
+    public static String id;
+    public static String cliente;
+    public static String date;
+
+    public static void FILA(Object[] usuariosexistentes){
+        DefaultTableModel model = (DefaultTableModel)table.getModel();
+        model.addRow(usuariosexistentes);
+    }
+
+
+    //**Clientes**
 
 
     public static void  Menu (){
@@ -53,6 +79,7 @@ public class Menu {
 
         JTabbedPane pestañas=new JTabbedPane();
         pestañas.setBounds(0,80,1400,850);
+
         //--------------------INFO--------------------
         JPanel info = new JPanel();
         JLabel fotoFondo = new JLabel();
@@ -120,23 +147,150 @@ public class Menu {
 
         //--------------------USUARIOS--------------------
         usuarios=new JPanel();
+        usuarios.setLayout(null);
         CrearTablaUsuarios2();
 
+        JLabel fotoFondoUsu = new JLabel();
+        fotoFondoUsu.setIcon(new ImageIcon("FondoMenu.jpg"));
+        fotoFondoUsu.setBounds(0, 0, 1400, 850);
+
+
+        //Botones de Configuración
+        //Editar
+        JButton editarUsuarios = new JButton("Editar");
+        editarUsuarios.setBounds(700, 600, 100, 50);
+        editarUsuarios.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                int sR = table.getSelectedRow();
+                TableModel m = table.getModel();
+                usu = m.getValueAt(sR, 0).toString();
+                con = m.getValueAt(sR, 1).toString();
+
+                EditarUsu EUsu = new EditarUsu();
+                EUsu.getContentPane().setBackground(Color.ORANGE);
+                EUsu.setVisible(true);
+
+                EditarUsu.txtNomP.setText(usu);
+                EditarUsu.txtApe.setText(con);
+            }
+        });
+        //Eliminar
+        JButton eliminarUsuarios = new JButton("Eliminar");
+        eliminarUsuarios.setBounds(900, 600, 100, 50);
+        eliminarUsuarios.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                DefaultTableModel model = (DefaultTableModel)table.getModel();
+                try{
+                    int S = table.getSelectedRow();
+                    model.removeRow(S);
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex);
+                }
+            }
+        });
+        //Crear
+        JButton crearUsuario = new JButton("Crear Nuevo Usuario");
+        crearUsuario.setBounds(900, 500, 100, 50);
+        crearUsuario.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                CrearUsu CrU = new CrearUsu();
+                CrU.getContentPane().setBackground(Color.ORANGE);
+                CrU.setVisible(true);
+            }
+
+        });
+
+
+
+        usuarios.add(editarUsuarios);
+        usuarios.add(crearUsuario);
+        usuarios.add(eliminarUsuarios);
+        usuarios.add(fotoFondoUsu);
         //--------------------CLIENTES--------------------
         clientes=new JPanel();
+        clientes.setLayout(null);
+
+        //Botones de configuración
+        JButton editarClientes = new JButton("Editar");
+
+        JButton crearClientes = new JButton("Crear");
+
+        JButton eliminarClientes= new JButton("Eliminar");
+
+        JLabel fotoFondoClientes = new JLabel();
+        fotoFondoClientes.setIcon(new ImageIcon("FondoMenu.jpg"));
+        fotoFondoClientes.setBounds(0, 0, 1400, 850);
+
         CrearTablaClientes();
 
+        clientes.add(fotoFondoClientes);
         //--------------------PRODUCTOS--------------------
         productos=new JPanel();
+        productos.setLayout(null);
+        CrearTablaProductos();
+        //Botones de Configuracion
+        JButton editarProducto = new JButton("Editar");
 
+        JButton crearProducto = new JButton("Crear");
+
+        JButton eliminarProducto = new JButton("Eliminar");
+
+
+        JLabel fotoFondoProductos = new JLabel();
+        fotoFondoProductos.setIcon(new ImageIcon("FondoMenu.jpg"));
+        fotoFondoProductos.setBounds(0, 0, 1400, 850);
+
+        productos.add(fotoFondoProductos);
 
         //--------------------FACTURAS--------------------
         facturas=new JPanel();
+        facturas.setLayout(null);
         CrearTablaFacturas();
+
+        JLabel fotoFondoFacturas = new JLabel();
+        fotoFondoFacturas.setIcon(new ImageIcon("FondoMenu.jpg"));
+        fotoFondoFacturas.setBounds(0, 0, 1400, 850);
+
+
+        //Botones de configuración:
+        JButton editarFactura = new JButton("Editar");
+        editarFactura.setBounds(900, 120, 130, 60);
+        editarFactura.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+               int sR = table.getSelectedRow();
+                TableModel m = table.getModel();
+                id = m.getValueAt(sR, 0).toString();
+                cliente = m.getValueAt(sR, 1).toString();
+                date = m.getValueAt(sR, 1).toString();
+
+                EditarFactura EFac = new EditarFactura();
+                EFac.getContentPane().setBackground(Color.ORANGE);
+                EFac.setVisible(true);
+
+                EditarUsu.txtNomP.setText(id);
+                EditarUsu.txtApe.setText(cliente);
+                EditarUsu.txtNomP.setText(date);
+
+            }
+        });
+
+
+        JButton crearFactura = new JButton("Crear");
+        crearFactura.setBounds(900, 270, 130, 60);
+
+        JButton eliminarFactura = new JButton("Eliminar");
+        eliminarFactura.setBounds(900, 440, 130, 60);
+
+
+        facturas.add(eliminarFactura);
+        facturas.add(crearFactura);
+        facturas.add(editarFactura);
+        facturas.add(fotoFondoFacturas);
+
 
         //--------------------GUARDAR--------------------
         guardar=new JPanel();
-        CrearTablaProductos();
 
         //Cada una de las pestañas para seleccionar opción/submenú
         pestañas.add("Information", info);
@@ -269,26 +423,28 @@ public class Menu {
 
 
     public static void CrearTablaUsuarios2(){
-        DefaultTableModel modelUsuario = new DefaultTableModel();
-        JTable table = new JTable(modelUsuario);
-        modelUsuario.addColumn("#");
+        modelUsuario = new DefaultTableModel();
+        table = new JTable(modelUsuario);
+        table.setFont(new Font("Century Gothic", 0, 18));
         modelUsuario.addColumn("Username");
         modelUsuario.addColumn("Password");
-        modelUsuario.addColumn("Borrar Usuario");
-        modelUsuario.addColumn("Editar Usuario");
+
 
         for (int i = 0; i <main.usuariosA.size(); i++) {
-            modelUsuario.addRow(new Object[]{String.valueOf(i),main.usuariosA.get(i).getUsername(), main.usuariosA.get(i).getPassword()});
-    }
+            modelUsuario.addRow(new Object[]{main.usuariosA.get(i).getUsername(), main.usuariosA.get(i).getPassword()});
+        }
 
         JScrollPane sp = new JScrollPane(table);
         sp.setEnabled(false);
-        sp.setBounds(10,10,300,300);
+        sp.setBounds(100,50,500,600);
         sp.setVisible(true);
+
+
         usuarios.add(sp);
+
     }
 
-    public static void CrearTablaClientes(){
+        public static void CrearTablaClientes(){
         DefaultTableModel modelCliente = new DefaultTableModel();
         JTable table = new JTable(modelCliente);
         modelCliente.addColumn("ID");
@@ -310,27 +466,71 @@ public class Menu {
 
     public static void CrearTablaProductos(){
         DefaultTableModel modelProductos = new DefaultTableModel();
-        JTable table = new JTable(modelProductos);
+        tableProductos = new JTable(modelProductos);
         modelProductos.addColumn("ID");
         modelProductos.addColumn("Name");
         modelProductos.addColumn("Description");
         modelProductos.addColumn("Cost");
         modelProductos.addColumn("Price");
 
+
         for (int i = 0; i <main.productosA.size(); i++) {
             modelProductos.addRow(new Object[]{main.productosA.get(i).getId(),main.productosA.get(i).getName(), main.productosA.get(i).getDescription(),main.productosA.get(i).getCost(),main.productosA.get(i).getPrice()});
         }
 
-        JScrollPane sp = new JScrollPane(table);
+        JScrollPane sp = new JScrollPane(tableProductos);
         sp.setEnabled(false);
-        sp.setBounds(10,10,300,200);
+        sp.setBounds(100,50,500,600);
         sp.setVisible(true);
         productos.add(sp);
+
+        modelProductos2 = new DefaultTableModel();
+        JTable tableP = new JTable(modelProductos2);
+        modelProductos2.addColumn("Name");
+        modelProductos2.addColumn("Quantity");
+        modelProductos2.addColumn("Units");
+
+        DefaultTableModel modelP = (DefaultTableModel)tableProductos.getModel();
+        tableProductos.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                try{
+                    int S = tableProductos.getSelectedRow();
+                    int id =Integer.parseInt(modelP.getValueAt(S, 0).toString());
+                    TablaDatosProductos(id);
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex);
+                }
+            }
+
+        });
+
+        JScrollPane sp2 = new JScrollPane(tableP);
+        sp2.setEnabled(false);
+        sp2.setBounds(700,50,500,600);
+        sp2.setVisible(true);
+        productos.add(sp2);
+
     }
+
+    public static void TablaDatosProductos(int id){
+        modelProductos2.setRowCount(0);
+        for (int i = 0; i <main.productosA.size(); i++) {
+            if(main.productosA.get(i).getId() == id){
+                ArrayList<Ingredients> ingrediente = main.productosA.get(i).getIngredients();
+                for (int j = 0; j < ingrediente.size(); j++) {
+
+                    modelProductos2.addRow(new Object[]{ingrediente.get(j).getName(), ingrediente.get(j).getQuantity(),ingrediente.get(j).getUnits()});
+                }
+            }
+        }
+
+    }
+
 
     public static void CrearTablaFacturas(){
         DefaultTableModel modelFacturas = new DefaultTableModel();
-        JTable table = new JTable(modelFacturas);
+        tableFacturas = new JTable(modelFacturas);
         modelFacturas.addColumn("ID");
         modelFacturas.addColumn("Cliente");
         modelFacturas.addColumn("Date");
@@ -340,15 +540,51 @@ public class Menu {
             modelFacturas.addRow(new Object[]{main.facturasA.get(i).getId(),nombreCliente, main.facturasA.get(i).getDate()});
         }
 
-        JScrollPane sp = new JScrollPane(table);
+        JScrollPane sp = new JScrollPane(tableFacturas);
         sp.setEnabled(false);
-        sp.setBounds(10,10,300,200);
+        sp.setBounds(100,80,400,600);
         sp.setVisible(true);
         facturas.add(sp);
+
+        modelFacturas2 = new DefaultTableModel();
+        JTable tableF = new JTable(modelFacturas2);
+        modelFacturas2.addColumn("Name");
+        modelFacturas2.addColumn("Price");
+
+        DefaultTableModel modelF = (DefaultTableModel)tableFacturas.getModel();
+        tableFacturas.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                try{
+                    int S = tableFacturas.getSelectedRow();
+                    int id =Integer.parseInt(modelF.getValueAt(S, 0).toString());
+                    TablaDatosFacturas(id);
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex);
+                }
+            }
+        });
+
+        JScrollPane sp2 = new JScrollPane(tableF);
+        sp2.setEnabled(false);
+        sp2.setBounds(550,80,250,400);
+        sp2.setVisible(true);
+        facturas.add(sp2);
     }
 
 
+    public static void TablaDatosFacturas(int id){
+        modelFacturas2.setRowCount(0);
+        for (int i = 0; i <main.facturasA.size(); i++) {
+            if(main.facturasA.get(i).getId() == id){
+                ArrayList<Producto> producto = main.facturasA.get(i).getProducts();
+                for (int j = 0; j < producto.size(); j++) {
+                    modelFacturas2.addRow(new Object[]{producto.get(j).getName(), producto.get(j).getPrice()});
+                }
+            }
+        }
 
+    }
 
 
 
