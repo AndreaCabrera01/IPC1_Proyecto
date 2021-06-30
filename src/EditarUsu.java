@@ -3,6 +3,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
 
 public class EditarUsu extends JFrame {
     public static JTextField txtCodP;
@@ -68,8 +69,19 @@ public class EditarUsu extends JFrame {
                     model.setValueAt(nom, Menu.table.getSelectedRow(), 0);
                     model.setValueAt(pass, Menu.table.getSelectedRow(), 1);
 
-                    Usuario usuario = new Usuario(nom, pass);
-                    main.usuariosA.add(usuario);
+
+                    for (int i=0; i<main.usuariosA.size() ; i++) {
+                        if (main.usuariosA.get(i).getUsername().equals(Menu.usu)){
+                            main.usuariosA.get(i).setUsername(nom);
+                            main.usuariosA.get(i).setPassword(pass);
+                            EditarUsu.super.dispose();
+                        }
+                    }
+
+
+
+
+
                 }
 
             });

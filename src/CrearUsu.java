@@ -83,6 +83,13 @@ public class CrearUsu extends JFrame {
                             txtUsu.getText(),
                             txtPass.getText(),
                     });
+                    String txt = txtUsu.getText();
+                    String pass = txtPass.getText();
+
+                            Usuario nuevo = new Usuario(txt,pass);
+                            main.usuariosA.add(nuevo);
+                            CrearUsu.super.dispose();
+
                 } else {
                     JOptionPane.showMessageDialog(null, "No es posible tener usuario repetido, inténtelo de nuevo.");
                 }

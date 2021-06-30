@@ -183,6 +183,8 @@ public class Menu {
                 try{
                     int S = table.getSelectedRow();
                     model.removeRow(S);
+                    main.usuariosA.remove(S);
+
                 }
                 catch(Exception ex){
                     JOptionPane.showMessageDialog(null, ex);
@@ -197,6 +199,10 @@ public class Menu {
                 CrearUsu CrU = new CrearUsu();
                 CrU.getContentPane().setBackground(Color.ORANGE);
                 CrU.setVisible(true);
+
+
+
+
             }
 
         });
