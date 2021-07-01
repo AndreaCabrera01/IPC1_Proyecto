@@ -31,15 +31,25 @@ public class Menu {
     public static DefaultTableModel modelProductos2;
     public static JTable tableFacturas;
     public static DefaultTableModel modelFacturas2;
+    public static  JTable tableClientes;
+
     //Variables para obtener los datos
     //**Usuarios**
     public static String usu;
     public static String con;
 
+    //**Clientes**
+    public static String idCliente;
+    public static String NCliente;
+    public static String address;
+    public static String phone;
+    public static String NIT;
+
     //**Facturas**
     public static String id;
     public static String cliente;
     public static String date;
+
 
     //**Productos**
     public static String idP;
@@ -47,10 +57,12 @@ public class Menu {
     public static String descP;
     public static String costP, priceP;
 
+
     public static void FILA(Object[] usuariosexistentes){
         DefaultTableModel model = (DefaultTableModel)table.getModel();
         model.addRow(usuariosexistentes);
     }
+
 
     public static void FILAP(Object[] usuariosexistentes){
         DefaultTableModel model = (DefaultTableModel)tableProductos.getModel();
@@ -59,6 +71,12 @@ public class Menu {
 
 
     //**Clientes**
+
+    public static void FILAC(Object[] clientes){
+        DefaultTableModel model = (DefaultTableModel)tableClientes.getModel();
+        model.addRow(clientes);
+    }
+
 
 
     public static void  Menu (){
@@ -165,11 +183,25 @@ public class Menu {
         fotoFondoUsu.setIcon(new ImageIcon("FondoMenu.jpg"));
         fotoFondoUsu.setBounds(0, 0, 1400, 850);
 
+        JLabel tUsuario = new JLabel("Usuarios:");
+        tUsuario.setBounds(40, 20, 500, 50);
+        tUsuario.setFont(new Font("Century Gothic", 1+2, 45));
+
+        JLabel cUsuario = new JLabel("Configuración:");
+        cUsuario.setBounds(700, 180, 500, 50);
+        cUsuario.setFont(new Font("Century Gothic", 1+2, 38));
+
+        JPanel cuadroBlancoU = new JPanel();
+        cuadroBlancoU.setBounds(670, 170, 650,450);
+        cuadroBlancoU.setBackground(new Color(255,255,255, 169));
+
 
         //Botones de Configuración
         //Editar
         JButton editarUsuarios = new JButton("Editar");
-        editarUsuarios.setBounds(700, 600, 100, 50);
+        editarUsuarios.setBounds(920, 300, 175, 45);
+        editarUsuarios.setBackground(new Color(255, 188, 14));
+        editarUsuarios.setFont(new Font("Bahnschrift", 0, 30));
         editarUsuarios.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 int sR = table.getSelectedRow();
@@ -185,9 +217,13 @@ public class Menu {
                 EditarUsu.txtApe.setText(con);
             }
         });
+
         //Eliminar
         JButton eliminarUsuarios = new JButton("Eliminar");
-        eliminarUsuarios.setBounds(900, 600, 100, 50);
+        eliminarUsuarios.setBounds(920, 400, 175, 45);
+        eliminarUsuarios.setBackground(new Color(198, 11, 11));
+        eliminarUsuarios.setFont(new Font("Bahnschrift", 0, 30));
+
         eliminarUsuarios.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 DefaultTableModel model = (DefaultTableModel)table.getModel();
@@ -202,9 +238,12 @@ public class Menu {
                 }
             }
         });
+
         //Crear
         JButton crearUsuario = new JButton("Crear Nuevo Usuario");
-        crearUsuario.setBounds(900, 500, 100, 50);
+        crearUsuario.setBounds(770, 500, 500, 45);
+        crearUsuario.setBackground(new Color(82, 186, 42));
+        crearUsuario.setFont(new Font("Bahnschrift", 0, 30));
         crearUsuario.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 CrearUsu CrU = new CrearUsu();
@@ -219,21 +258,90 @@ public class Menu {
         });
 
 
-
+        usuarios.add(tUsuario);
+        usuarios.add(cUsuario);
         usuarios.add(editarUsuarios);
         usuarios.add(crearUsuario);
         usuarios.add(eliminarUsuarios);
+        usuarios.add(cuadroBlancoU);
         usuarios.add(fotoFondoUsu);
+
         //--------------------CLIENTES--------------------
         clientes=new JPanel();
         clientes.setLayout(null);
 
+        JLabel tClientes = new JLabel("Clientes:");
+        tClientes.setBounds(40, 20, 500, 50);
+        tClientes.setFont(new Font("Century Gothic", 1+2, 45));
+
+        JLabel cClientes = new JLabel("Configuración:");
+        cClientes.setBounds(790, 180, 500, 50);
+        cClientes.setFont(new Font("Century Gothic", 1+2, 38));
+
+        JPanel cuadroBlancoC = new JPanel();
+        cuadroBlancoC.setBounds(750, 170, 520,450);
+        cuadroBlancoC.setBackground(new Color(255,255,255, 169));
+
         //Botones de configuración
+        //Editar
         JButton editarClientes = new JButton("Editar");
+        editarClientes.setBounds(920, 300, 175, 45);
+        editarClientes.setBackground(new Color(255, 188, 14));
+        editarClientes.setFont(new Font("Bahnschrift", 0, 30));
+        editarClientes.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                int sR = tableClientes.getSelectedRow();
+                TableModel m = tableClientes.getModel();
+                idCliente = m.getValueAt(sR, 0).toString();
+                NCliente = m.getValueAt(sR, 1).toString();
+                address = m.getValueAt(sR, 2).toString();
+                phone = m.getValueAt(sR, 3).toString();
+                NIT = m.getValueAt(sR, 4).toString();
 
-        JButton crearClientes = new JButton("Crear");
+                EditarClient EClient = new EditarClient();
+                EClient.getContentPane().setBackground(Color.ORANGE);
+                EClient.setVisible(true);
 
+                EditarClient.txtID.setText(idCliente);
+                EditarClient.txtNClient.setText(NCliente);
+                EditarClient.txtAddress.setText(address);
+                EditarClient.txtPhone.setText(phone);
+                EditarClient.txtNIT.setText(NIT);
+            }
+        });
+     //Eliminar
         JButton eliminarClientes= new JButton("Eliminar");
+        eliminarClientes.setBounds(920, 400, 175, 45);
+        eliminarClientes.setBackground(new Color(198, 11, 11));
+        eliminarClientes.setFont(new Font("Bahnschrift", 0, 30));
+
+        eliminarClientes.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                DefaultTableModel model = (DefaultTableModel)tableClientes.getModel();
+                try{
+                    int S = tableClientes.getSelectedRow();
+                    model.removeRow(S);
+                    main.clientesA.remove(S);
+
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex);
+                }
+            }
+        });
+        //Crear
+        JButton crearClientes = new JButton("Crear Nuevo Cliente");
+        crearClientes.setBounds(780, 500, 480, 45);
+        crearClientes.setBackground(new Color(82, 186, 42));
+        crearClientes.setFont(new Font("Bahnschrift", 0, 30));
+        crearClientes.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                CrearClient CrC = new CrearClient();
+                CrC.getContentPane().setBackground(Color.ORANGE);
+                CrC.setVisible(true);
+            }
+
+        });
 
         JLabel fotoFondoClientes = new JLabel();
         fotoFondoClientes.setIcon(new ImageIcon("FondoMenu.jpg"));
@@ -241,15 +349,41 @@ public class Menu {
 
         CrearTablaClientes();
 
+
+        clientes.add(tClientes);
+        clientes.add(cClientes);
+        clientes.add(crearClientes);
+        clientes.add(eliminarClientes);
+        clientes.add(editarClientes);
+        clientes.add(cuadroBlancoC);
         clientes.add(fotoFondoClientes);
         //--------------------PRODUCTOS--------------------
         productos=new JPanel();
         productos.setLayout(null);
         CrearTablaProductos();
+
+        JLabel tProductos = new JLabel("Productos:");
+        tProductos.setBounds(40, 20, 500, 50);
+        tProductos.setFont(new Font("Century Gothic", 1+2, 45));
+
+        JLabel tIngre = new JLabel("Ingredientes:");
+        tIngre.setBounds(650, 30, 500, 50);
+        tIngre.setFont(new Font("Century Gothic", 1+2, 25));
+
+        JLabel cProductos = new JLabel("Configuración:");
+        cProductos.setBounds(1020, 180, 500, 50);
+        cProductos.setFont(new Font("Century Gothic", 1+2, 30));
+
+        JPanel cuadroBlancoP = new JPanel();
+        cuadroBlancoP.setBounds(1000, 170, 320,450);
+        cuadroBlancoP.setBackground(new Color(255,255,255, 169));
+
         //Botones de Configuracion
         //Editar
         JButton editarProductos = new JButton("Editar");
-        editarProductos.setBounds(1250,300, 100, 50);
+        editarProductos.setBounds(1070, 300, 175, 45);
+        editarProductos.setBackground(new Color(255, 188, 14));
+        editarProductos.setFont(new Font("Bahnschrift", 0, 30));
         editarProductos.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 int sR = tableProductos.getSelectedRow();
@@ -272,8 +406,10 @@ public class Menu {
             }
         });
 
-        JButton crearProducto = new JButton("Crear");
-        crearProducto.setBounds(1250,100,100,50);
+        JButton crearProducto = new JButton("Crear Producto");
+        crearProducto.setBounds(1030, 500, 250, 45);
+        crearProducto.setBackground(new Color(82, 186, 42));
+        crearProducto.setFont(new Font("Bahnschrift", 0, 23));
         crearProducto.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 CrearProdu CrP = new CrearProdu();
@@ -285,7 +421,9 @@ public class Menu {
 
 
         JButton eliminarProducto = new JButton("Eliminar");
-        eliminarProducto.setBounds(1250,500,100,50);
+        eliminarProducto.setBounds(1070, 400, 175, 45);
+        eliminarProducto.setBackground(new Color(198, 11, 11));
+        eliminarProducto.setFont(new Font("Bahnschrift", 0, 30));
         eliminarProducto.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 DefaultTableModel model = (DefaultTableModel)tableProductos.getModel();
@@ -308,9 +446,13 @@ public class Menu {
         fotoFondoProductos.setIcon(new ImageIcon("FondoMenu.jpg"));
         fotoFondoProductos.setBounds(0, 0, 1400, 850);
 
+        productos.add(tIngre);
+        productos.add(tProductos);
+        productos.add(cProductos);
         productos.add(editarProductos);
         productos.add(crearProducto);
         productos.add(eliminarProducto);
+        productos.add(cuadroBlancoP);
         productos.add(fotoFondoProductos);
 
         //--------------------FACTURAS--------------------
@@ -323,10 +465,28 @@ public class Menu {
         fotoFondoFacturas.setBounds(0, 0, 1400, 850);
 
 
+        JLabel tFacturas = new JLabel("Facturas:");
+        tFacturas.setBounds(40, 20, 500, 50);
+        tFacturas.setFont(new Font("Century Gothic", 1+2, 45));
+
+        JLabel tCli = new JLabel("Compra:");
+        tCli.setBounds(550, 30, 500, 50);
+        tCli.setFont(new Font("Century Gothic", 1+2, 25));
+
+        JLabel cFacturas = new JLabel("Configuración:");
+        cFacturas.setBounds(910, 200, 500, 50);
+        cFacturas.setFont(new Font("Century Gothic", 1+2, 30));
+
+        JPanel cuadroBlancoF = new JPanel();
+        cuadroBlancoF.setBounds(890, 170, 320,380);
+        cuadroBlancoF.setBackground(new Color(255,255,255, 169));
+
         //Botones de configuración:
 
-        JButton crearFactura = new JButton("Crear");
-        crearFactura.setBounds(900, 270, 130, 60);
+        JButton crearFactura = new JButton("Crear Factura");
+        crearFactura.setBounds(940, 320, 230, 60);
+        crearFactura.setBackground(new Color(82, 186, 42));
+        crearFactura.setFont(new Font("Bahnschrift", 0, 23));
         crearFactura.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 CrearFactu CrF = new CrearFactu();
@@ -336,12 +496,21 @@ public class Menu {
 
         });
 
+        facturas.add(tFacturas);
+        facturas.add(tCli);
+        facturas.add(cFacturas);
         facturas.add(crearFactura);
+        facturas.add(cuadroBlancoF);
         facturas.add(fotoFondoFacturas);
 
 
         //--------------------GUARDAR--------------------
-        guardar=new JPanel();
+        JButton guardar = new JButton("Guardar");
+        guardar.setBounds(790, 20, 250, 50);
+        guardar.setFont(new Font("Century Gothic", 0, 22));
+        guardar.setBackground(new Color(139, 147, 28));
+        guardar.setForeground(Color.WHITE);
+
 
         //Cada una de las pestañas para seleccionar opción/submenú
         pestañas.add("Information", info);
@@ -349,12 +518,12 @@ public class Menu {
         pestañas.add("Clients", clientes);
         pestañas.add("Products", productos);
         pestañas.add("Invoices", facturas);
-        pestañas.add("Save Changes", guardar);
         pestañas.setBackground(Color.white);
         pestañas.setFont(new Font("Century Gothic", 0, 20));
 
         frame.add(pestañas);
         frame.add(titulo);
+        frame.add(guardar);
         frame.add(cerrarS);
         frame.add(labelIcon);
         frame.setVisible(true);
@@ -370,6 +539,13 @@ public class Menu {
             }
         });
 
+        //GUARDAR TODO
+        guardar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //METER EL MÉTODO
+            }
+        });
 
         //EDICIÓN DE CONFIG.JSON
         editarConfig.addActionListener(new ActionListener() {
@@ -477,6 +653,7 @@ public class Menu {
         modelUsuario = new DefaultTableModel();
         table = new JTable(modelUsuario);
         table.setFont(new Font("Century Gothic", 0, 18));
+        table.setRowHeight(25);
         modelUsuario.addColumn("Username");
         modelUsuario.addColumn("Password");
 
@@ -487,7 +664,7 @@ public class Menu {
 
         JScrollPane sp = new JScrollPane(table);
         sp.setEnabled(false);
-        sp.setBounds(100,50,500,600);
+        sp.setBounds(100,80,500,600);
         sp.setVisible(true);
 
 
@@ -497,7 +674,9 @@ public class Menu {
 
         public static void CrearTablaClientes(){
         DefaultTableModel modelCliente = new DefaultTableModel();
-        JTable table = new JTable(modelCliente);
+        tableClientes = new JTable(modelCliente);
+        tableClientes.setRowHeight(25);
+        tableClientes.setFont(new Font("Century Gothic", 0, 18));
         modelCliente.addColumn("ID");
         modelCliente.addColumn("Name");
         modelCliente.addColumn("Address");
@@ -508,9 +687,9 @@ public class Menu {
             modelCliente.addRow(new Object[]{main.clientesA.get(i).getId(),main.clientesA.get(i).getName(), main.clientesA.get(i).getAddress(),main.clientesA.get(i).getPhone(),main.clientesA.get(i).getNit()});
         }
 
-        JScrollPane sp = new JScrollPane(table);
+        JScrollPane sp = new JScrollPane(tableClientes);
         sp.setEnabled(false);
-        sp.setBounds(10,10,300,300);
+        sp.setBounds(100,80,600,600);
         sp.setVisible(true);
         clientes.add(sp);
     }
@@ -518,6 +697,8 @@ public class Menu {
     public static void CrearTablaProductos(){
         DefaultTableModel modelProductos = new DefaultTableModel();
         tableProductos = new JTable(modelProductos);
+        tableProductos.setRowHeight(25);
+        tableProductos.setFont(new Font("Century Gothic", 0, 18));
         modelProductos.addColumn("ID");
         modelProductos.addColumn("Name");
         modelProductos.addColumn("Description");
@@ -531,12 +712,14 @@ public class Menu {
 
         JScrollPane sp = new JScrollPane(tableProductos);
         sp.setEnabled(false);
-        sp.setBounds(100,50,500,600);
+        sp.setBounds(80,80,500,600);
         sp.setVisible(true);
         productos.add(sp);
 
         modelProductos2 = new DefaultTableModel();
         JTable tableP = new JTable(modelProductos2);
+        tableP.setRowHeight(20);
+        tableP.setFont(new Font("Century Gothic", 0, 13));
         modelProductos2.addColumn("Name");
         modelProductos2.addColumn("Quantity");
         modelProductos2.addColumn("Units");
@@ -558,7 +741,7 @@ public class Menu {
 
         JScrollPane sp2 = new JScrollPane(tableP);
         sp2.setEnabled(false);
-        sp2.setBounds(700,50,500,600);
+        sp2.setBounds(650,80,300,600);
         sp2.setVisible(true);
         productos.add(sp2);
 
@@ -566,6 +749,7 @@ public class Menu {
 
     public static void TablaDatosProductos(int id){
         modelProductos2.setRowCount(0);
+
         for (int i = 0; i <main.productosA.size(); i++) {
             if(main.productosA.get(i).getId() == id){
                 ArrayList<Ingredients> ingrediente = main.productosA.get(i).getIngredients();
@@ -582,6 +766,8 @@ public class Menu {
     public static void CrearTablaFacturas(){
         DefaultTableModel modelFacturas = new DefaultTableModel();
         tableFacturas = new JTable(modelFacturas);
+        tableFacturas.setRowHeight(25);
+        tableFacturas.setFont(new Font("Century Gothic", 0, 18));
         modelFacturas.addColumn("ID");
         modelFacturas.addColumn("Cliente");
         modelFacturas.addColumn("Date");
@@ -599,6 +785,8 @@ public class Menu {
 
         modelFacturas2 = new DefaultTableModel();
         JTable tableF = new JTable(modelFacturas2);
+        tableF.setRowHeight(20);
+        tableF.setFont(new Font("Century Gothic", 0, 13));
         modelFacturas2.addColumn("Name");
         modelFacturas2.addColumn("Price");
 

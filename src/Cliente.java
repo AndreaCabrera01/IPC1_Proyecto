@@ -8,6 +8,13 @@ public class Cliente implements Serializable {
     private int phone;
     private String nit;
 
+    public Cliente(int Id, String name, String address, int phone, String nit){
+        this.id=Id;
+        this.name=name;
+        this.address = address;
+        this.phone = phone;
+        this.nit = nit;
+    }
 
     //Listado de clientes
     public void ListarClientes(int i){
