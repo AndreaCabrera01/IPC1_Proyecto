@@ -41,8 +41,19 @@ public class Menu {
     public static String cliente;
     public static String date;
 
+    //**Productos**
+    public static String idP;
+    public static String nameP;
+    public static String descP;
+    public static String costP, priceP;
+
     public static void FILA(Object[] usuariosexistentes){
         DefaultTableModel model = (DefaultTableModel)table.getModel();
+        model.addRow(usuariosexistentes);
+    }
+
+    public static void FILAP(Object[] usuariosexistentes){
+        DefaultTableModel model = (DefaultTableModel)tableProductos.getModel();
         model.addRow(usuariosexistentes);
     }
 
@@ -236,17 +247,70 @@ public class Menu {
         productos.setLayout(null);
         CrearTablaProductos();
         //Botones de Configuracion
-        JButton editarProducto = new JButton("Editar");
+        //Editar
+        JButton editarProductos = new JButton("Editar");
+        editarProductos.setBounds(1250,300, 100, 50);
+        editarProductos.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                int sR = tableProductos.getSelectedRow();
+                TableModel m = tableProductos.getModel();
+                idP = (m.getValueAt(sR, 0).toString());
+                nameP = m.getValueAt(sR, 1).toString();
+                descP = m.getValueAt(sR, 2).toString();
+                costP = (m.getValueAt(sR, 3).toString());
+                priceP =(m.getValueAt(sR, 4).toString());
+
+                EditarProdu EPru = new EditarProdu();
+                EPru.getContentPane().setBackground(Color.ORANGE);
+                EPru.setVisible(true);
+
+                EditarProdu.txtUsu.setText(idP);
+                EditarProdu.txtPass.setText(nameP);
+                EditarProdu.txtDescripcion.setText(descP);
+                EditarProdu.txtCosto.setText(costP);
+                EditarProdu.txtPrecio.setText(priceP);
+            }
+        });
 
         JButton crearProducto = new JButton("Crear");
+        crearProducto.setBounds(1250,100,100,50);
+        crearProducto.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                CrearProdu CrP = new CrearProdu();
+                CrP.getContentPane().setBackground(Color.ORANGE);
+                CrP.setVisible(true);
+            }
+
+        });
+
 
         JButton eliminarProducto = new JButton("Eliminar");
+        eliminarProducto.setBounds(1250,500,100,50);
+        eliminarProducto.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                DefaultTableModel model = (DefaultTableModel)tableProductos.getModel();
+                try{
+                    int S = tableProductos.getSelectedRow();
+                    model.removeRow(S);
+                    main.productosA.remove(S);
+                    modelProductos2.setRowCount(0);
+
+
+                }
+                catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, ex);
+                }
+            }
+        });
 
 
         JLabel fotoFondoProductos = new JLabel();
         fotoFondoProductos.setIcon(new ImageIcon("FondoMenu.jpg"));
         fotoFondoProductos.setBounds(0, 0, 1400, 850);
 
+        productos.add(editarProductos);
+        productos.add(crearProducto);
+        productos.add(eliminarProducto);
         productos.add(fotoFondoProductos);
 
         //--------------------FACTURAS--------------------
@@ -260,38 +324,19 @@ public class Menu {
 
 
         //Botones de configuración:
-        JButton editarFactura = new JButton("Editar");
-        editarFactura.setBounds(900, 120, 130, 60);
-        editarFactura.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e) {
-               int sR = table.getSelectedRow();
-                TableModel m = table.getModel();
-                id = m.getValueAt(sR, 0).toString();
-                cliente = m.getValueAt(sR, 1).toString();
-                date = m.getValueAt(sR, 1).toString();
-
-                EditarFactura EFac = new EditarFactura();
-                EFac.getContentPane().setBackground(Color.ORANGE);
-                EFac.setVisible(true);
-
-                EditarUsu.txtNomP.setText(id);
-                EditarUsu.txtApe.setText(cliente);
-                EditarUsu.txtNomP.setText(date);
-
-            }
-        });
-
 
         JButton crearFactura = new JButton("Crear");
         crearFactura.setBounds(900, 270, 130, 60);
+        crearFactura.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                CrearFactu CrF = new CrearFactu();
+                CrF.getContentPane().setBackground(Color.ORANGE);
+                CrF.setVisible(true);
+            }
 
-        JButton eliminarFactura = new JButton("Eliminar");
-        eliminarFactura.setBounds(900, 440, 130, 60);
+        });
 
-
-        facturas.add(eliminarFactura);
         facturas.add(crearFactura);
-        facturas.add(editarFactura);
         facturas.add(fotoFondoFacturas);
 
 
@@ -505,7 +550,7 @@ public class Menu {
                     TablaDatosProductos(id);
                 }
                 catch(Exception ex){
-                    JOptionPane.showMessageDialog(null, ex);
+                    JOptionPane.showMessageDialog(null, "producto sin ingredientes");
                 }
             }
 
@@ -566,7 +611,7 @@ public class Menu {
                     TablaDatosFacturas(id);
                 }
                 catch(Exception ex){
-                    JOptionPane.showMessageDialog(null, ex);
+                    JOptionPane.showMessageDialog(null, "la factura no posee productos");
                 }
             }
         });

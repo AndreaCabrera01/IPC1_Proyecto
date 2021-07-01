@@ -8,6 +8,13 @@ public class Factura implements Serializable {
     private String date;
     private ArrayList<Producto> products;
 
+    public Factura (int id, int client, String date){
+
+        this.id=id;
+        this.client=client;
+        this.date=date;
+
+    }
 
 //Lista los datos de las facturas
     public void ListarFacturas(int i){

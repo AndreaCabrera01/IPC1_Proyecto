@@ -10,7 +10,7 @@ public class Producto implements Serializable {
     private double price;
     private ArrayList<Ingredients> ingredients;
 
-    public void Producto(int id, String name, String description, double cost, double price){
+    public Producto(int id, String name, String description, double cost, double price){
     this.id=id;
     this.name=name;
     this.description=description;
