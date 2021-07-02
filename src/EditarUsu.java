@@ -9,12 +9,8 @@ import java.time.format.DateTimeFormatter;
 public class EditarUsu extends JFrame {
     public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     public static String textologA = "";
-    public static JTextField txtCodP;
-    public static JTextField txtNomP;
-    public static JTextField txtApe;
-    public static JTextField txtCorreoP;
-    public static JComboBox listaGen;
-    String [] gen;
+    public static JTextField txtUsu;
+    public static JTextField txtContra;
     JButton Agregar;
 
         public EditarUsu(){
@@ -43,31 +39,31 @@ public class EditarUsu extends JFrame {
 
             //EDICIÓN DE DATOS
 
-            //Ingreso Nombre:
-            txtNomP = new JTextField();
-            this.add(txtNomP);
-            txtNomP.setBounds(150,130,250,30);
-            txtNomP.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+            //Ingreso usuario:
+            txtUsu = new JTextField();
+            this.add(txtUsu);
+            txtUsu.setBounds(150,130,250,30);
+            txtUsu.setFont(new Font("Century Gothic", Font.PLAIN, 20));
 
             //Ingreso de Contraseña
-            txtApe = new JTextField();
-            this.add(txtApe);
-            txtApe.setBounds(150,180,250,30);
-            txtApe.setFont(new Font("Century Gothic", Font.PLAIN, 20));
+            txtContra = new JTextField();
+            this.add(txtContra);
+            txtContra.setBounds(150,180,250,30);
+            txtContra.setFont(new Font("Century Gothic", Font.PLAIN, 20));
 
 
             //Boton para guardar
             Agregar = new JButton("Agregar");
             this.add(Agregar);
             Agregar.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-            Agregar.setBackground(Color.LIGHT_GRAY);
+            Agregar.setBackground(new Color(10, 166, 206));
             Agregar.setBounds(75, 240, 300, 40);
             Agregar.addMouseListener(new MouseAdapter(){
                 public void mouseClicked(MouseEvent e) {
                     DefaultTableModel model = (DefaultTableModel)Menu.table.getModel();
                    // String cod =txtCodP.getText();
-                    String nom =txtNomP.getText();
-                    String pass =txtApe.getText();
+                    String nom =txtUsu.getText();
+                    String pass =txtContra.getText();
 
                     model.setValueAt(nom, Menu.table.getSelectedRow(), 0);
                     model.setValueAt(pass, Menu.table.getSelectedRow(), 1);

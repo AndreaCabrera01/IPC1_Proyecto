@@ -85,7 +85,7 @@ public class CrearFactu extends JFrame {
         Agregar = new JButton("Siguiente");
         this.add(Agregar);
         Agregar.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        Agregar.setBackground(Color.LIGHT_GRAY);
+        Agregar.setBackground(new Color(10, 166, 206));
         Agregar.setBounds(75, 450, 300, 40);
 
 
@@ -117,7 +117,7 @@ public class CrearFactu extends JFrame {
 
                             AgregarProducto AgrPro = new AgregarProducto();
                             AgrPro.RecibirDatos(idFactura,idCliente,nombreCliente,fecha);
-                            AgrPro.getContentPane().setBackground(Color.ORANGE);
+                            AgrPro.getContentPane().setBackground(new Color(159, 167, 53));
                             AgrPro.setVisible(true);
                             CrearFactu.super.dispose();
 

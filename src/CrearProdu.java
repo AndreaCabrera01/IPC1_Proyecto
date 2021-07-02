@@ -9,10 +9,6 @@ public class CrearProdu extends JFrame {
     public static String textologA = "";
     public static JTextField txtUsu;
     public static JTextField txtPass,txtDescripcion,txtPrecio,txtCosto;
-    public static JTextField txtApeP;
-    public static JTextField txtCorreoP;
-    JTextField txtContraseñaP;
-    String [] genero;
     JButton Agregar;
 
 
@@ -96,7 +92,7 @@ public class CrearProdu extends JFrame {
         Agregar = new JButton("Agregar");
         this.add(Agregar);
         Agregar.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        Agregar.setBackground(Color.LIGHT_GRAY);
+        Agregar.setBackground(new Color(10, 166, 206));
         Agregar.setBounds(75, 450, 300, 40);
 
 
@@ -127,7 +123,7 @@ public class CrearProdu extends JFrame {
 
                             AgregarIngrediente AgrIngrediente = new AgregarIngrediente();
                             AgrIngrediente.RecibirDatos(id, nombre, descr, cost, price);
-                            AgrIngrediente.getContentPane().setBackground(Color.ORANGE);
+                            AgrIngrediente.getContentPane().setBackground(new Color(175, 184, 53));
                             AgrIngrediente.setVisible(true);
                             CrearProdu.super.dispose();
 

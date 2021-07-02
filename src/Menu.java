@@ -228,11 +228,11 @@ public class Menu {
                     con = m.getValueAt(sR, 1).toString();
 
                     EditarUsu EUsu = new EditarUsu();
-                    EUsu.getContentPane().setBackground(Color.ORANGE);
+                    EUsu.getContentPane().setBackground(new Color(175, 184, 53));
                     EUsu.setVisible(true);
 
-                    EditarUsu.txtNomP.setText(usu);
-                    EditarUsu.txtApe.setText(con);
+                    EditarUsu.txtUsu.setText(usu);
+                    EditarUsu.txtContra.setText(con);
                 }catch(Exception ex){
                     JOptionPane.showMessageDialog(null, "Seleccione un Usuario.");
                 }
@@ -270,7 +270,7 @@ public class Menu {
         crearUsuario.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 CrearUsu CrU = new CrearUsu();
-                CrU.getContentPane().setBackground(Color.ORANGE);
+                CrU.getContentPane().setBackground(new Color(175, 184, 53));
                 CrU.setVisible(true);
             }
 
@@ -319,7 +319,7 @@ public class Menu {
                     NIT = m.getValueAt(sR, 4).toString();
 
                     EditarClient EClient = new EditarClient();
-                    EClient.getContentPane().setBackground(Color.ORANGE);
+                    EClient.getContentPane().setBackground(new Color(175, 184, 53));
                     EClient.setVisible(true);
 
                     EditarClient.txtID.setText(idCliente);
@@ -365,7 +365,7 @@ public class Menu {
         crearClientes.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 CrearClient CrC = new CrearClient();
-                CrC.getContentPane().setBackground(Color.ORANGE);
+                CrC.getContentPane().setBackground(new Color(159, 167, 53));
                 CrC.setVisible(true);
             }
 
@@ -409,9 +409,9 @@ public class Menu {
         //Botones de Configuracion
         //Editar Producto
         JButton editarProductos = new JButton("Editar Producto");
-        editarProductos.setBounds(1070, 250, 175, 45);
+        editarProductos.setBounds(1050, 250, 220, 45);
         editarProductos.setBackground(new Color(255, 188, 14));
-        editarProductos.setFont(new Font("Bahnschrift", 0, 30));
+        editarProductos.setFont(new Font("Bahnschrift", 0, 18));
         editarProductos.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 try{
@@ -424,7 +424,7 @@ public class Menu {
                     priceP =(m.getValueAt(sR, 4).toString());
 
                     EditarProdu EPru = new EditarProdu();
-                    EPru.getContentPane().setBackground(Color.ORANGE);
+                    EPru.getContentPane().setBackground(new Color(175, 184, 53));
                     EPru.setVisible(true);
 
                     EditarProdu.txtUsu.setText(idP);
@@ -440,9 +440,9 @@ public class Menu {
 
         //Botón EditarIngrediente
         JButton editarIngrediente = new JButton("Editar Ingrediente");
-        editarIngrediente.setBounds(1070, 350, 175, 45);
+        editarIngrediente.setBounds(1050, 350, 220, 45);
         editarIngrediente.setBackground(new Color(255, 188, 14));
-        editarIngrediente.setFont(new Font("Bahnschrift", 0, 30));
+        editarIngrediente.setFont(new Font("Bahnschrift", 0, 18));
         editarIngrediente.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 try{
@@ -458,7 +458,7 @@ public class Menu {
 
 
                     EditIngredientes EIng = new EditIngredientes();
-                    EIng.getContentPane().setBackground(Color.ORANGE);
+                    EIng.getContentPane().setBackground(new Color(175, 184, 53));
                     EIng.setVisible(true);
 
                     EditIngredientes.txtName.setText(nameI);
@@ -480,7 +480,7 @@ public class Menu {
         crearProducto.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 CrearProdu CrP = new CrearProdu();
-                CrP.getContentPane().setBackground(Color.ORANGE);
+                CrP.getContentPane().setBackground(new Color(175, 184, 53));
                 CrP.setVisible(true);
             }
 
@@ -558,7 +558,7 @@ public class Menu {
         crearFactura.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
                 CrearFactu CrF = new CrearFactu();
-                CrF.getContentPane().setBackground(Color.ORANGE);
+                CrF.getContentPane().setBackground(new Color(175, 184, 53));
                 CrF.setVisible(true);
             }
 
@@ -626,8 +626,8 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame editConfig = new JFrame();
+                editConfig.setBackground(new Color(159, 167, 53));
                 editConfig.setBounds(670, 100, 700, 600);
-                editConfig.setBackground(new Color(255, 193, 77));
                 editConfig.setLayout(null);
                 editConfig.setResizable(false);
 
@@ -673,7 +673,6 @@ public class Menu {
                 editConfig.add(direccion);
                 editConfig.add(nombre);
                 editConfig.add(numero);
-
                 editConfig.add(guardarConfig);
 
                 guardarConfig.addActionListener(new ActionListener() {

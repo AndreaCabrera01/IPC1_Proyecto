@@ -58,7 +58,7 @@ public class CrearUsu extends JFrame {
         Agregar = new JButton("Agregar");
         this.add(Agregar);
         Agregar.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        Agregar.setBackground(Color.LIGHT_GRAY);
+        Agregar.setBackground(new Color(10, 166, 206));
         Agregar.setBounds(75, 450, 300, 40);
 
 

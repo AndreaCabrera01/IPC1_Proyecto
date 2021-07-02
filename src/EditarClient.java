@@ -14,7 +14,6 @@ public class EditarClient extends JFrame {
     public static JTextField txtAddress;
     public static JTextField txtPhone;
     public static JTextField txtNIT;
-    String [] gen;
     JButton Agregar;
 
     public EditarClient(){
@@ -95,7 +94,7 @@ public class EditarClient extends JFrame {
         Agregar = new JButton("Agregar");
         this.add(Agregar);
         Agregar.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        Agregar.setBackground(Color.LIGHT_GRAY);
+        Agregar.setBackground(new Color(10, 166, 206));
         Agregar.setBounds(75, 390, 300, 40);
         Agregar.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
