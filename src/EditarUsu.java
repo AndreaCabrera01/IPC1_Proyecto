@@ -4,8 +4,11 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class EditarUsu extends JFrame {
+    public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static String textologA = "";
     public static JTextField txtCodP;
     public static JTextField txtNomP;
     public static JTextField txtApe;
@@ -72,6 +75,8 @@ public class EditarUsu extends JFrame {
 
                     for (int i=0; i<main.usuariosA.size() ; i++) {
                         if (main.usuariosA.get(i).getUsername().equals(Menu.usu)){
+                            textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha editado al usuario: "+Menu.usu+".";
+                            Archivo.LogAcciones(textologA);
                             main.usuariosA.get(i).setUsername(nom);
                             main.usuariosA.get(i).setPassword(pass);
                             EditarUsu.super.dispose();

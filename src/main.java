@@ -12,7 +12,6 @@ import java.util.Scanner;
 
 public class main {
 
-
     //Variables y arreglos globales para guardar los archivos automaticamente
     public static ArrayList<Usuario> usuariosA = new ArrayList<>();
     public static ArrayList<Producto> productosA = new ArrayList<>();
@@ -226,37 +225,24 @@ public class main {
         log.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-               /* System.out.println("--------------INICIAR SESIÓN--------------");
-                System.out.println("USERNAME: ");
-                Scanner sc1 = new Scanner(System.in);
-                username = sc1.nextLine();
-                System.out.println("PASSWORD: ");
-                Scanner sc2 = new Scanner(System.in);
-                String password = sc1.nextLine();
-                //Verificación
-
-                //Manejo de error
-                //Login();*/
-
+            boolean verificar = false;
                 username = txt1.getText();
                String password =String.valueOf(txt2.getPassword());
-                System.out.println(username);
-                System.out.println(password);
                 for (int i=0; i<main.usuariosA.size() ; i++) {
                     if (main.usuariosA.get(i).getUsername().equals(username) && main.usuariosA.get(i).getPassword().equals(password)){
-                        System.out.println("Ingreso exitoso");
                         textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+username+": Inicio de sesión exitoso.";
                         Archivo.LogAcciones(textologA);
                         login.dispose();
                         Menu.Menu();
+                        verificar=true;
                     }
+
                 }
-              /*  System.out.println("Usuario y/o contraseña incorrectos. Intente de nuevo");
-                textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+username+": Inicio de sesión fallido.";
-                Archivo.LogAcciones(textologA);
-                login.dispose();*/
-              //  Login();
+                if(!verificar){
+                    JOptionPane.showMessageDialog(null, "Nombre de usuario y/o contraseña incorrecta.");
+                    textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Inicio de sesión fallido.";
+                    Archivo.LogAcciones(textologA);
+                }
             }
         });
         cerrar.addActionListener(new ActionListener() {

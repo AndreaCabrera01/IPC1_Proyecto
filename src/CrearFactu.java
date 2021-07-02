@@ -2,10 +2,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class CrearFactu extends JFrame {
 
+    public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static String textologA = "";
     public static JTextField txtFecha,txtId;
     public static JComboBox BoxClients;
     public static JComboBox BoxDia, BoxMes;
@@ -90,48 +93,42 @@ public class CrearFactu extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 String s = "";
                 boolean duplicado = false;
+                try{
+                    if(txtId.getText().equals("")||txtFecha.getText().equals("")||BoxClients.getSelectedItem().equals("Seleccione un Cliente")){
+                        JOptionPane.showMessageDialog(null, "Ingrese todos los datos.");
+                    }else{
+                        for (int i = 0; i <main.facturasA.size(); i++) {
+                            if (Integer.parseInt(txtId.getText())==main.facturasA.get(i).getId()) {
+                                duplicado=true;
+                            }
+                        }
+                        if (!duplicado) {
+                            String cliente = BoxClients.getSelectedItem().toString();
+                            String[] datosCliente = cliente.split("-");
 
-                for (int i = 0; i <main.facturasA.size(); i++) {
-                    if (Integer.parseInt(txtId.getText())==main.facturasA.get(i).getId()) {
-                      duplicado=true;
+                            String año = txtFecha.getText();
+                            String mes = BoxMes.getSelectedItem().toString();
+                            String dia = BoxDia.getSelectedItem().toString();
+
+                            idFactura = Integer.parseInt(txtId.getText());
+                            String nombreCliente = datosCliente[1];
+                            idCliente = Integer.parseInt(datosCliente[0]);
+                            fecha = año+"-"+mes+"-"+dia;
+
+                            AgregarProducto AgrPro = new AgregarProducto();
+                            AgrPro.RecibirDatos(idFactura,idCliente,nombreCliente,fecha);
+                            AgrPro.getContentPane().setBackground(Color.ORANGE);
+                            AgrPro.setVisible(true);
+                            CrearFactu.super.dispose();
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No es posible tener Id repetido, inténtelo de nuevo.");
+                        }
                     }
+                }catch(NumberFormatException nbr){
+                    JOptionPane.showMessageDialog(null, "Ha ingresado un dato erroneo.");
                 }
-                if (!duplicado) {
-                    String cliente = BoxClients.getSelectedItem().toString();
-                    String[] datosCliente = cliente.split("-");
-
-                    String año = txtFecha.getText();
-                    String mes = BoxMes.getSelectedItem().toString();
-                    String dia = BoxDia.getSelectedItem().toString();
-
-                    idFactura = Integer.parseInt(txtId.getText());
-                    String nombreCliente = datosCliente[1];
-                    idCliente = Integer.parseInt(datosCliente[0]);
-                    fecha = año+"-"+mes+"-"+dia;
-
-
-
-
-
-                    AgregarProducto AgrPro = new AgregarProducto();
-                    AgrPro.RecibirDatos(idFactura,idCliente,nombreCliente,fecha);
-                    AgrPro.getContentPane().setBackground(Color.ORANGE);
-                    AgrPro.setVisible(true);
-
-
-
-
-
-//                    nuevo.setIngredients();
-
-                    CrearFactu.super.dispose();
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "No es posible tener Id repetido, inténtelo de nuevo.");
-                }
-
             }
-
         });
 
     }

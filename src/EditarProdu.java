@@ -3,14 +3,14 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class EditarProdu  extends JFrame {
-    public static JTextField txtCodP;
-    public static JTextField txtNomP,txtUsu,txtPass,txtDescripcion,txtCosto,txtPrecio;
-    public static JTextField txtApe;
-    public static JTextField txtCorreoP;
-    public static JComboBox listaGen;
-    String [] gen;
+    public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static String textologA = "";
+    public static JTextField txtUsu,txtPass,txtDescripcion,txtCosto,txtPrecio;
+
     JButton Agregar;
 
     public EditarProdu(){
@@ -94,21 +94,13 @@ public class EditarProdu  extends JFrame {
         Agregar.setBounds(75, 380, 300, 40);
         Agregar.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
-
-               DefaultTableModel model = (DefaultTableModel)Menu.tableProductos.getModel();
-                // String cod =txtCodP.getText();
+            try{
+                DefaultTableModel model = (DefaultTableModel)Menu.tableProductos.getModel();
                 int id = Integer.parseInt(txtUsu.getText());
                 String name =txtPass.getText();
                 String desc =txtDescripcion.getText();
-               double cost = Double.parseDouble(txtCosto.getText());
+                double cost = Double.parseDouble(txtCosto.getText());
                 double price = Double.parseDouble(txtPrecio.getText());
-
-
-                model.setValueAt(String.valueOf(id), Menu.tableProductos.getSelectedRow(), 0);
-                model.setValueAt(name, Menu.tableProductos.getSelectedRow(), 1);
-                model.setValueAt(desc, Menu.tableProductos.getSelectedRow(), 2);
-                model.setValueAt(String.valueOf(cost), Menu.tableProductos.getSelectedRow(), 3);
-                model.setValueAt(String.valueOf(price), Menu.tableProductos.getSelectedRow(), 4);
 
 
                 for (int i=0; i<main.productosA.size() ; i++) {
@@ -117,14 +109,22 @@ public class EditarProdu  extends JFrame {
                         main.productosA.get(i).setDescription(desc);
                         main.productosA.get(i).setCost(cost);
                         main.productosA.get(i).setPrice(price);
+                        textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha editado el producto con id: "+Menu.idP+".";
+                        Archivo.LogAcciones(textologA);
 
                         EditarProdu.super.dispose();
                     }
                 }
 
+                model.setValueAt(String.valueOf(id), Menu.tableProductos.getSelectedRow(), 0);
+                model.setValueAt(name, Menu.tableProductos.getSelectedRow(), 1);
+                model.setValueAt(desc, Menu.tableProductos.getSelectedRow(), 2);
+                model.setValueAt(String.valueOf(cost), Menu.tableProductos.getSelectedRow(), 3);
+                model.setValueAt(String.valueOf(price), Menu.tableProductos.getSelectedRow(), 4);
 
-
-
+            }catch(NumberFormatException nbr){
+                JOptionPane.showMessageDialog(null, "Ha ingresado un dato erroneo.");
+            }
 
             }
 

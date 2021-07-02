@@ -4,15 +4,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CrearUsu extends JFrame {
 
+    public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static String textologA = "";
     public static JTextField txtUsu;
     public static JTextField txtPass;
-    public static JTextField txtApeP;
-    public static JTextField txtCorreoP;
-    JTextField txtContraseñaP;
-    String [] genero;
     JButton Agregar;
 
 
@@ -66,33 +66,41 @@ public class CrearUsu extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 String s = "";
                 boolean duplicado = false;
-                for (int i = 0; i < Menu.table.getRowCount(); i++) {
-                    s = Menu.table.getValueAt(i, 0).toString().trim();
+                if(txtUsu.getText().equals("")||txtPass.getText().equals("")){
+                    JOptionPane.showMessageDialog(null, "Ingrese todos los datos");
+                }else{
+                    for (int i = 0; i < Menu.table.getRowCount(); i++) {
+                        s = Menu.table.getValueAt(i, 0).toString().trim();
 
-                    if (txtUsu.getText().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Ingrese todos los datos.");
-                    } else {
-                        if (txtUsu.getText().equals(s)) {
-                            duplicado = true;
-                            break;
+                        if (txtUsu.getText().equals("")) {
+                            JOptionPane.showMessageDialog(null, "Ingrese todos los datos.");
+                        } else {
+                            if (txtUsu.getText().equals(s)) {
+                                duplicado = true;
+                                break;
+                            }
                         }
                     }
-                }
-                if (!duplicado) {
-                    Menu.FILA(new Object[]{
-                            txtUsu.getText(),
-                            txtPass.getText(),
-                    });
-                    String txt = txtUsu.getText();
-                    String pass = txtPass.getText();
+                    if (!duplicado) {
+                        Menu.FILA(new Object[]{
+                                txtUsu.getText(),
+                                txtPass.getText(),
+                        });
+                        String txt = txtUsu.getText();
+                        String pass = txtPass.getText();
 
-                            Usuario nuevo = new Usuario(txt,pass);
-                            main.usuariosA.add(nuevo);
-                            CrearUsu.super.dispose();
+                        Usuario nuevo = new Usuario(txt,pass);
+                        main.usuariosA.add(nuevo);
+                        textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha creado al usuario: "+txt+".";
+                        Archivo.LogAcciones(textologA);
+                        CrearUsu.super.dispose();
 
-                } else {
-                    JOptionPane.showMessageDialog(null, "No es posible tener usuario repetido, inténtelo de nuevo.");
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No es posible tener usuario repetido, inténtelo de nuevo.");
+                    }
                 }
+
 
             }
 

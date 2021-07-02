@@ -4,9 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class AgregarProducto extends JFrame {
+
+    public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static String textologA = "";
     public static JTextField txtPrecio;
     public static JComboBox BoxProductos;
     JButton Agregar, Nuevo;
@@ -86,16 +91,22 @@ public class AgregarProducto extends JFrame {
 
         Agregar.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
-                GuardarDatosIngresados();
-                Factura nuevo = new Factura(idFactura,idCliente,fecha, Producto);
-                main.facturasA.add(nuevo);
-                Menu.FILAF(new Object[]{
-                        idFactura,
-                        nombreCliente,
-                        fecha
+                if(BoxProductos.getSelectedItem().equals("Seleccione un producto")){
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione un producto para añadir a la factura");
+                }else{
+                    GuardarDatosIngresados();
+                    Factura nuevo = new Factura(idFactura,idCliente,fecha, Producto);
+                    textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha creado la factura con id: "+idFactura+".";
+                    Archivo.LogAcciones(textologA);
+                    main.facturasA.add(nuevo);
+                    Menu.FILAF(new Object[]{
+                            idFactura,
+                            nombreCliente,
+                            fecha
 
-                });
-                AgregarProducto.super.dispose();
+                    });
+                    AgregarProducto.super.dispose();
+                }
             }
 
         });
@@ -103,10 +114,14 @@ public class AgregarProducto extends JFrame {
         Nuevo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if(BoxProductos.getSelectedItem().equals("Seleccione un producto")){
+                    JOptionPane.showMessageDialog(null, "Por favor, seleccione un producto para añadir a la factura");
+                }else{
                 GuardarDatosIngresados();
 
                 BoxProductos.setSelectedIndex(0);
                 txtPrecio.setText("");
+                }
                     super.mouseClicked(e);
             }
         });
@@ -122,15 +137,18 @@ public class AgregarProducto extends JFrame {
     }
 
     public void GuardarDatosIngresados(){
-        if(BoxProductos.getSelectedItem().equals("Seleccione un producto")){
-            JOptionPane.showMessageDialog(null, "Por favor, seleccione un producto para añadir a la factura");
-        }else{
-            String producto = BoxProductos.getSelectedItem().toString();
-            String[] datosProducto = producto.split("-");
+            try{
+                String producto = BoxProductos.getSelectedItem().toString();
+                String[] datosProducto = producto.split("-");
+                ProductosFactura productosfactura = new ProductosFactura(datosProducto[1], Double.parseDouble(txtPrecio.getText()));
+                Producto.add(productosfactura);
+            }catch(NumberFormatException nbr){
+                JOptionPane.showMessageDialog(null, "Ha ingresado un dato erroneo.");
+            }catch(Exception ex){
+                JOptionPane.showMessageDialog(null, ex);
+            }
 
-        ProductosFactura productosfactura = new ProductosFactura(datosProducto[1], Double.parseDouble(txtPrecio.getText()));
-        Producto.add(productosfactura);
-        }
+
     }
 
     public void RecibirDatos(int idFactura, int idCliente,String nombreCliente, String fecha){

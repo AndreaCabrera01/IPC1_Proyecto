@@ -2,8 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.format.DateTimeFormatter;
 
 public class CrearProdu extends JFrame {
+    public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static String textologA = "";
     public static JTextField txtUsu;
     public static JTextField txtPass,txtDescripcion,txtPrecio,txtCosto;
     public static JTextField txtApeP;
@@ -101,46 +104,42 @@ public class CrearProdu extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 String s = "";
                 boolean duplicado = false;
-                for (int i = 0; i < Menu.tableProductos.getRowCount(); i++) {
-                    s = Menu.tableProductos.getValueAt(i, 0).toString().trim();
+                try{
+                    if(txtUsu.getText().equals("")||txtPass.getText().equals("")||txtDescripcion.getText().equals("")||txtCosto.getText().equals("")||txtPrecio.getText().equals("")){
+                        JOptionPane.showMessageDialog(null, "Ingrese todos los datos");
+                    }else{
+                        for (int i = 0; i < Menu.tableProductos.getRowCount(); i++) {
+                            s = Menu.tableProductos.getValueAt(i, 0).toString().trim();
 
-                    if (txtUsu.getText().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Ingrese todos los datos.");
-                    } else {
-                        if (txtUsu.getText().equals(s)) {
-                            duplicado = true;
-                            break;
+                            if (txtUsu.getText().equals(s)) {
+                                duplicado = true;
+                                break;
+                            }
+
+                        }
+                        if (!duplicado) {
+
+                            int id = Integer.parseInt(txtUsu.getText());
+                            String nombre = txtPass.getText();
+                            String descr = txtDescripcion.getText();
+                            double cost = Double.parseDouble(txtCosto.getText());
+                            double price = Double.parseDouble(txtPrecio.getText());
+
+                            AgregarIngrediente AgrIngrediente = new AgregarIngrediente();
+                            AgrIngrediente.RecibirDatos(id, nombre, descr, cost, price);
+                            AgrIngrediente.getContentPane().setBackground(Color.ORANGE);
+                            AgrIngrediente.setVisible(true);
+                            CrearProdu.super.dispose();
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No es posible tener producto repetido, inténtelo de nuevo.");
                         }
                     }
+                }catch(NumberFormatException nbr){
+                    JOptionPane.showMessageDialog(null, "Ha ingresado un dato erroneo.");
                 }
-                if (!duplicado) {
-//                    Menu.FILAP(new Object[]{
-//                            txtUsu.getText(),
-//                            txtPass.getText(),
-//                            txtDescripcion.getText(),
-//                            txtCosto.getText(),
-//                            txtPrecio.getText()
-//                    });
-                    int id = Integer.parseInt(txtUsu.getText());
-                    String nombre = txtPass.getText();
-                    String descr = txtDescripcion.getText();
-                    double cost = Double.parseDouble(txtCosto.getText());
-                    double price = Double.parseDouble(txtPrecio.getText());
 
-//                    Producto nuevo = new Producto(id,nombre,descr,cost,price);
-//                    main.productosA.add(nuevo);
 
-                    AgregarIngrediente AgrIngrediente = new AgregarIngrediente();
-                    AgrIngrediente.RecibirDatos(id, nombre, descr, cost, price);
-                    AgrIngrediente.getContentPane().setBackground(Color.ORANGE);
-                    AgrIngrediente.setVisible(true);
-//                    nuevo.setIngredients();
-
-                    CrearProdu.super.dispose();
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "No es posible tener producto repetido, inténtelo de nuevo.");
-                }
 
             }
 

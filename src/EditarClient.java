@@ -4,8 +4,11 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class EditarClient extends JFrame {
+    public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static String textologA = "";
     public static JTextField txtID;
     public static JTextField txtNClient;
     public static JTextField txtAddress;
@@ -96,31 +99,35 @@ public class EditarClient extends JFrame {
         Agregar.setBounds(75, 390, 300, 40);
         Agregar.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
-                DefaultTableModel model = (DefaultTableModel)Menu.tableClientes.getModel();
-                String id = txtID.getText();
-                String nom = txtNClient.getText();
-                String add = txtAddress.getText();
-                String ph = txtPhone.getText();
-                String nit = txtNIT.getText();
+                try{
+                    DefaultTableModel model = (DefaultTableModel)Menu.tableClientes.getModel();
+                    String id = txtID.getText();
+                    String nom = txtNClient.getText();
+                    String add = txtAddress.getText();
+                    String ph = txtPhone.getText();
+                    String nit = txtNIT.getText();
 
-                model.setValueAt(id, Menu.tableClientes.getSelectedRow(), 0);
-                model.setValueAt(nom, Menu.tableClientes.getSelectedRow(), 1);
-                model.setValueAt(add, Menu.tableClientes.getSelectedRow(), 2);
-                model.setValueAt(ph, Menu.tableClientes.getSelectedRow(), 3);
-                model.setValueAt(nit, Menu.tableClientes.getSelectedRow(), 4);
-
-
-                for (int i=0; i<main.clientesA.size() ; i++) {
-                    if (main.clientesA.get(i).getId() == Integer.parseInt(Menu.idCliente)){
-                        main.clientesA.get(i).setId(Integer.parseInt(id));
-                        main.clientesA.get(i).setName(nom);
-                        main.clientesA.get(i).setAddress(add);
-                        main.clientesA.get(i).setPhone(Integer.parseInt(ph));
-                        main.clientesA.get(i).setNit(nit);
-                        EditarClient.super.dispose();
+                    for (int i=0; i<main.clientesA.size() ; i++) {
+                        if (main.clientesA.get(i).getId() == Integer.parseInt(Menu.idCliente)){
+                            main.clientesA.get(i).setId(Integer.parseInt(id));
+                            main.clientesA.get(i).setName(nom);
+                            main.clientesA.get(i).setAddress(add);
+                            main.clientesA.get(i).setPhone(Integer.parseInt(ph));
+                            main.clientesA.get(i).setNit(nit);
+                            textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha editado al cliente con id: "+Menu.idCliente+".";
+                            Archivo.LogAcciones(textologA);
+                            EditarClient.super.dispose();
+                        }
                     }
-                }
 
+                    model.setValueAt(id, Menu.tableClientes.getSelectedRow(), 0);
+                    model.setValueAt(nom, Menu.tableClientes.getSelectedRow(), 1);
+                    model.setValueAt(add, Menu.tableClientes.getSelectedRow(), 2);
+                    model.setValueAt(ph, Menu.tableClientes.getSelectedRow(), 3);
+                    model.setValueAt(nit, Menu.tableClientes.getSelectedRow(), 4);
+                }catch(NumberFormatException nbr){
+                    JOptionPane.showMessageDialog(null, "Ha ingresado un dato erroneo.");
+                }
             }
 
         });

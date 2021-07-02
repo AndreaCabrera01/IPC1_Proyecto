@@ -18,9 +18,9 @@ public class Menu {
 
     //Variables globales
     public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static String textologA = "";
     public static String textolog="";
     public static JPanel usuarios;
-
     public static JPanel clientes;
     public static JPanel productos;
     public static JPanel facturas;
@@ -29,6 +29,8 @@ public class Menu {
     public static JTable table;
     public static JTable tableProductos;
     public static DefaultTableModel modelProductos2;
+    public static JTable tableProductos2;
+    public static JTable tableIngredientes;
     public static JTable tableFacturas;
     public static DefaultTableModel modelFacturas2;
     public static  JTable tableClientes;
@@ -56,6 +58,11 @@ public class Menu {
     public static String nameP;
     public static String descP;
     public static String costP, priceP;
+    //Ingredientes
+    public static String idP2;
+    public static String nameI;
+    public static int cantI;
+    public static String unitsI;
 
 
     public static void FILA(Object[] usuariosexistentes){
@@ -83,7 +90,7 @@ public class Menu {
         model.addRow(facturas);
     }
     public static void FILAF2(Object[] ProduFacturas){
-        modelFacturas2.setRowCount(0);
+
         modelFacturas2.addRow(ProduFacturas);
     }
 
@@ -214,21 +221,25 @@ public class Menu {
         editarUsuarios.setFont(new Font("Bahnschrift", 0, 30));
         editarUsuarios.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
-                int sR = table.getSelectedRow();
-                TableModel m = table.getModel();
-                usu = m.getValueAt(sR, 0).toString();
-                con = m.getValueAt(sR, 1).toString();
+                try{
+                    int sR = table.getSelectedRow();
+                    TableModel m = table.getModel();
+                    usu = m.getValueAt(sR, 0).toString();
+                    con = m.getValueAt(sR, 1).toString();
 
-                EditarUsu EUsu = new EditarUsu();
-                EUsu.getContentPane().setBackground(Color.ORANGE);
-                EUsu.setVisible(true);
+                    EditarUsu EUsu = new EditarUsu();
+                    EUsu.getContentPane().setBackground(Color.ORANGE);
+                    EUsu.setVisible(true);
 
-                EditarUsu.txtNomP.setText(usu);
-                EditarUsu.txtApe.setText(con);
+                    EditarUsu.txtNomP.setText(usu);
+                    EditarUsu.txtApe.setText(con);
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, "Seleccione un Usuario.");
+                }
             }
         });
 
-        //Eliminar
+        //Eliminar usuario
         JButton eliminarUsuarios = new JButton("Eliminar");
         eliminarUsuarios.setBounds(920, 400, 175, 45);
         eliminarUsuarios.setBackground(new Color(198, 11, 11));
@@ -239,12 +250,14 @@ public class Menu {
                 DefaultTableModel model = (DefaultTableModel)table.getModel();
                 try{
                     int S = table.getSelectedRow();
+                    textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha eliminado al usuario: "+main.usuariosA.get(S).getUsername();
                     model.removeRow(S);
                     main.usuariosA.remove(S);
+                    Archivo.LogAcciones(textologA);
 
                 }
                 catch(Exception ex){
-                    JOptionPane.showMessageDialog(null, ex);
+                    JOptionPane.showMessageDialog(null, "Seleccione un Usuario.");
                 }
             }
         });
@@ -259,10 +272,6 @@ public class Menu {
                 CrearUsu CrU = new CrearUsu();
                 CrU.getContentPane().setBackground(Color.ORANGE);
                 CrU.setVisible(true);
-
-
-
-
             }
 
         });
@@ -300,23 +309,30 @@ public class Menu {
         editarClientes.setFont(new Font("Bahnschrift", 0, 30));
         editarClientes.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
-                int sR = tableClientes.getSelectedRow();
-                TableModel m = tableClientes.getModel();
-                idCliente = m.getValueAt(sR, 0).toString();
-                NCliente = m.getValueAt(sR, 1).toString();
-                address = m.getValueAt(sR, 2).toString();
-                phone = m.getValueAt(sR, 3).toString();
-                NIT = m.getValueAt(sR, 4).toString();
+                try{
+                    int sR = tableClientes.getSelectedRow();
+                    TableModel m = tableClientes.getModel();
+                    idCliente = m.getValueAt(sR, 0).toString();
+                    NCliente = m.getValueAt(sR, 1).toString();
+                    address = m.getValueAt(sR, 2).toString();
+                    phone = m.getValueAt(sR, 3).toString();
+                    NIT = m.getValueAt(sR, 4).toString();
 
-                EditarClient EClient = new EditarClient();
-                EClient.getContentPane().setBackground(Color.ORANGE);
-                EClient.setVisible(true);
+                    EditarClient EClient = new EditarClient();
+                    EClient.getContentPane().setBackground(Color.ORANGE);
+                    EClient.setVisible(true);
 
-                EditarClient.txtID.setText(idCliente);
-                EditarClient.txtNClient.setText(NCliente);
-                EditarClient.txtAddress.setText(address);
-                EditarClient.txtPhone.setText(phone);
-                EditarClient.txtNIT.setText(NIT);
+                    EditarClient.txtID.setText(idCliente);
+                    EditarClient.txtNClient.setText(NCliente);
+                    EditarClient.txtAddress.setText(address);
+                    EditarClient.txtPhone.setText(phone);
+                    EditarClient.txtNIT.setText(NIT);
+                }catch(NumberFormatException nbr){
+                    JOptionPane.showMessageDialog(null, "Ha ingresado un dato erroneo.");
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, "Seleccione un Cliente");
+                }
+
             }
         });
      //Eliminar
@@ -330,12 +346,14 @@ public class Menu {
                 DefaultTableModel model = (DefaultTableModel)tableClientes.getModel();
                 try{
                     int S = tableClientes.getSelectedRow();
+                    textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha eliminado al cliente con id: "+main.clientesA.get(S).getId()+".";
+                    Archivo.LogAcciones(textologA);
                     model.removeRow(S);
                     main.clientesA.remove(S);
 
                 }
                 catch(Exception ex){
-                    JOptionPane.showMessageDialog(null, ex);
+                    JOptionPane.showMessageDialog(null, "Seleccione un Cliente");
                 }
             }
         });
@@ -389,35 +407,74 @@ public class Menu {
         cuadroBlancoP.setBackground(new Color(255,255,255, 169));
 
         //Botones de Configuracion
-        //Editar
-        JButton editarProductos = new JButton("Editar");
-        editarProductos.setBounds(1070, 300, 175, 45);
+        //Editar Producto
+        JButton editarProductos = new JButton("Editar Producto");
+        editarProductos.setBounds(1070, 250, 175, 45);
         editarProductos.setBackground(new Color(255, 188, 14));
         editarProductos.setFont(new Font("Bahnschrift", 0, 30));
         editarProductos.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
-                int sR = tableProductos.getSelectedRow();
-                TableModel m = tableProductos.getModel();
-                idP = (m.getValueAt(sR, 0).toString());
-                nameP = m.getValueAt(sR, 1).toString();
-                descP = m.getValueAt(sR, 2).toString();
-                costP = (m.getValueAt(sR, 3).toString());
-                priceP =(m.getValueAt(sR, 4).toString());
+                try{
+                    int sR = tableProductos.getSelectedRow();
+                    TableModel m = tableProductos.getModel();
+                    idP = (m.getValueAt(sR, 0).toString());
+                    nameP = m.getValueAt(sR, 1).toString();
+                    descP = m.getValueAt(sR, 2).toString();
+                    costP = (m.getValueAt(sR, 3).toString());
+                    priceP =(m.getValueAt(sR, 4).toString());
 
-                EditarProdu EPru = new EditarProdu();
-                EPru.getContentPane().setBackground(Color.ORANGE);
-                EPru.setVisible(true);
+                    EditarProdu EPru = new EditarProdu();
+                    EPru.getContentPane().setBackground(Color.ORANGE);
+                    EPru.setVisible(true);
 
-                EditarProdu.txtUsu.setText(idP);
-                EditarProdu.txtPass.setText(nameP);
-                EditarProdu.txtDescripcion.setText(descP);
-                EditarProdu.txtCosto.setText(costP);
-                EditarProdu.txtPrecio.setText(priceP);
+                    EditarProdu.txtUsu.setText(idP);
+                    EditarProdu.txtPass.setText(nameP);
+                    EditarProdu.txtDescripcion.setText(descP);
+                    EditarProdu.txtCosto.setText(costP);
+                    EditarProdu.txtPrecio.setText(priceP);
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, "Seleccione un Productos.");
+                }
             }
         });
 
+        //Botón EditarIngrediente
+        JButton editarIngrediente = new JButton("Editar Ingrediente");
+        editarIngrediente.setBounds(1070, 350, 175, 45);
+        editarIngrediente.setBackground(new Color(255, 188, 14));
+        editarIngrediente.setFont(new Font("Bahnschrift", 0, 30));
+        editarIngrediente.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                try{
+                    int sR1 = tableProductos.getSelectedRow();
+                    TableModel m1 = tableProductos.getModel();
+                    idP2 = (m1.getValueAt(sR1, 0).toString());
+
+                    int sR = tableIngredientes.getSelectedRow();
+                    TableModel m = tableIngredientes.getModel();
+                    nameI = (m.getValueAt(sR, 0).toString());
+                    cantI = Integer.parseInt(m.getValueAt(sR, 1).toString());
+                    unitsI = m.getValueAt(sR, 2).toString();
+
+
+                    EditIngredientes EIng = new EditIngredientes();
+                    EIng.getContentPane().setBackground(Color.ORANGE);
+                    EIng.setVisible(true);
+
+                    EditIngredientes.txtName.setText(nameI);
+                    EditIngredientes.txtCantidad.setText(String.valueOf(cantI));
+                    EditIngredientes.txtUnits.setText(unitsI);
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, "Seleccione un Ingrediente.");
+                }
+
+
+            }
+        });
+
+        //Crear Producto
         JButton crearProducto = new JButton("Crear Producto");
-        crearProducto.setBounds(1030, 500, 250, 45);
+        crearProducto.setBounds(1030, 450, 250, 45);
         crearProducto.setBackground(new Color(82, 186, 42));
         crearProducto.setFont(new Font("Bahnschrift", 0, 23));
         crearProducto.addMouseListener(new MouseAdapter(){
@@ -429,9 +486,9 @@ public class Menu {
 
         });
 
-
+        //Eliminar Producto
         JButton eliminarProducto = new JButton("Eliminar");
-        eliminarProducto.setBounds(1070, 400, 175, 45);
+        eliminarProducto.setBounds(1070, 550, 175, 45);
         eliminarProducto.setBackground(new Color(198, 11, 11));
         eliminarProducto.setFont(new Font("Bahnschrift", 0, 30));
         eliminarProducto.addMouseListener(new MouseAdapter(){
@@ -439,14 +496,14 @@ public class Menu {
                 DefaultTableModel model = (DefaultTableModel)tableProductos.getModel();
                 try{
                     int S = tableProductos.getSelectedRow();
+                    textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha eliminado el producto con id: "+main.productosA.get(S).getId()+".";
+                    Archivo.LogAcciones(textologA);
                     model.removeRow(S);
                     main.productosA.remove(S);
                     modelProductos2.setRowCount(0);
-
-
                 }
                 catch(Exception ex){
-                    JOptionPane.showMessageDialog(null, ex);
+                    JOptionPane.showMessageDialog(null, "Seleccione un Producto");
                 }
             }
         });
@@ -460,6 +517,7 @@ public class Menu {
         productos.add(tProductos);
         productos.add(cProductos);
         productos.add(editarProductos);
+        productos.add(editarIngrediente);
         productos.add(crearProducto);
         productos.add(eliminarProducto);
         productos.add(cuadroBlancoP);
@@ -521,13 +579,6 @@ public class Menu {
         guardar.setBackground(new Color(139, 147, 28));
         guardar.setForeground(Color.WHITE);
 
-        guardar.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent e) {
-               SerializacionJ();
-                JOptionPane.showMessageDialog(null, "Se han guardado los datos.");
-            }
-
-        });
 
 
         //Cada una de las pestañas para seleccionar opción/submenú
@@ -553,6 +604,8 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 main.Login();
+                textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha cerrado sesión.";
+                Archivo.LogAcciones(textologA);
                 frame.dispose();
             }
         });
@@ -561,7 +614,10 @@ public class Menu {
         guardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //METER EL MÉTODO
+                SerializacionJ();
+                textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha guardado cambios.";
+                Archivo.LogAcciones(textologA);
+                JOptionPane.showMessageDialog(null, "Se han guardado los datos.");
             }
         });
 
@@ -645,6 +701,8 @@ public class Menu {
                         }
 
                         if(guardar){
+                            textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha actualizado la configuración del restaurante.";
+                            Archivo.LogAcciones(textologA);
                             JOptionPane.showMessageDialog(null,"Datos actualizados.");
                             ConfigName.setText(main.configs.getName());
                             ConfigPhone.setText(String.valueOf(main.configs.getPhone()));
@@ -735,9 +793,9 @@ public class Menu {
         productos.add(sp);
 
         modelProductos2 = new DefaultTableModel();
-        JTable tableP = new JTable(modelProductos2);
-        tableP.setRowHeight(20);
-        tableP.setFont(new Font("Century Gothic", 0, 13));
+        tableIngredientes = new JTable(modelProductos2);
+        tableIngredientes.setRowHeight(20);
+        tableIngredientes.setFont(new Font("Century Gothic", 0, 13));
         modelProductos2.addColumn("Name");
         modelProductos2.addColumn("Quantity");
         modelProductos2.addColumn("Units");
@@ -757,7 +815,7 @@ public class Menu {
 
         });
 
-        JScrollPane sp2 = new JScrollPane(tableP);
+        JScrollPane sp2 = new JScrollPane(tableIngredientes);
         sp2.setEnabled(false);
         sp2.setBounds(650,80,300,600);
         sp2.setVisible(true);
@@ -772,7 +830,6 @@ public class Menu {
             if(main.productosA.get(i).getId() == id){
                 ArrayList<Ingredients> ingrediente = main.productosA.get(i).getIngredients();
                 for (int j = 0; j < ingrediente.size(); j++) {
-
                     modelProductos2.addRow(new Object[]{ingrediente.get(j).getName(), ingrediente.get(j).getQuantity(),ingrediente.get(j).getUnits()});
                 }
             }
@@ -802,9 +859,9 @@ public class Menu {
         facturas.add(sp);
 
         modelFacturas2 = new DefaultTableModel();
-        JTable tableF = new JTable(modelFacturas2);
-        tableF.setRowHeight(20);
-        tableF.setFont(new Font("Century Gothic", 0, 13));
+        tableProductos2 = new JTable(modelFacturas2);
+        tableProductos2.setRowHeight(20);
+        tableProductos2.setFont(new Font("Century Gothic", 0, 13));
         modelFacturas2.addColumn("Name");
         modelFacturas2.addColumn("Price");
 
@@ -822,7 +879,7 @@ public class Menu {
             }
         });
 
-        JScrollPane sp2 = new JScrollPane(tableF);
+        JScrollPane sp2 = new JScrollPane(tableProductos2);
         sp2.setEnabled(false);
         sp2.setBounds(550,80,250,400);
         sp2.setVisible(true);

@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -6,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class AgregarIngrediente extends JFrame{
+public class EditIngredientes extends JFrame{
 
     public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     public static String textologA = "";
@@ -19,13 +20,13 @@ public class AgregarIngrediente extends JFrame{
     private double cost;
     private double price;
 
-    public AgregarIngrediente(){
+    public EditIngredientes(){
         this.setBounds(500, 210, 500, 690);
-        this.setTitle("AGREGAR INGREDIENTES");
+        this.setTitle("EDITAR INGREDIENTE");
 
 
         // CREACIÓN DE LAS LABELS:
-        JLabel Titulo = new JLabel("Agregar un Nuevo Ingrediente");
+        JLabel Titulo = new JLabel("Editar un Ingrediente");
         this.add(Titulo);
         this.setLayout(null);
         Titulo.setFont(new Font("Century Gothic", Font.BOLD, 24));
@@ -75,60 +76,48 @@ public class AgregarIngrediente extends JFrame{
         Agregar.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         Agregar.setBackground(Color.LIGHT_GRAY);
         Agregar.setBounds(75, 280, 300, 40);
-
-        //Boton para Nuevo Ingrediente
-        Nuevo = new JButton("Nuevo Ingrediente");
-        this.add(Nuevo);
-        Nuevo.setFont(new Font("Century Gothic", Font.PLAIN, 18));
-        Nuevo.setBackground(Color.LIGHT_GRAY);
-        Nuevo.setBounds(75, 330, 300, 40);
-
         Agregar.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e) {
-                try{
-                    if(txtName.getText().equals("")||txtUnits.getText().equals("")||txtCantidad.getText().equals("")){
-                        JOptionPane.showMessageDialog(null, "Por favor, ingrese todos los datos");
-                    }else{
-                        GuardarDatosIngresados();
-                        Producto nuevo = new Producto(idProducto, nameProducto, descripcion, cost, price, Ingredientes);
-                        main.productosA.add(nuevo);
-                        textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha creado el producto con id: "+idProducto+".";
-                        Archivo.LogAcciones(textologA);
-                        Menu.FILAP(new Object[]{
-                                idProducto,
-                                nameProducto,
-                                descripcion,
-                                cost,
-                                price
-                        });
-                        AgregarIngrediente.super.dispose();
-                    }
-                }catch(NumberFormatException nbr){
-                    JOptionPane.showMessageDialog(null, "Ha ingresado un dato erroneo.");
-                }
-
+                GuardarDatosIngresados();
+                EditIngredientes.super.dispose();
             }
+
         });
 
-        Nuevo.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-              GuardarDatosIngresados();
-                txtCantidad.setText("");
-                txtUnits.setText("");
-                txtName.setText("");
-                super.mouseClicked(e);
-            }
-        });
+
     }
 
     public void GuardarDatosIngresados(){
         try{
-            String name = txtName.getText();
-            String units = txtUnits.getText();
-            int cant = Integer.parseInt(txtCantidad.getText());
-            Ingredients ingrediente = new Ingredients(name, cant, units);
-            Ingredientes.add(ingrediente);
+            if(txtName.getText().equals("")||txtUnits.getText().equals("")||txtCantidad.getText().equals("")){
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese todos los datos");
+            }else{
+                DefaultTableModel model = (DefaultTableModel)Menu.tableIngredientes.getModel();
+                String name = txtName.getText();
+                String units = txtUnits.getText();
+                int cant = Integer.parseInt(txtCantidad.getText());
+
+                for (int i=0; i<main.productosA.size() ; i++) {
+                    if (main.productosA.get(i).getId()== Integer.parseInt(Menu.idP2)){
+                        for (int j = 0; j < main.productosA.get(i).getIngredients().size(); j++) {
+                            if(main.productosA.get(i).getIngredients().get(j).getName().equals(Menu.nameI)){
+                                main.productosA.get(i).getIngredients().get(j).setName(name);
+                                main.productosA.get(i).getIngredients().get(j).setQuantity(cant);
+                                main.productosA.get(i).getIngredients().get(j).setUnits(units);
+                                textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha editado los ingredientes del producto con id: "+Menu.idP2+".";
+                                Archivo.LogAcciones(textologA);
+                            }
+                        }
+                    }
+                }
+                model.setValueAt(name, Menu.tableIngredientes.getSelectedRow(), 0);
+                model.setValueAt(String.valueOf(cant), Menu.tableIngredientes.getSelectedRow(), 1);
+                model.setValueAt(units, Menu.tableIngredientes.getSelectedRow(), 2);
+
+
+                EditIngredientes.super.dispose();
+
+            }
         }catch(NumberFormatException nbr){
             JOptionPane.showMessageDialog(null, "Ha ingresado un dato erroneo.");
         }
@@ -136,11 +125,4 @@ public class AgregarIngrediente extends JFrame{
     }
 
 
-    public void RecibirDatos(int idProducto, String nameProducto,String descripcion, double cost, double price){
-        this.idProducto = idProducto;
-        this.nameProducto = nameProducto;
-        this.descripcion = descripcion;
-        this.cost = cost;
-        this.price = price;
-    }
 }

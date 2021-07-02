@@ -4,9 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class CrearClient extends JFrame {
 
+    public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    public static String textologA = "";
     public static JTextField txtID;
     public static JTextField txtNClient;
     public static JTextField txtAddress;
@@ -101,32 +105,44 @@ public class CrearClient extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 String s = "";
                 boolean duplicado = false;
-                for (int i = 0; i < Menu.tableClientes.getRowCount(); i++) {
-                    s = Menu.tableClientes.getValueAt(i, 0).toString().trim();
-
-                    if (txtID.getText().equals("")) {
+                try{
+                    if(txtID.getText().equals("")||txtNClient.getText().equals("")||txtAddress.getText().equals("")||txtPhone.getText().equals("")||txtNIT.getText().equals("")){
                         JOptionPane.showMessageDialog(null, "Ingrese todos los datos.");
-                    } else {
-                        if (txtID.getText().equals(s)) {
-                            duplicado = true;
-                            break;
+                    }else{
+                        for (int i = 0; i < Menu.tableClientes.getRowCount(); i++) {
+                            s = Menu.tableClientes.getValueAt(i, 0).toString().trim();
+
+                            if (txtID.getText().equals("")) {
+                                JOptionPane.showMessageDialog(null, "Ingrese todos los datos.");
+                            } else {
+                                if (txtID.getText().equals(s)) {
+                                    duplicado = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (!duplicado) {
+                            int ID = Integer.parseInt(txtID.getText());
+                            String Nom = txtNClient.getText();
+                            String Add = txtAddress.getText();
+                            int Phone = Integer.parseInt(txtPhone.getText());
+                            String NIT = txtNIT.getText();
+
+                            Menu.FILAC(new Object[]{txtID.getText(), txtNClient.getText(),txtAddress.getText(), txtPhone.getText(), txtNIT.getText()});
+
+
+                            Cliente nuevo = new Cliente(ID, Nom, Add, Phone, NIT);
+                            main.clientesA.add(nuevo);
+                            textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha creado al cliente con id: "+ID+".";
+                            Archivo.LogAcciones(textologA);
+                            CrearClient.super.dispose();
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "No es posible tener usuario repetido, inténtelo de nuevo.");
                         }
                     }
-                }
-                if (!duplicado) {
-                    Menu.FILAC(new Object[]{txtID.getText(), txtNClient.getText(),txtAddress.getText(), txtPhone.getText(), txtNIT.getText()});
-                    int ID = Integer.parseInt(txtID.getText());
-                    String Nom = txtNClient.getText();
-                    String Add = txtAddress.getText();
-                    int Phone = Integer.parseInt(txtPhone.getText());
-                    String NIT = txtNIT.getText();
-
-                    Cliente nuevo = new Cliente(ID, Nom, Add, Phone, NIT);
-                    main.clientesA.add(nuevo);
-                    CrearClient.super.dispose();
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "No es posible tener usuario repetido, inténtelo de nuevo.");
+                }catch(NumberFormatException nbr){
+                    JOptionPane.showMessageDialog(null, "Ha ingresado un dato erroneo.");
                 }
             }
 
