@@ -6,13 +6,14 @@ public class Factura implements Serializable {
     private int id;
     private int client;
     private String date;
-    private ArrayList<Producto> products;
+    private ArrayList<ProductosFactura> products;
 
-    public Factura (int id, int client, String date){
+    public Factura (int id, int client, String date, ArrayList<ProductosFactura> products){
 
         this.id=id;
         this.client=client;
         this.date=date;
+        this.products = products;
 
     }
 
@@ -68,11 +69,11 @@ public class Factura implements Serializable {
         this.date = date;
     }
 
-    public ArrayList<Producto> getProducts() {
+    public ArrayList<ProductosFactura> getProducts() {
         return products;
     }
 
-    public void setProducts(ArrayList<Producto> products) {
+    public void setProducts(ArrayList<ProductosFactura> products) {
         this.products = products;
     }
 }

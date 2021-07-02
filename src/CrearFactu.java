@@ -2,12 +2,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class CrearFactu extends JFrame {
 
     public static JTextField txtFecha,txtId;
     public static JComboBox BoxClients;
+    public static JComboBox BoxDia, BoxMes;
     JButton Agregar;
+    public static String fecha;
+     public static int idFactura,idCliente;
 
 
     public static String a;
@@ -54,22 +58,28 @@ public class CrearFactu extends JFrame {
         this.add(txtFecha);
         this.setLayout(null);
         txtFecha.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-        txtFecha.setBounds(150,230,250,30);
+        txtFecha.setBounds(150,230,100,30);
+
+        String[] dias = new String[]{"01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
+        BoxDia = new JComboBox(dias);
+        BoxDia.setBounds(350,230,80,30);
+        this.add(BoxDia);
+
+        String[] mes = new String[]{"01","02","03","04","05","06","07","08","09","10","11","12"};
+        BoxMes = new JComboBox(mes);
+        BoxMes.setBounds(260,230,80,30);
+        this.add(BoxMes);
 
 
-        String[] NOMBRES = new String[3];
-        NOMBRES[0]="n1";
-        NOMBRES[1]="n2";
-        NOMBRES[2]="n3";
+        String[] NOMBRES = ListadoClientes();
         BoxClients = new JComboBox(NOMBRES);
         BoxClients.setBounds(150,180,250,30);
-
         this.add(BoxClients);
 
 
 
         //Boton para guardar
-        Agregar = new JButton("Agregar");
+        Agregar = new JButton("Siguiente");
         this.add(Agregar);
         Agregar.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         Agregar.setBackground(Color.LIGHT_GRAY);
@@ -80,24 +90,38 @@ public class CrearFactu extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 String s = "";
                 boolean duplicado = false;
+
                 for (int i = 0; i <main.facturasA.size(); i++) {
                     if (Integer.parseInt(txtId.getText())==main.facturasA.get(i).getId()) {
                       duplicado=true;
                     }
                 }
                 if (!duplicado) {
-                    Menu.FILAP(new Object[]{
-                            txtId.getText(),
-                            BoxClients.getSelectedItem(),
-                            txtFecha.getText()
-
-                    });
-                    int id = Integer.parseInt(txtId.getText());
                     String cliente = BoxClients.getSelectedItem().toString();
-                    String fecha = txtFecha.getText();
+                    String[] datosCliente = cliente.split("-");
 
-                    Factura nuevo = new Factura(id,1,fecha);
-                    main.facturasA.add(nuevo);
+                    String año = txtFecha.getText();
+                    String mes = BoxMes.getSelectedItem().toString();
+                    String dia = BoxDia.getSelectedItem().toString();
+
+                    idFactura = Integer.parseInt(txtId.getText());
+                    String nombreCliente = datosCliente[1];
+                    idCliente = Integer.parseInt(datosCliente[0]);
+                    fecha = año+"-"+mes+"-"+dia;
+
+
+
+
+
+                    AgregarProducto AgrPro = new AgregarProducto();
+                    AgrPro.RecibirDatos(idFactura,idCliente,nombreCliente,fecha);
+                    AgrPro.getContentPane().setBackground(Color.ORANGE);
+                    AgrPro.setVisible(true);
+
+
+
+
+
 //                    nuevo.setIngredients();
 
                     CrearFactu.super.dispose();
@@ -111,5 +135,19 @@ public class CrearFactu extends JFrame {
         });
 
     }
+
+    public String[] ListadoClientes(){
+        String[] nombresClientes = new String[main.clientesA.size()+1];
+        nombresClientes[0]="Seleccione un Cliente";
+        for (int i = 0; i < main.clientesA.size(); i++) {
+            nombresClientes[i+1]=main.clientesA.get(i).getId()+"-"+main.clientesA.get(i).getName();
+        }
+        return nombresClientes;
+    }
+
+
+
+
+
 
 }

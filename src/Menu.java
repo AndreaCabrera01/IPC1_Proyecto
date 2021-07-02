@@ -63,7 +63,7 @@ public class Menu {
         model.addRow(usuariosexistentes);
     }
 
-
+    //**PRODUCTOS**
     public static void FILAP(Object[] usuariosexistentes){
         DefaultTableModel model = (DefaultTableModel)tableProductos.getModel();
         model.addRow(usuariosexistentes);
@@ -75,6 +75,16 @@ public class Menu {
     public static void FILAC(Object[] clientes){
         DefaultTableModel model = (DefaultTableModel)tableClientes.getModel();
         model.addRow(clientes);
+    }
+
+    //**FACTURAS**
+    public static void FILAF(Object[] facturas){
+        DefaultTableModel model = (DefaultTableModel)tableFacturas.getModel();
+        model.addRow(facturas);
+    }
+    public static void FILAF2(Object[] ProduFacturas){
+        modelFacturas2.setRowCount(0);
+        modelFacturas2.addRow(ProduFacturas);
     }
 
 
@@ -511,6 +521,14 @@ public class Menu {
         guardar.setBackground(new Color(139, 147, 28));
         guardar.setForeground(Color.WHITE);
 
+        guardar.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+               SerializacionJ();
+                JOptionPane.showMessageDialog(null, "Se han guardado los datos.");
+            }
+
+        });
+
 
         //Cada una de las pestañas para seleccionar opción/submenú
         pestañas.add("Information", info);
@@ -557,7 +575,7 @@ public class Menu {
                 editConfig.setLayout(null);
                 editConfig.setResizable(false);
 
-//Config del nombre
+                //Config del nombre
                 JLabel nombre = new JLabel("Nombre del Restaurante: ");
                 nombre.setBounds(10, 100, 300, 30);
                 nombre.setFont(new Font("Century Gothic", 0, 20));
@@ -566,7 +584,7 @@ public class Menu {
                 name.setFont(new Font("Century Gothic", 0, 20));
 
 
-//Config de la dirección
+                //Config de la dirección
                 JLabel direccion = new JLabel("Direccion del Restaurante: ");
                 direccion.setBounds(10, 200, 300, 30);
                 direccion.setFont(new Font("Century Gothic", 0, 20));
@@ -575,7 +593,7 @@ public class Menu {
                 address.setFont(new Font("Century Gothic", 0, 20));
 
 
-//Config del numero
+                //Config del numero
                 JLabel numero = new JLabel("Teléfono del Restaurante: ");
                 numero.setBounds(10, 300, 300, 30);
                 numero.setFont(new Font("Century Gothic", 0, 20));
@@ -584,7 +602,7 @@ public class Menu {
                 number.setFont(new Font("Century Gothic", 0, 20));
 
 
-//Botón guardar Config
+                //Botón guardar Config
                 JButton guardarConfig = new JButton("Guardar");
                 guardarConfig.setBounds(100, 400, 200, 75);
                 guardarConfig.setBackground(new Color(234, 195, 47));
@@ -816,7 +834,7 @@ public class Menu {
         modelFacturas2.setRowCount(0);
         for (int i = 0; i <main.facturasA.size(); i++) {
             if(main.facturasA.get(i).getId() == id){
-                ArrayList<Producto> producto = main.facturasA.get(i).getProducts();
+                ArrayList<ProductosFactura> producto = main.facturasA.get(i).getProducts();
                 for (int j = 0; j < producto.size(); j++) {
                     modelFacturas2.addRow(new Object[]{producto.get(j).getName(), producto.get(j).getPrice()});
                 }
@@ -1301,6 +1319,10 @@ public class Menu {
     //Método que serializa a Json
     public static void SerializacionJ(){
         Gson gson = new Gson();
+
+        String JsonConfig = gson.toJson(main.configs);
+        Archivo.writeOnFile("config.json",JsonConfig,false);
+
         String JsonUsuarios = gson.toJson(main.usuariosA);
         Archivo.writeOnFile("users.json",JsonUsuarios,false);
 

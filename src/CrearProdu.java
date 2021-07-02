@@ -114,21 +114,26 @@ public class CrearProdu extends JFrame {
                     }
                 }
                 if (!duplicado) {
-                    Menu.FILAP(new Object[]{
-                            txtUsu.getText(),
-                            txtPass.getText(),
-                            txtDescripcion.getText(),
-                            txtCosto.getText(),
-                            txtPrecio.getText()
-                    });
+//                    Menu.FILAP(new Object[]{
+//                            txtUsu.getText(),
+//                            txtPass.getText(),
+//                            txtDescripcion.getText(),
+//                            txtCosto.getText(),
+//                            txtPrecio.getText()
+//                    });
                     int id = Integer.parseInt(txtUsu.getText());
                     String nombre = txtPass.getText();
                     String descr = txtDescripcion.getText();
                     double cost = Double.parseDouble(txtCosto.getText());
                     double price = Double.parseDouble(txtPrecio.getText());
 
-                    Producto nuevo = new Producto(id,nombre,descr,cost,price);
-                    main.productosA.add(nuevo);
+//                    Producto nuevo = new Producto(id,nombre,descr,cost,price);
+//                    main.productosA.add(nuevo);
+
+                    AgregarIngrediente AgrIngrediente = new AgregarIngrediente();
+                    AgrIngrediente.RecibirDatos(id, nombre, descr, cost, price);
+                    AgrIngrediente.getContentPane().setBackground(Color.ORANGE);
+                    AgrIngrediente.setVisible(true);
 //                    nuevo.setIngredients();
 
                     CrearProdu.super.dispose();

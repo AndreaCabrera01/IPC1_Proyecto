@@ -10,12 +10,13 @@ public class Producto implements Serializable {
     private double price;
     private ArrayList<Ingredients> ingredients;
 
-    public Producto(int id, String name, String description, double cost, double price){
+    public Producto(int id, String name, String description, double cost, double price, ArrayList<Ingredients> ingredients){
     this.id=id;
     this.name=name;
     this.description=description;
     this.cost=cost;
     this.price=price;
+    this.ingredients = ingredients;
 
     }
 
@@ -34,11 +35,7 @@ public class Producto implements Serializable {
             }
     }
 
-    //Según la factura, lista los productos que se enlazan a esta (la factura)
-    public void ListarProductoparaFactur() {
-        System.out.println("> Name: " + name + "         ");
-        System.out.println("> Price: " + price + "        ");
-    }
+
 
     //GETTERS AND SETTERS
     public int getId() {

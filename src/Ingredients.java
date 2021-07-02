@@ -6,6 +6,12 @@ public class Ingredients implements Serializable {
     private int quantity;
     private String units;
 
+    public Ingredients(String name, int quantity, String units){
+        this.name = name;
+        this.quantity = quantity;
+        this.units = units;
+    }
+
     //Lista los ingredientes del producto
     public void Listar(){
             System.out.println("> Name: " + name+"         ");
