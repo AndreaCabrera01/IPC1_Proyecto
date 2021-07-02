@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Archivo {
     //Variables públicas utilizadas en los logs
     public static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    private static String textoA = "\n\n | LOG de ACCIONES " +dtf.format(LocalDateTime.now())+" |" ;
+    private static String textoA = "\n | LOG de ACCIONES " +dtf.format(LocalDateTime.now())+" |" ;
 
     //Obtención del contenido de los archivos JSON/Bin
     public static String getContentOfFile(String pathname) {
@@ -123,10 +123,10 @@ public class Archivo {
     //Log de Acciones
     public static void LogAcciones(String texto){
         //System.out.println("Log generado.");
-        textoA += texto;
+        textoA = texto;
         FileWriter flwriter = null;
         try {
-            flwriter = new FileWriter("log.log", false); // True indica que se va a agregar datos al final
+            flwriter = new FileWriter("log.log", true); // True indica que se va a agregar datos al final
             BufferedWriter bfwriter = new BufferedWriter(flwriter);
             // Escribe los datos en el archivo
             bfwriter.write(textoA);

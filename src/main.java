@@ -91,6 +91,8 @@ public class main {
 
         //Según verificaciones, agregar al log de errores
         Archivo.LogErrores(textologE);
+        String textoA = "\n\n | LOG de ACCIONES " +dtf.format(LocalDateTime.now())+" |" ;
+        Archivo.LogAcciones(textoA);
         //Inicio de sesión
         Login();
     }

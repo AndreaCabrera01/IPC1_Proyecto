@@ -98,7 +98,7 @@ public class CrearClient extends JFrame {
         this.add(Agregar);
         Agregar.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         Agregar.setBackground(new Color(10, 166, 206));
-        Agregar.setBounds(75, 450, 300, 40);
+        Agregar.setBounds(75, 400, 300, 40);
 
 
         Agregar.addMouseListener(new MouseAdapter(){
@@ -133,7 +133,7 @@ public class CrearClient extends JFrame {
 
                             Cliente nuevo = new Cliente(ID, Nom, Add, Phone, NIT);
                             main.clientesA.add(nuevo);
-                            textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha creado al cliente con id: "+ID+".";
+                            textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha creado al cliente \""+Nom+"\" con id: "+ID+".";
                             Archivo.LogAcciones(textologA);
                             CrearClient.super.dispose();
 

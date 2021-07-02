@@ -19,7 +19,7 @@ public class CrearFactu extends JFrame {
 
     public static String a;
     public CrearFactu(){
-        this.setBounds(500, 210, 500, 690);
+        this.setBounds(500, 210, 500, 400);
         this.setTitle("AGREGAR NUEVA FACTURA");
 
 
@@ -86,7 +86,7 @@ public class CrearFactu extends JFrame {
         this.add(Agregar);
         Agregar.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         Agregar.setBackground(new Color(10, 166, 206));
-        Agregar.setBounds(75, 450, 300, 40);
+        Agregar.setBounds(75, 300, 300, 40);
 
 
         Agregar.addMouseListener(new MouseAdapter(){

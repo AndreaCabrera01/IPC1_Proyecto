@@ -14,7 +14,7 @@ public class CrearProdu extends JFrame {
 
     public static String a;
     public CrearProdu(){
-        this.setBounds(500, 210, 500, 690);
+        this.setBounds(500, 210, 500, 500);
         this.setTitle("AGREGAR NUEVO PRODUCTO");
 
 
@@ -93,7 +93,7 @@ public class CrearProdu extends JFrame {
         this.add(Agregar);
         Agregar.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         Agregar.setBackground(new Color(10, 166, 206));
-        Agregar.setBounds(75, 450, 300, 40);
+        Agregar.setBounds(75, 400, 300, 40);
 
 
         Agregar.addMouseListener(new MouseAdapter(){

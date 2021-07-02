@@ -17,7 +17,7 @@ public class EditarClient extends JFrame {
     JButton Agregar;
 
     public EditarClient(){
-        this.setBounds(500, 220, 500, 600);
+        this.setBounds(500, 220, 500, 520);
         this.setTitle("Editar Clientes");
         // CREACIÓN DE LAS LABELS:
         JLabel Titulo = new JLabel("Editar Clientes");
@@ -108,13 +108,14 @@ public class EditarClient extends JFrame {
 
                     for (int i=0; i<main.clientesA.size() ; i++) {
                         if (main.clientesA.get(i).getId() == Integer.parseInt(Menu.idCliente)){
+                            textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha editado al cliente \""+main.clientesA.get(i).getName()+"\" con id: "+Menu.idCliente+".";
+                            Archivo.LogAcciones(textologA);
                             main.clientesA.get(i).setId(Integer.parseInt(id));
                             main.clientesA.get(i).setName(nom);
                             main.clientesA.get(i).setAddress(add);
                             main.clientesA.get(i).setPhone(Integer.parseInt(ph));
                             main.clientesA.get(i).setNit(nit);
-                            textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha editado al cliente con id: "+Menu.idCliente+".";
-                            Archivo.LogAcciones(textologA);
+
                             EditarClient.super.dispose();
                         }
                     }

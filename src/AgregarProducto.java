@@ -20,7 +20,7 @@ public class AgregarProducto extends JFrame {
     private int idFactura,idCliente;
 
     public AgregarProducto(){
-        this.setBounds(500, 210, 500, 690);
+        this.setBounds(500, 210, 500, 380);
         this.setTitle("AGREGAR PRODUCTO");
 
 

@@ -18,7 +18,7 @@ public class CrearUsu extends JFrame {
 
     public static String a;
     public CrearUsu(){
-        this.setBounds(500, 210, 500, 590);
+        this.setBounds(500, 210, 500, 340);
         this.setTitle("AGREGAR NUEVO USUARIO");
 
 
@@ -59,7 +59,7 @@ public class CrearUsu extends JFrame {
         this.add(Agregar);
         Agregar.setFont(new Font("Century Gothic", Font.PLAIN, 18));
         Agregar.setBackground(new Color(10, 166, 206));
-        Agregar.setBounds(75, 450, 300, 40);
+        Agregar.setBounds(75, 230, 300, 40);
 
 
         Agregar.addMouseListener(new MouseAdapter(){

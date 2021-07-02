@@ -14,7 +14,7 @@ public class EditarProdu  extends JFrame {
     JButton Agregar;
 
     public EditarProdu(){
-        this.setBounds(500, 210, 500, 600);
+        this.setBounds(500, 210, 500, 500);
         this.setTitle("Editar producto");
         // CREACIÓN DE LAS LABELS:
         JLabel Titulo = new JLabel("Editar Producto");
@@ -59,6 +59,7 @@ public class EditarProdu  extends JFrame {
         //Ingreso Código:
         txtUsu = new JTextField();
         this.add(txtUsu);
+        txtUsu.setEnabled(false);
         txtUsu.setBounds(150,130,250,30);
         txtUsu.setFont(new Font("Century Gothic", Font.PLAIN, 20));
 
@@ -105,11 +106,12 @@ public class EditarProdu  extends JFrame {
 
                 for (int i=0; i<main.productosA.size() ; i++) {
                     if (main.productosA.get(i).getId()== Integer.parseInt(Menu.idP)){
+                        textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha editado el producto \""+main.productosA.get(i).getName()+"\" con id: "+Menu.idP+".";
                         main.productosA.get(i).setName(name);
                         main.productosA.get(i).setDescription(desc);
                         main.productosA.get(i).setCost(cost);
                         main.productosA.get(i).setPrice(price);
-                        textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha editado el producto con id: "+Menu.idP+".";
+
                         Archivo.LogAcciones(textologA);
 
                         EditarProdu.super.dispose();

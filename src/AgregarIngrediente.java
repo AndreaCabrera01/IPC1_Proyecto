@@ -20,7 +20,7 @@ public class AgregarIngrediente extends JFrame{
     private double price;
 
     public AgregarIngrediente(){
-        this.setBounds(500, 210, 500, 690);
+        this.setBounds(500, 210, 500, 430);
         this.setTitle("AGREGAR INGREDIENTES");
 
 
@@ -92,7 +92,7 @@ public class AgregarIngrediente extends JFrame{
                         GuardarDatosIngresados();
                         Producto nuevo = new Producto(idProducto, nameProducto, descripcion, cost, price, Ingredientes);
                         main.productosA.add(nuevo);
-                        textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha creado el producto con id: "+idProducto+".";
+                        textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha creado el producto \""+nameProducto+"\" con id: "+idProducto+".";
                         Archivo.LogAcciones(textologA);
                         Menu.FILAP(new Object[]{
                                 idProducto,

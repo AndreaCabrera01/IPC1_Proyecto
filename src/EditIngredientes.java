@@ -21,7 +21,7 @@ public class EditIngredientes extends JFrame{
     private double price;
 
     public EditIngredientes(){
-        this.setBounds(500, 210, 500, 690);
+        this.setBounds(500, 210, 500, 420);
         this.setTitle("EDITAR INGREDIENTE");
 
 

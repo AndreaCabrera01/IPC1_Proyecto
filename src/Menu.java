@@ -346,7 +346,7 @@ public class Menu {
                 DefaultTableModel model = (DefaultTableModel)tableClientes.getModel();
                 try{
                     int S = tableClientes.getSelectedRow();
-                    textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha eliminado al cliente con id: "+main.clientesA.get(S).getId()+".";
+                    textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha eliminado al cliente \""+main.clientesA.get(S).getName()+"\"con id: "+main.clientesA.get(S).getId()+".";
                     Archivo.LogAcciones(textologA);
                     model.removeRow(S);
                     main.clientesA.remove(S);
@@ -496,7 +496,7 @@ public class Menu {
                 DefaultTableModel model = (DefaultTableModel)tableProductos.getModel();
                 try{
                     int S = tableProductos.getSelectedRow();
-                    textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha eliminado el producto con id: "+main.productosA.get(S).getId()+".";
+                    textologA="\n"+dtf.format(LocalDateTime.now())+"\t"+main.username+": Ha eliminado el producto \""+main.productosA.get(S).getName()+"\" con id: "+main.productosA.get(S).getId()+".";
                     Archivo.LogAcciones(textologA);
                     model.removeRow(S);
                     main.productosA.remove(S);
