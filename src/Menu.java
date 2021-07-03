@@ -214,9 +214,36 @@ public class Menu {
 
 
         //Botones de Configuración
+
+//VER
+        JButton verUsuarios = new JButton("Ver Usuario");
+        verUsuarios.setBounds(1020, 300, 220, 45);
+        verUsuarios.setBackground(new Color(15, 129, 179));
+        verUsuarios.setFont(new Font("Bahnschrift", 0, 30));
+        verUsuarios.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                try{
+                    int sR = table.getSelectedRow();
+                    TableModel m = table.getModel();
+                    usu = m.getValueAt(sR, 0).toString();
+                    con = m.getValueAt(sR, 1).toString();
+
+                    VerUsuarios VUsu = new VerUsuarios();
+                    VUsu.getContentPane().setBackground(new Color(175, 184, 53));
+                    VUsu.setVisible(true);
+
+                    VerUsuarios.txtUsu.setText(usu);
+                    VerUsuarios.txtContra.setText(con);
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, "Seleccione un Usuario.");
+                }
+            }
+        });
+
+
         //Editar
         JButton editarUsuarios = new JButton("Editar");
-        editarUsuarios.setBounds(920, 300, 175, 45);
+        editarUsuarios.setBounds(720, 300, 175, 45);
         editarUsuarios.setBackground(new Color(255, 188, 14));
         editarUsuarios.setFont(new Font("Bahnschrift", 0, 30));
         editarUsuarios.addMouseListener(new MouseAdapter(){
@@ -279,6 +306,7 @@ public class Menu {
 
         usuarios.add(tUsuario);
         usuarios.add(cUsuario);
+        usuarios.add(verUsuarios);
         usuarios.add(editarUsuarios);
         usuarios.add(crearUsuario);
         usuarios.add(eliminarUsuarios);
@@ -302,9 +330,43 @@ public class Menu {
         cuadroBlancoC.setBackground(new Color(255,255,255, 169));
 
         //Botones de configuración
+        //Ver
+        JButton verClientes = new JButton("Ver Clientes");
+        verClientes.setBounds(1000, 300, 220, 45);
+        verClientes.setBackground(new Color(15, 129, 179));
+        verClientes.setFont(new Font("Bahnschrift", 0, 30));
+        verClientes.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                try{
+                    int sR = tableClientes.getSelectedRow();
+                    TableModel m = tableClientes.getModel();
+                    idCliente = m.getValueAt(sR, 0).toString();
+                    NCliente = m.getValueAt(sR, 1).toString();
+                    address = m.getValueAt(sR, 2).toString();
+                    phone = m.getValueAt(sR, 3).toString();
+                    NIT = m.getValueAt(sR, 4).toString();
+
+                    VerClientes EClient = new VerClientes();
+                    EClient.getContentPane().setBackground(new Color(175, 184, 53));
+                    EClient.setVisible(true);
+
+                    VerClientes.txtID.setText(idCliente);
+                    VerClientes.txtNClient.setText(NCliente);
+                    VerClientes.txtAddress.setText(address);
+                    VerClientes.txtPhone.setText(phone);
+                    VerClientes.txtNIT.setText(NIT);
+                }catch(NumberFormatException nbr){
+                    JOptionPane.showMessageDialog(null, "Ha ingresado un dato erroneo.");
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, "Seleccione un Cliente");
+                }
+
+            }
+        });
+
         //Editar
         JButton editarClientes = new JButton("Editar");
-        editarClientes.setBounds(920, 300, 175, 45);
+        editarClientes.setBounds(780, 300, 175, 45);
         editarClientes.setBackground(new Color(255, 188, 14));
         editarClientes.setFont(new Font("Bahnschrift", 0, 30));
         editarClientes.addMouseListener(new MouseAdapter(){
@@ -380,6 +442,7 @@ public class Menu {
 
         clientes.add(tClientes);
         clientes.add(cClientes);
+        clientes.add(verClientes);
         clientes.add(crearClientes);
         clientes.add(eliminarClientes);
         clientes.add(editarClientes);
@@ -399,14 +462,47 @@ public class Menu {
         tIngre.setFont(new Font("Century Gothic", 1+2, 25));
 
         JLabel cProductos = new JLabel("Configuración:");
-        cProductos.setBounds(1020, 180, 500, 50);
+        cProductos.setBounds(1020, 40, 500, 50);
         cProductos.setFont(new Font("Century Gothic", 1+2, 30));
 
         JPanel cuadroBlancoP = new JPanel();
-        cuadroBlancoP.setBounds(1000, 170, 320,450);
+        cuadroBlancoP.setBounds(1000, 30, 320,650);
         cuadroBlancoP.setBackground(new Color(255,255,255, 169));
 
         //Botones de Configuracion
+        //Ver
+        JButton verProducto = new JButton("Ver Producto");
+        verProducto.setBounds(1050, 100, 220, 45);
+        verProducto.setBackground(new Color(15, 129, 179));
+        verProducto.setFont(new Font("Bahnschrift", 0, 18));
+        verProducto.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                try{
+                    int sR = tableProductos.getSelectedRow();
+                    TableModel m = tableProductos.getModel();
+                    idP = (m.getValueAt(sR, 0).toString());
+                    nameP = m.getValueAt(sR, 1).toString();
+                    descP = m.getValueAt(sR, 2).toString();
+                    costP = (m.getValueAt(sR, 3).toString());
+                    priceP =(m.getValueAt(sR, 4).toString());
+
+                    VerProductos EPru = new VerProductos();
+                    EPru.getContentPane().setBackground(new Color(175, 184, 53));
+                    EPru.setVisible(true);
+
+                    VerProductos.txtUsu.setText(idP);
+                    VerProductos.txtPass.setText(nameP);
+                    VerProductos.txtDescripcion.setText(descP);
+                    VerProductos.txtCosto.setText(costP);
+                    VerProductos.txtPrecio.setText(priceP);
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, "Seleccione un Productos.");
+                }
+            }
+        });
+
+
+
         //Editar Producto
         JButton editarProductos = new JButton("Editar Producto");
         editarProductos.setBounds(1050, 250, 220, 45);
@@ -472,6 +568,41 @@ public class Menu {
             }
         });
 
+
+        //Botón VerIngrediente
+        JButton verIngrediente = new JButton("Ver Ingrediente");
+        verIngrediente.setBounds(1050, 180, 220, 45);
+        verIngrediente.setBackground(new Color(15, 129, 179));
+        verIngrediente.setFont(new Font("Bahnschrift", 0, 18));
+        verIngrediente.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                try{
+                    int sR1 = tableProductos.getSelectedRow();
+                    TableModel m1 = tableProductos.getModel();
+                    idP2 = (m1.getValueAt(sR1, 0).toString());
+
+                    int sR = tableIngredientes.getSelectedRow();
+                    TableModel m = tableIngredientes.getModel();
+                    nameI = (m.getValueAt(sR, 0).toString());
+                    cantI = Integer.parseInt(m.getValueAt(sR, 1).toString());
+                    unitsI = m.getValueAt(sR, 2).toString();
+
+
+                    VerIngredientes EIng = new VerIngredientes();
+                    EIng.getContentPane().setBackground(new Color(175, 184, 53));
+                    EIng.setVisible(true);
+
+                    VerIngredientes.txtName.setText(nameI);
+                    VerIngredientes.txtCantidad.setText(String.valueOf(cantI));
+                    VerIngredientes.txtUnits.setText(unitsI);
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, "Seleccione un Ingrediente.");
+                }
+
+
+            }
+        });
+
         //Crear Producto
         JButton crearProducto = new JButton("Crear Producto");
         crearProducto.setBounds(1030, 450, 250, 45);
@@ -516,6 +647,8 @@ public class Menu {
         productos.add(tIngre);
         productos.add(tProductos);
         productos.add(cProductos);
+        productos.add(verProducto);
+        productos.add(verIngrediente);
         productos.add(editarProductos);
         productos.add(editarIngrediente);
         productos.add(crearProducto);
