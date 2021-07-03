@@ -138,7 +138,7 @@ public class CrearClient extends JFrame {
                             CrearClient.super.dispose();
 
                         } else {
-                            JOptionPane.showMessageDialog(null, "No es posible tener usuario repetido, inténtelo de nuevo.");
+                            JOptionPane.showMessageDialog(null, "No es posible tener un cliente repetido, inténtelo de nuevo.");
                         }
                     }
                 }catch(NumberFormatException nbr){

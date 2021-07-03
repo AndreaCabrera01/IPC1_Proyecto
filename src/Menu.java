@@ -64,6 +64,12 @@ public class Menu {
     public static int cantI;
     public static String unitsI;
 
+    //Facturas
+    public static int idF;
+    public static String clienteF;
+    public static String fechaF;
+    public static int idF2;
+
 
     public static void FILA(Object[] usuariosexistentes){
         DefaultTableModel model = (DefaultTableModel)table.getModel();
@@ -697,12 +703,41 @@ public class Menu {
 
         });
 
+        //Ver Factura
+        JButton VerFac = new JButton("Ver Factura");
+        VerFac.setBounds(940, 410, 230, 45);
+        VerFac.setBackground(new Color(15, 129, 179));
+        VerFac.setFont(new Font("Bahnschrift", 0, 30));
+        VerFac.addMouseListener(new MouseAdapter(){
+            public void mouseClicked(MouseEvent e) {
+                try{
+                    int sR = tableFacturas.getSelectedRow();
+                    TableModel m = tableFacturas.getModel();
+                    idF = Integer.parseInt(m.getValueAt(sR, 0).toString());
+                    clienteF = m.getValueAt(sR, 1).toString();
+                    fechaF = m.getValueAt(sR, 2).toString();
+
+                    VerFacturas VFac = new VerFacturas();
+                    VFac.getContentPane().setBackground(new Color(15, 129, 179));
+                    VFac.setVisible(true);
+
+                    VerFacturas.txtId.setText(String.valueOf(idF));
+                    VerFacturas.NOMBRES.setText(String.valueOf(clienteF));
+                    VerFacturas.txtFecha.setText(String.valueOf(fechaF));
+
+                }catch(Exception ex){
+                    JOptionPane.showMessageDialog(null, "Seleccione una Factura.");
+                }
+            }
+        });
         facturas.add(tFacturas);
         facturas.add(tCli);
         facturas.add(cFacturas);
+        facturas.add(VerFac);
         facturas.add(crearFactura);
         facturas.add(cuadroBlancoF);
         facturas.add(fotoFondoFacturas);
+
 
 
         //--------------------GUARDAR--------------------

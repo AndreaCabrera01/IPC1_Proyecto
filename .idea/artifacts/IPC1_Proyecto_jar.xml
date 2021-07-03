@@ -3,7 +3,9 @@
     <output-path>$PROJECT_DIR$/out/artifacts/IPC1_Proyecto_jar</output-path>
     <root id="archive" name="IPC1_Proyecto.jar">
       <element id="module-output" name="IPC1_Proyecto" />
-      <element id="extracted-dir" path="$USER_HOME$/Downloads/gson-2.8.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/uni/IPC 1/librerias/gson-2.8.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/uni/IPC 1/librerias/jcommon-1.0.23.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/uni/IPC 1/librerias/jfreechart-1.0.19.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
