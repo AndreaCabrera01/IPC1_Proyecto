@@ -10,26 +10,30 @@ function leerJSON(){
     const fileReader= new FileReader()
 
     function miOnload(){
+        const config = fileReader.result
         const json = JSON.parse(fileReader.result)
         console.log(json)
+
+        localStorage.setItem('json', JSON.stringify(json))
+        var retrievedObject = localStorage.getItem('json')
+        console.log('retrievedObject',JSON.parse(retrievedObject))
+
     }
     
    fileReader.readAsText(inputJsonConfig.files[0])
-   /* fileReader.readAsText(inputJsonUsers.files[0])
-    fileReader.readAsText(inputJsonClients.files[0])
-    fileReader.readAsText(inputJsonProducts.files[0])
-    fileReader.readAsText(inputJsonInvoices.files[0])*/
-    fileReader.onload = miOnload;
-}
-inputJsonProducts.addEventListener('change', leerJSON);
-inputJsonUsers.addEventListener('change', leerJSON);
-inputJsonConfig.addEventListener('change', leerJSON);
-inputJsonClients.addEventListener('change', leerJSON);
+   fileReader.onload = miOnload;
 
-inputJsonInvoices.addEventListener('change', leerJSON);
+/*localStorage.setItem('testObject', JSON.stringify(testObject));
+var retrievedObject = localStorage.getItem('testObject');
+console.log('retrievedObject: ', JSON.parse(retrievedObject));*/
+
+}
+
+inputJsonConfig.addEventListener('change', leerJSON);
+
 
 //leer Users
-/*function leerJSONUsers(){
+function leerJSONUsers(){
     console.log(inputJsonUsers.files)
     const fileReader= new FileReader()
 
@@ -56,7 +60,7 @@ function leerJSONClientes(){
     fileReader.readAsText(inputJsonClients.files[0])
     fileReader.onload = miOnload;
 }
-inputJsonConfig.addEventListener('change', leerJSONClientes);
+inputJsonClients.addEventListener('change', leerJSONClientes);
 
 //leer Productos
 function leerJSONProducts(){
@@ -71,7 +75,7 @@ function leerJSONProducts(){
     fileReader.readAsText(inputJsonProducts.files[0])
     fileReader.onload = miOnload;
 }
-inputJsonUsers.addEventListener('change', leerJSONProducts);
+inputJsonProducts.addEventListener('change', leerJSONProducts);
 
 //leer facturas
 function leerJSONInvoices(){
@@ -86,4 +90,9 @@ function leerJSONInvoices(){
     fileReader.readAsText(inputJsonInvoices.files[0])
     fileReader.onload = miOnload;
 }
-inputJsonUsers.addEventListener('change', leerJSONInvoices);*/
+inputJsonInvoices.addEventListener('change', leerJSONInvoices);
+
+
+
+
+
