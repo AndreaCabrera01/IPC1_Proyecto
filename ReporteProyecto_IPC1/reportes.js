@@ -3,6 +3,15 @@ const inputJsonUsers = document.getElementById('jsonUsers')
 const inputJsonClients = document.getElementById('jsonClients')
 const inputJsonProducts = document.getElementById('jsonProducts')
 const inputJsonInvoices = document.getElementById('jsonInvoices')
+const divEncabezado = document.getElementById('encabezado')
+
+
+
+
+
+
+
+
 
 //Leer JSON
 
@@ -14,9 +23,7 @@ function leerJSON(){
         const json = JSON.parse(fileReader.result)
         console.log(json)
 
-        localStorage.setItem('json', JSON.stringify(json))
-        var retrievedObject = localStorage.getItem('json')
-        console.log('retrievedObject',JSON.parse(retrievedObject))
+        localStorage.setItem('config', JSON.stringify(json))
 
     }
     
@@ -28,8 +35,9 @@ var retrievedObject = localStorage.getItem('testObject');
 console.log('retrievedObject: ', JSON.parse(retrievedObject));*/
 
 }
-
 inputJsonConfig.addEventListener('change', leerJSON);
+
+
 
 
 //leer Users
@@ -40,12 +48,16 @@ function leerJSONUsers(){
     function miOnload(){
         const jsonUsers = JSON.parse(fileReader.result)
         console.log(jsonUsers)
+
+        localStorage.setItem('users', JSON.stringify(jsonUsers))
     }
 
     fileReader.readAsText(inputJsonUsers.files[0])
     fileReader.onload = miOnload;
 }
 inputJsonUsers.addEventListener('change', leerJSONUsers);
+
+
 
 //leer Clientes
 function leerJSONClientes(){
@@ -55,12 +67,17 @@ function leerJSONClientes(){
     function miOnload(){
         const jsonClients = JSON.parse(fileReader.result)
         console.log(jsonClients)
+
+        localStorage.setItem('clients', JSON.stringify(jsonClients))
     }
 
     fileReader.readAsText(inputJsonClients.files[0])
     fileReader.onload = miOnload;
 }
 inputJsonClients.addEventListener('change', leerJSONClientes);
+
+
+
 
 //leer Productos
 function leerJSONProducts(){
@@ -70,12 +87,17 @@ function leerJSONProducts(){
     function miOnload(){
         const jsonProducts = JSON.parse(fileReader.result)
         console.log(jsonProducts)
+
+        localStorage.setItem('products', JSON.stringify(jsonProducts))
     }
 
     fileReader.readAsText(inputJsonProducts.files[0])
     fileReader.onload = miOnload;
 }
 inputJsonProducts.addEventListener('change', leerJSONProducts);
+
+
+
 
 //leer facturas
 function leerJSONInvoices(){
@@ -85,12 +107,29 @@ function leerJSONInvoices(){
     function miOnload(){
         const jsonFacturas = JSON.parse(fileReader.result)
         console.log(jsonFacturas)
+
+        localStorage.setItem('facturas', JSON.stringify(jsonFacturas))
     }
 
     fileReader.readAsText(inputJsonInvoices.files[0])
     fileReader.onload = miOnload;
 }
-inputJsonInvoices.addEventListener('change', leerJSONInvoices);
+
+
+var ls = JSON.parse(localStorage.getItem('config'));
+Encabezado();
+
+function Encabezado (){
+    let html =``  
+    html += ` ${ls.name} - ${ls.address} - ${ls.phone}`
+divEncabezado.innerHTML = html
+return html;
+}
+
+
+
+inputJsonInvoices.addEventListener('change', leerJSONInvoices)
+
 
 
 
