@@ -22,10 +22,11 @@ function CrearTabla(result){
                 var nombre= cl[j].name
             }
         }
+        if(result[i][1]!=0){
         html +=`
         <tbody>
         <tr><th>${result[i][0]}</th><td>${nombre}</td><td>${result[i][1]}</td><td><button id="ver" type="button" onclick="verInfo(this.value)" value = ${result[i][0]} style="border: 0; background-color:rgba(255,255,255,0.4); border-radius: 25px; height: 36px">&nbsp Ver &nbsp</button></td></tr>`
-
+        }
     }
 
 
