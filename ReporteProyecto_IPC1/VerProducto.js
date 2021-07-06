@@ -36,3 +36,13 @@ function CrearTarjeta(){
 divTarjeta.innerHTML = html
 return html;
 }
+
+const divEncabezado = document.getElementById('encabezado')    
+Encabezado();
+function Encabezado (){
+    var ls = JSON.parse(localStorage.getItem('config'));
+    let html =``  
+    html += ` ${ls.name} - ${ls.address} - ${ls.phone}`
+divEncabezado.innerHTML = html
+return html;
+}

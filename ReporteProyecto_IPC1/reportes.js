@@ -24,6 +24,7 @@ function leerJSON(){
         console.log(json)
 
         localStorage.setItem('config', JSON.stringify(json))
+        alert('Se ha cargado el archivo "config"')
 
     }
     
@@ -50,6 +51,8 @@ function leerJSONUsers(){
         console.log(jsonUsers)
 
         localStorage.setItem('users', JSON.stringify(jsonUsers))
+        alert('Se ha cargado el archivo "Users"')
+
     }
 
     fileReader.readAsText(inputJsonUsers.files[0])
@@ -69,6 +72,8 @@ function leerJSONClientes(){
         console.log(jsonClients)
 
         localStorage.setItem('clients', JSON.stringify(jsonClients))
+        alert('Se ha cargado el archivo "Clients"')
+
     }
 
     fileReader.readAsText(inputJsonClients.files[0])
@@ -89,6 +94,8 @@ function leerJSONProducts(){
         console.log(jsonProducts)
 
         localStorage.setItem('products', JSON.stringify(jsonProducts))
+        alert('Se ha cargado el archivo "Products"')
+
     }
 
     fileReader.readAsText(inputJsonProducts.files[0])
@@ -109,11 +116,15 @@ function leerJSONInvoices(){
         console.log(jsonFacturas)
 
         localStorage.setItem('facturas', JSON.stringify(jsonFacturas))
+        alert('Se ha cargado el archivo "Invoices"')
+
     }
 
     fileReader.readAsText(inputJsonInvoices.files[0])
     fileReader.onload = miOnload;
 }
+
+inputJsonInvoices.addEventListener('change', leerJSONInvoices)
 
 
 var ls = JSON.parse(localStorage.getItem('config'));
@@ -126,9 +137,6 @@ divEncabezado.innerHTML = html
 return html;
 }
 
-
-
-inputJsonInvoices.addEventListener('change', leerJSONInvoices)
 
 
 

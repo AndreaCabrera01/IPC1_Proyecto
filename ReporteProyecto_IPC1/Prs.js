@@ -2,6 +2,8 @@ const divtodosLosProductos = document.getElementById('todosLosProductos')
 const divEncabezado = document.getElementById('encabezado')
 
 
+
+
     
 Encabezado();
 var ls = JSON.parse(localStorage.getItem('products'));
@@ -20,7 +22,7 @@ function CrearTabla(productos){
     html += `<table class="table table-success table-striped">
 
     <thead>
-        <tr><th>Id</th><th>Name</th><th>Description</th><th>Cost</th><th>Price</th><th># Ingredientes</th><th></th><th></th></tr>
+        <tr><th>Id</th><th>Name</th><th>Description</th><th>Cost</th><th>Price</th><th># Ingredientes</th><th></th></tr>
     </thead>`
     
 
@@ -56,3 +58,5 @@ function verInfo(id){
     var ls2 = JSON.parse(localStorage.getItem('produIndividual'));
     console.log(ls2)
 }
+
+

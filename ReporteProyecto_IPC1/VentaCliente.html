@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">    <title>Reporte Usuarios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">    <title>Venta por Cliente</title>
     <link href="estilo.css" rel="stylesheet">
     <link rel = "icon" href = "extra/restaurante.png" type = "image/x-icon">
-    <title>Factura</title>
 </head>
 <body>
+
+
      <!--División-->
      <div class="wrapper">
         <!--Empieza la sidebar-->
@@ -17,8 +18,7 @@
            <h2>REPORTES</h2>
            <ul>
                 <!--Contenido de la sidebar **FALTA PONER DROPDOWN PORQUE NO ME FUNCIONÓ D:**-->
-               <li><a href="Facturas.html" class="nav-link">Regresar &nbsp<img class="d-inline-block align-top" src="extra/back.png" width="30" height="30"></a></li>
-
+               <li><a href="Clients.html" class="nav-link">Regresar &nbsp<img class="d-inline-block align-top" src="extra/back.png" width="30" height="30"></a></li>
            </ul> 
        </div>
        <!--Termina la sidebar y empieza la navbar que está arriba y el contenido de la página-->
@@ -27,15 +27,12 @@
            <div id="encabezado" class="header"></div>  
            <div class="info">
                <div class="text-center">
-                    <!--Tarjeta-->
+                    <!--Tabla-->
                   
 
-                    <h1>Factura:</h1>
-                    <div id="Tarjeta"></div>
-                    
-                    <div id="Tabla"></div>
-                    
-                    
+                    <h1>Venta por Cliente</h1>
+                    <div id="VentaClientes">
+                    </div>
 
 
 
@@ -45,6 +42,6 @@
        </div>
    </div>
 
-    <script src="VerFactura.js"></script>
+<script src="VentaCliente.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 const divtodasLasFacturas = document.getElementById('todasLasFacturas')
 const divEncabezado = document.getElementById('encabezado')
-
+var pr = JSON.parse(localStorage.getItem('products'));
 
     
 Encabezado();
@@ -24,17 +24,17 @@ function CrearTabla(facturas){
     </thead>`
 
 for (let index = 0; index < facturas.length; index++) {
-    var total = 0
+    
     var nombre =''
     for(let i=0;i<cl.length;i++){
         if(cl[i].id == facturas[index].client){
             nombre = cl[i].name
         }
     }
-    for (let index2 = 0; index2 < facturas[index]["products"].length; index2++) {
-        total += facturas[index]["products"][index2].price
-    }
-
+   // for (let index2 = 0; index2 < facturas[index]["products"].length; index2++) {
+  //      total += facturas[index]["products"][index2].price
+   // }
+    var total = precioTotal(index)
     html +=`
     <tbody>
     
@@ -67,4 +67,26 @@ function verInfo(id){
     window.open('VerFacIndividual.html', '_self');
     var ls2 = JSON.parse(localStorage.getItem('facIndividual'));
     console.log(ls2)
+}
+
+function precioTotal(index){
+        
+        var total = 0
+        for(let j=0;j<ls[index]["products"].length;j++){
+            var cont=0
+            for(let i=0;i<pr.length;i++){
+                if(pr[i].name == ls[index]["products"][j].name){
+                  cont ++;
+      
+                    var pre1 = pr[i].price
+                    total += pre1
+                } 
+            }
+            if (cont==0){
+                var pre = ls[index]["products"][j].price;
+                total += pre
+              }
+        }
+        
+    return total
 }
